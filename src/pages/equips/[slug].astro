@@ -45,7 +45,7 @@ partitsFuturs.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTi
           {entry.data.nom}
         </h1>
         <p class="text-gray-600 mt-3 font-medium text-lg">
-          Entrenador/a: <span class="text-gray-200">{entry.data.entrenador}</span>
+          Entrenador/a: <span class="text-gray-500">{entry.data.entrenador}</span>
         </p>
       </div>
 
@@ -111,7 +111,7 @@ partitsFuturs.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTi
                 <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 shadow-inner">
                   <div class="flex justify-between items-center mb-2">
                     <span class="font-bold text-white text-lg">{partit.rival}</span>
-                    <span class={`text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico text-white' : 'bg-gray-700 text-gray-200'}`}>
+                    <span class={`text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider 'bg-gray-700 text-gray-200'}`}>
                       {partit.local ? 'Local' : 'Visitant'}
                     </span>
                   </div>
