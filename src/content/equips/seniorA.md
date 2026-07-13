@@ -1,4 +1,5 @@
 ---
+slug: "seniorA"
 nom: "Sènior Masculí A"
 categoria: "Sènior"
 entrenador: "Carlos Gómez"
