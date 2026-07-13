@@ -31,9 +31,28 @@ const teamCollection = defineCollection({
   }),
 });
 
+const equipsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    nom: z.string(),
+    categoria: z.string(),
+    entrenador: z.string(),
+    fotografies: z.array(z.string()).optional(),
+    horaris: z.array(z.string()).optional(),
+    partits: z.array(z.object({
+      rival: z.string(),
+      data: z.string(),
+      hora: z.string(),
+      pista: z.string(),
+      local: z.boolean()
+    })).optional()
+  }),
+});
+
 // 3. Export a single `collections` object to register your collection(s)
 //    This key should match your collection directory name in "src/content"
 export const collections = {
   'blog': blogCollection,
   'team': teamCollection,
+  'equips': equipsCollection
 };
