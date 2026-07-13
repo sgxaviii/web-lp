@@ -3,7 +3,7 @@ import Container from "@/components/container.astro";
 import Link from "@/components/ui/link.astro";
 import Dropdown from "./dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
-import { Icon } from "astro-icon/components"; // Imported the Icon component
+import { Icon } from "astro-icon/components"; 
 
 const menuitems = [
   {
@@ -41,8 +41,8 @@ const menuitems = [
         </div>
       </div>
       
-      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
+      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0 items-center">
+        <ul class="flex flex-col lg:flex-row lg:gap-3 w-full lg:w-auto">
           {
             menuitems.map((item, index) => (
               <>
@@ -71,9 +71,32 @@ const menuitems = [
               </>
             ))
           }
+          
+          <li class="lg:hidden border-t border-gray-100 mt-2 pt-2">
+            <a 
+              href="https://instagram.com/aeblapalma" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="flex py-2 items-center text-gray-600 hover:text-pink-600 transition-colors"
+            >
+              <Icon class="w-5 h-5 mr-2" name="uil:instagram" />
+              <span>Instagram</span>
+            </a>
+          </li>
         </ul>
-        </MenuItems>
+      </MenuItems>
     </Astronav>
     
-    </header>
+    <div class="hidden lg:flex items-center">
+      <a 
+        href="https://instagram.com/aeblapalma" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        title="Instagram"
+        class="text-gray-600 hover:text-pink-600 transition-colors p-2"
+      >
+        <Icon class="w-6 h-6" name="uil:instagram" />
+      </a>
+    </div>
+  </header>
 </Container>
