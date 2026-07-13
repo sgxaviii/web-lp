@@ -1,0 +1,149 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+
+// Generem les rutes estàtiques per a cada equip de la col·lecció
+export async function getStaticPaths() {
+  const equips = await getCollection("equips");
+  return equips.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// Obtenim l'equip actual mitjançant les props
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// 🕒 LÒGICA PER FILTRAR PARTITS:
+// Agafem la data actual i filtrem la llista de partits de l'equip
+const avui = new Date();
+const partitsFuturs = entry.data.partits
+  ? entry.data.partits.filter((partit) => new Date(partit.data) >= avui)
+  : [];
+
+// Ordenem els partits propers cronològicament (del més aviat al més tard)
+partitsFuturs.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
+---
+
+<Layout title={`${entry.data.nom} - CB Bàsquet`}>
+  <Container>
+    <div class="mx-auto max-w-5xl mt-14 relative z-10">
+      
+      <!-- Botó de retorn -->
+      <a href="/equips" class="text-amarilloClub hover:text-amarilloBrillante text-sm font-bold mb-6 inline-block transition">
+        ← Tornar a la llista d'equips
+      </a>
+      
+      <!-- Capçalera: Categoria i Nom -->
+      <div class="border-b border-slate-800 pb-6 mb-8">
+        <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+          {entry.data.categoria}
+        </span>
+        <h1 class="text-4xl lg:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+          {entry.data.nom}
+        </h1>
+        <p class="text-gray-400 mt-3 font-medium text-lg">
+          Entrenador/a: <span class="text-gray-200">{entry.data.entrenador}</span>
+        </p>
+      </div>
+
+      <!-- Descripció de l'equip (Contingut principal del fitxer Markdown) -->
+      <div class="prose prose-invert prose-lg max-w-none text-gray-300 mb-12">
+        <Content />
+      </div>
+
+      <!-- Carrusel de Fotografies (Placeholder) -->
+      <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 mb-12 shadow-md backdrop-blur-sm">
+        <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
+          📸 Galeria d'Imatges
+        </h2>
+        
+        <!-- Contenidor del carrusel amb scroll horitzontal -->
+        <div class="flex overflow-x-auto gap-4 snap-x py-2 scrollbar-hide">
+          {entry.data.fotografies && entry.data.fotografies.length > 0 ? (
+            entry.data.fotografies.map((foto) => (
+              <img 
+                src={foto} 
+                alt={`Fotografia de l'equip ${entry.data.nom}`} 
+                class="w-72 h-48 object-cover rounded-xl snap-center shrink-0 border border-slate-700 shadow-sm" 
+              />
+            ))
+          ) : (
+            <div class="w-full h-48 bg-slate-950/50 flex flex-col items-center justify-center rounded-xl text-gray-500 border border-slate-800 border-dashed">
+              <span class="text-2xl mb-2">📷</span>
+              <p>Espai per al carrusel de fotografies</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <!-- Secció Inferior a 2 columnes: Horaris i Partits -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 items-start">
+        
+        <!-- Horaris d'Entrenament -->
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm">
+          <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
+            📅 Horaris d'Entrenament
+          </h2>
+          <ul class="space-y-3">
+            {entry.data.horaris ? entry.data.horaris.map((horari) => (
+              <li class="bg-slate-950/60 text-gray-300 p-4 rounded-xl border border-slate-800 shadow-inner flex items-start gap-3">
+                <span class="text-azulElectrico mt-0.5">🏀</span>
+                <span>{horari}</span>
+              </li>
+            )) : (
+              <li class="text-gray-500 italic">Horaris pendents de confirmar.</li>
+            )}
+          </ul>
+        </div>
+
+        <!-- Pròxims Partits (Només futurs) -->
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm">
+          <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
+            🏆 Pròxims Partits
+          </h2>
+          
+          <div class="space-y-4">
+            {partitsFuturs.length > 0 ? (
+              partitsFuturs.map((partit) => (
+                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 shadow-inner">
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="font-bold text-white text-lg">{partit.rival}</span>
+                    <span class={`text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico text-white' : 'bg-gray-700 text-gray-300'}`}>
+                      {partit.local ? 'Local' : 'Visitant'}
+                    </span>
+                  </div>
+                  <div class="text-sm text-gray-400 mt-2 space-y-1">
+                    <p>📅 {new Date(partit.data).toLocaleDateString('ca-ES', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                    <p>⏰ {partit.hora}</p>
+                    <p>📍 {partit.pista}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div class="text-center bg-slate-950/40 p-6 rounded-xl border border-slate-800 border-dashed">
+                <p class="text-gray-400">No hi ha partits oficials programats pròximament.</p>
+                <p class="text-xs text-gray-500 mt-1">Torna a consultar el calendari més endavant.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </Container>
+</Layout>
+
+<!-- Amagar barra de scroll del carrusel però permetre desplaçament -->
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
