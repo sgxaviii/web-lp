@@ -49,6 +49,7 @@ const menuitems = [
                 {item.children && (
                   <Dropdown
                     title={item.title}
+                    path={item.path} {/* 🌟 CAMBIO AQUÍ: Passem el path a l'actual desplegable */}
                     children={item.children}
                     lastItem={index === menuitems.length - 1}
                   />
