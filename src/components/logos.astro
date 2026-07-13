@@ -4,14 +4,72 @@ import { Icon } from "astro-icon/components";
 ---
 
 <div class="mt-24">
-  <h2 class="text-center text-slate-500">Troba'ns a les xarxes socials</h2>
-  <div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap">
+  <h2 class="text-center text-slate-500 uppercase tracking-wider text-sm font-bold">Troba'ns a les xarxes socials</h2>
+  
+  <div class="flex gap-8 md:gap-16 items-center justify-center mt-10 flex-wrap text-slate-400">
 
-    <Icon class="size-8 md:size-12" name="uil:instagram" />
-    <Icon class="size-8 md:size-12" name="uil:facebook-f" />
-    <Icon class="size-8 md:size-12" name="uil:whatsapp" />
-    <Icon class="size-8 md:size-16" name="uil:phone" />
-    <Icon class="size-8 md:size-16" name="ic:baseline-tiktok" />
+    <!-- Instagram -->
+    <a 
+      href="https://www.instagram.com/aeblapalma" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="hover:text-pink-500 transition-all duration-200 hover:scale-110 block"
+      title="Instagram"
+    >
+      <Icon class="size-8 md:size-12" name="uil:instagram" />
+    </a>
+
+    <!-- Facebook -->
+    <a 
+      href="https://www.facebook.com/AEBLaPalma" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="hover:text-blue-600 transition-all duration-200 hover:scale-110 block"
+      title="Facebook"
+    >
+      <Icon class="size-8 md:size-12" name="uil:facebook-f" />
+    </a>
+
+    <!-- WhatsApp -->
+    <a 
+      href="https://wa.me/34644279680"
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="hover:text-green-500 transition-all duration-200 hover:scale-110 block"
+      title="WhatsApp"
+    >
+      <Icon class="size-8 md:size-12" name="uil:whatsapp" />
+    </a>
+
+    <!-- Telèfon (Trucada directa) -->
+    <a 
+      href="tel:+34644279680"
+      class="hover:text-white transition-all duration-200 hover:scale-110 block"
+      title="Trucar"
+    >
+      <Icon class="size-8 md:size-12" name="uil:phone" />
+    </a>
+
+    <!-- TikTok (Substituït el placeholder de uil:bolt) -->
+    <a 
+      href="https://www.tiktok.com/@aeblapalma" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="hover:text-white transition-all duration-200 hover:scale-110 block"
+      title="TikTok"
+    >
+      <Icon class="size-8 md:size-12" name="uil:tiktok" />
+    </a>
+
+        <a 
+      href="https://x.com/aeblapalma" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="hover:text-white transition-all duration-200 hover:scale-110 block"
+      title="X"
+    >
+      <Icon class="size-8 md:size-12" name="uil:twitter" />
+    </a>
 
   </div>
 </div>
