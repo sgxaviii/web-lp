@@ -13,10 +13,16 @@ function urlFor(source) {
 }
 
 // 🌟 Demanem les dades del casal a Sanity. 
-// Ara demanem la query de forma òptima recuperant tots els camps i el link correctament.
+// Recuperem el camp "enllac" dins de la llista de serveis.
 const dadesCasal = await sanityClient.fetch(`*[_type == "casal"][0]{
   ...,
-  "linkInscripcioUrl": documentInscripcio.asset->url
+  "linkInscripcioUrl": documentInscripcio.asset->url,
+  serveis[]{
+    titol,
+    descripcio,
+    icona,
+    enllac
+  }
 }`);
 
 // 🌟 Dades de seguretat (Fallbacks) per si encara no estan definides a Sanity
@@ -29,7 +35,12 @@ const imatgePortada = dadesCasal?.imatgePortada
   : "https://images.unsplash.com/photo-1519766304817-4f37bda74a27?q=80&w=800&auto=format&fit=crop";
 
 const serveis = dadesCasal?.serveis || [
-  { titol: "Bàsquet i Tecnificació", descripcio: "Entrenaments adaptats per a tots els nivells.", icona: "uil:basketball" }
+  { 
+    titol: "Bàsquet i Tecnificació", 
+    descripcio: "Entrenaments adaptats per a tots els nivells.", 
+    icona: "uil:basketball",
+    enllac: "/equips" 
+  }
 ];
 
 const torns = dadesCasal?.torns || [
@@ -44,8 +55,6 @@ const descomptes = dadesCasal?.descomptes || [
   "10% de descompte a partir del segon germà/ana."
 ];
 
-// 🌟 Prioritzem primer l'enllaç de tipus URL (per si hi poseu el link de Google Forms a Sanity) 
-// o el fitxer adjuntat de Sanity si fos el cas, amb un enllaç de rescat.
 const linkInscripcio = dadesCasal?.linkInscripcio || dadesCasal?.linkInscripcioUrl || "https://docs.google.com/forms/";
 const emailContacte = dadesCasal?.emailContacte || "casal@aeblapalma.cat";
 const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
@@ -102,7 +111,7 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
       <hr class="border-slate-100 my-16" />
 
       {/* =========================================
-          SECCIÓ: QUÈ OFERIM (SERVEIS DINÀMICS)
+          SECCIÓ: QUÈ OFERIM (SERVEIS CLICABLES)
       ========================================= */}
       <section id="info" class="scroll-mt-20">
         <div class="text-center max-w-2xl mx-auto">
@@ -115,19 +124,34 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {serveis.map((servei) => (
-            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-200 flex flex-col items-start">
-              <div class="bg-slate-900 text-amarilloClub p-3 rounded-xl mb-4">
-                <Icon class="w-6 h-6" name={servei.icona || "uil:basketball"} />
-              </div>
-              <h3 class="font-bold text-slate-900 uppercase text-lg mb-2">
-                {servei.titol}
-              </h3>
-              <p class="text-slate-500 text-sm leading-relaxed">
-                {servei.descripcio}
-              </p>
-            </div>
-          ))}
+          {serveis.map((servei) => {
+            const téEnllac = !!servei.enllac;
+            const Contenidor = téEnllac ? 'a' : 'div';
+            
+            return (
+              <Contenidor 
+                href={servei.enllac}
+                class={`bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition duration-200 flex flex-col items-start group ${
+                  téEnllac ? 'hover:shadow-md hover:border-slate-200 cursor-pointer' : ''
+                }`}
+              >
+                <div class="bg-slate-900 text-amarilloClub p-3 rounded-xl mb-4 group-hover:bg-azulElectrico transition-colors duration-200">
+                  <Icon class="w-6 h-6" name={servei.icona || "uil:basketball"} />
+                </div>
+                
+                <h3 class="font-bold text-slate-900 uppercase text-lg mb-2 inline-flex items-center gap-1.5 group-hover:text-azulElectrico transition-colors duration-200">
+                  {servei.titol}
+                  {téEnllac && (
+                    <Icon class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-200 text-azulElectrico transform translate-x-[-4px] group-hover:translate-x-0" name="uil:arrow-right" />
+                  )}
+                </h3>
+                
+                <p class="text-slate-500 text-sm leading-relaxed">
+                  {servei.descripcio}
+                </p>
+              </Contenidor>
+            );
+          })}
         </div>
       </section>
 

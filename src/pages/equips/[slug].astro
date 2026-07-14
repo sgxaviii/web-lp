@@ -187,8 +187,8 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
                   {/* Capçalera del partit */}
                   <div class="flex justify-between items-center mb-3">
                     <span class="font-bold text-white text-lg">{partit.rival}</span>
-                    {/* 🌟 ETIQUETA LOCAL: blau elèctric suavitzat si és local */}
-                    <span class={`text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico/80 text-white' : 'bg-gray-700 text-gray-200'}`}>
+                    {/* 🌟 ETIQUETA LOCAL: modificada a bg-azulElectrico per fer joc idèntic amb els pròxims partits */}
+                    <span class={`text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico text-white' : 'bg-gray-700 text-gray-200'}`}>
                       {partit.local ? 'Local' : 'Visitant'}
                     </span>
                   </div>
