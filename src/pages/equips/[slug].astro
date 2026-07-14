@@ -53,30 +53,65 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
   <Container>
     <div class="mx-auto max-w-5xl mt-14 relative z-10">
       
+      {/* 🌟 ENLLAÇ TORNAR: groc del club amb hover brillant */}
       <a href="/equips" class="text-amarilloClub hover:text-amarilloBrillante text-sm font-bold mb-6 inline-block transition">
         ← Tornar a la llista d'equips
       </a>
       
       <div class="border-b border-slate-900 pb-6 mb-8">
+        {/* 🌟 ETIQUETA CATEGORIA: fons groc de club amb text blau fosc */}
         {equip.categoria && (
-          <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+          <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-3 py-1 rounded-full shadow-sm">
             {equip.categoria}
           </span>
         )}
         <h1 class="text-4xl lg:text-5xl font-black text-slate-900 mt-4 uppercase tracking-tight">
           {equip.nom}
         </h1>
+        
         {equip.entrenador && (
           <p class="text-gray-600 mt-3 font-medium text-lg">
             Entrenador/a: <span class="text-gray-500">{equip.entrenador}</span>
           </p>
         )}
+
+        {/* 📝 DESCRIPCIÓ DE L'EQUIP */}
+        {equip.descripcio && (
+          <p class="text-gray-700 mt-4 text-base leading-relaxed max-w-3xl whitespace-pre-line">
+            {equip.descripcio}
+          </p>
+        )}
       </div>
 
-{/* =========================================
+      {/* =========================================
+          CARRUSEL DE L'EQUIP (Fotos destacades)
+      ========================================= */}
+      {equip.galeria && equip.galeria.length > 0 && (
+        <div class="mb-12">
+          {/* 🌟 TÍTOL: color groc del club */}
+          <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
+            📸 L'Equip
+          </h2>
+          
+          <div class="flex overflow-x-auto gap-4 snap-x snap-mandatory pb-4 scrollbar-hide">
+            {equip.galeria.map((foto) => (
+              <img 
+                src={urlFor(foto).width(800).height(500).fit("crop").url()} 
+                data-full-src={urlFor(foto).url()} 
+                alt={`Fotografia de l'equip ${equip.nom}`} 
+                class="img-galeria cursor-pointer hover:opacity-90 transition-opacity w-72 md:w-96 h-48 md:h-64 object-cover rounded-2xl snap-center shrink-0 border border-slate-700 shadow-lg" 
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* =========================================
           CAIXA 0: HORARIS D'ENTRENAMENT (A dalt)
       ========================================= */}
       <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm mb-12">
+        {/* 🌟 TÍTOL SECCIÓ: color groc del club */}
         <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
           📅 Horaris d'Entrenament
         </h2>
@@ -85,6 +120,7 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
           <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {equip.horaris.map((horari) => (
               <li class="bg-slate-950/60 text-gray-200 p-4 rounded-xl border border-slate-800 shadow-inner flex items-start gap-3">
+                {/* 🌟 ICONA ENTRENAMENT: blau elèctric personalitzat */}
                 <span class="text-azulElectrico mt-0.5">🏀</span>
                 <span class="font-medium">{horari}</span>
               </li>
@@ -103,6 +139,7 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
             CAIXA 1: PRÒXIMS PARTITS (FUTURS)
         ========================================= */}
         <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm">
+          {/* 🌟 TÍTOL SECCIÓ: color groc del club */}
           <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
             🏆 Pròxims Partits
           </h2>
@@ -113,7 +150,8 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
                 <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 shadow-inner">
                   <div class="flex justify-between items-center mb-2">
                     <span class="font-bold text-white text-lg">{partit.rival}</span>
-                    <span class={`text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico text-white' : 'bg-gray-700 text-gray-200'}`}>
+                    {/* 🌟 ETIQUETA LOCAL: blau elèctric si juga a casa */}
+                    <span class={`text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico text-white' : 'bg-gray-700 text-gray-200'}`}>
                       {partit.local ? 'Local' : 'Visitant'}
                     </span>
                   </div>
@@ -136,6 +174,7 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
             CAIXA 2: RESULTATS I PARTITS PASSATS
         ========================================= */}
         <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm">
+          {/* 🌟 TÍTOL SECCIÓ: color groc del club */}
           <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
             ✅ Resultats Anteriors
           </h2>
@@ -148,7 +187,8 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
                   {/* Capçalera del partit */}
                   <div class="flex justify-between items-center mb-3">
                     <span class="font-bold text-white text-lg">{partit.rival}</span>
-                    <span class={`text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico/80 text-white' : 'bg-gray-700 text-gray-200'}`}>
+                    {/* 🌟 ETIQUETA LOCAL: blau elèctric suavitzat si és local */}
+                    <span class={`text-xs font-black px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico/80 text-white' : 'bg-gray-700 text-gray-200'}`}>
                       {partit.local ? 'Local' : 'Visitant'}
                     </span>
                   </div>
@@ -165,6 +205,7 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
                         <p class="text-[10px] text-slate-400 font-bold uppercase">Local</p>
                         <p class="text-xl font-black text-white">{partit.resultatLocal ?? '-'}</p>
                       </div>
+                      {/* 🌟 DIVISOR VS: color groc del club */}
                       <div class="text-amarilloClub font-black text-lg">VS</div>
                       <div class="text-center">
                         <p class="text-[10px] text-slate-400 font-bold uppercase">Visitant</p>
@@ -172,6 +213,7 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
                       </div>
                     </div>
 
+                    {/* 🌟 BOTÓ YOUTUBE: fons vermell personalitzat (red-650/red-750) */}
                     {partit.videoYoutube && (
                       <a 
                         href={partit.videoYoutube} 
@@ -187,13 +229,14 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
                   {/* Galeria D'Imatges (Només pel partit més recent on index === 0) */}
                   {index === 0 && (partit.galeria || equip.galeria) && (
                     <div class="mt-5 pt-4 border-t border-slate-800/80">
-                      <h3 class="text-sm font-bold text-amarilloClub mb-3">📸 Galeria Destacada</h3>
+                      <h3 class="text-sm font-bold text-white mb-3">📸 Galeria Destacada</h3>
                       <div class="flex overflow-x-auto gap-3 snap-x pb-2 scrollbar-hide">
                         {(partit.galeria || equip.galeria).map((foto) => (
                           <img 
                             src={urlFor(foto).width(400).height(300).fit("crop").url()} 
+                            data-full-src={urlFor(foto).url()} 
                             alt={`Fotografia del partit contra ${partit.rival}`} 
-                            class="w-40 h-28 object-cover rounded-xl snap-center shrink-0 border border-slate-700 shadow-sm" 
+                            class="img-galeria cursor-pointer hover:opacity-80 transition-opacity w-40 h-28 object-cover rounded-xl snap-center shrink-0 border border-slate-700 shadow-sm" 
                             loading="lazy"
                           />
                         ))}
@@ -212,7 +255,29 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
         </div>
 
       </div>
+    </div>
   </Container>
+
+  {/* =========================================
+      MODAL DE LA GALERIA (Ampliació d'imatges)
+  ========================================= */}
+  <div id="imageModal" class="fixed inset-0 z-50 hidden bg-black/95 flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+    <div class="relative max-w-5xl w-full flex flex-col items-center">
+      {/* 🌟 BOTÓ TANCAR MODAL: efecte hover groc del club */}
+      <button id="closeModal" class="absolute -top-12 right-0 md:-right-8 text-white hover:text-amarilloClub text-4xl font-bold cursor-pointer z-50 transition">
+        &times;
+      </button>
+      
+      {/* Imatge ampliada */}
+      <img id="modalImage" src="" alt="Imatge ampliada" class="max-h-[80vh] w-auto object-contain rounded-lg shadow-2xl mb-6" />
+      
+      {/* 🌟 BOTÓ DESCARREGAR: fons groc del club amb text fosc i hover a brillant */}
+      <a id="downloadBtn" href="" download class="bg-amarilloClub hover:bg-amarilloBrillante text-azulOscuro font-black py-2.5 px-6 rounded-full flex items-center gap-2 transition shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Descarregar Imatge
+      </a>
+    </div>
+  </div>
 </Layout>
 
 <style>
@@ -224,3 +289,48 @@ partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getT
     scrollbar-width: none;
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.img-galeria');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const closeModal = document.getElementById('closeModal');
+
+    // Funció per obrir
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        const fullSrc = img.getAttribute('data-full-src');
+        
+        modalImage.src = fullSrc;
+        downloadBtn.href = fullSrc + '?dl='; 
+        
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        setTimeout(() => modal.classList.remove('opacity-0'), 10);
+      });
+    });
+
+    // Funció per tancar
+    const close = () => {
+      modal.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modalImage.src = ''; 
+      }, 300);
+    };
+
+    closeModal.addEventListener('click', close);
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) close();
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+  });
+</script>

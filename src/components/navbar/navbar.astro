@@ -3,30 +3,41 @@ import Container from "@/components/container.astro";
 import Link from "@/components/ui/link.astro";
 import Dropdown from "./dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
-import { Icon } from "astro-icon/components"; 
+import { Icon } from "astro-icon/components";
 
+// 🌟 Importem el client de Sanity per demanar les dades dels equips reals
+import { sanityClient } from "sanity:client";
+
+// Demanem els equips i els ordenem alfabèticament
+const equipsBaseDeDades = await sanityClient.fetch(
+  `*[_type == "equip"] | order(nom asc){ nom, "slug": slug.current }`
+);
+
+// Mapegem la informació de la base de dades a l'estructura del menú "children"
+const equipsMapejats = equipsBaseDeDades.map((equip) => ({
+  title: equip.nom,
+  path: `/equips/${equip.slug}`,
+}));
+
+// Estructura dinàmica del menú
 const menuitems = [
   {
     title: "Equips",
     path: "/equips",
-    children: [
-      { title: "Sènior A", path: "/equips/seniorA" },
-      { title: "Sènior B", path: "/equips/seniorB" },
-      { title: "Sots 25", path: "/equips/sots25" },
-      { title: "Escola", path: "/equips/escola" },
-    ],
+    children: equipsMapejats,
   },
   {
     title: "Club",
     path: "/about",
   },
   {
-    title: "Contacte",
-    path: "/contact",
-  },
-  {
     title: "Casal",
     path: "/casal",
+    badge: true, // Activem l'etiqueta d'estiu estàtica
+  },
+  {
+    title: "Contacte",
+    path: "/contact",
   },
 ];
 ---
@@ -35,13 +46,13 @@ const menuitems = [
   <header class="flex flex-col lg:flex-row justify-between items-center my-5">
     <Astronav>
       <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="flex items-center space-x-2 text-lg font-bold text-slate-800">
-          <Icon class="w-6 h-6 text-indigo-600" name="uil:basketball" /> 
+        <a href="/" class="flex items-center space-x-2 text-xl font-black text-slate-900 uppercase tracking-tight hover:opacity-90 transition-opacity">
+          <Icon class="w-6 h-6 text-azulElectrico" name="uil:basketball" /> 
           <span>AEB La Palma</span>
         </a>
         
         <div class="block lg:hidden">
-          <MenuIcon class="w-4 h-4 text-gray-800" />
+          <MenuIcon class="w-5 h-5 text-slate-800 hover:text-azulElectrico transition-colors" />
         </div>
       </div>
       
@@ -53,7 +64,7 @@ const menuitems = [
                 {item.children && (
                   <Dropdown
                     title={item.title}
-                    path={item.path} {/* 🌟 CAMBIO AQUÍ: Passem el path a l'actual desplegable */}
+                    path={item.path}
                     children={item.children}
                     lastItem={index === menuitems.length - 1}
                   />
@@ -63,11 +74,12 @@ const menuitems = [
                   <li>
                     <a
                       href={item.path}
-                      class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
+                      class="flex lg:px-3 py-2 items-center text-slate-600 hover:text-azulElectrico font-semibold transition-colors duration-200">
                       <span> {item.title}</span>
                       {item.badge && (
-                        <span class="ml-1 px-2 py-0.5 text-[10px] animate-pulse font-semibold uppercase text-white bg-indigo-600 rounded-full">
-                          New
+                        /* 🌟 RECUADRE ESTÀTIC (Sense 'animate-pulse') */
+                        <span class="ml-1.5 px-2 py-0.5 text-[9px] font-black uppercase text-azulOscuro bg-amarilloClub rounded-md shadow-sm">
+                          Estiu
                         </span>
                       )}
                     </a>
@@ -78,42 +90,42 @@ const menuitems = [
           }
           
           {/* 📱 XARXES SOCIALS - VERSIÓ MÒBIL (Ocult en pantalles grans) */}
-          <li class="lg:hidden border-t border-gray-100 mt-4 pt-4 grid grid-cols-2 gap-4">
+          <li class="lg:hidden border-t border-slate-100 mt-4 pt-4 grid grid-cols-2 gap-4">
             <a 
               href="https://instagram.com/aeblapalma" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="flex items-center text-gray-600 hover:text-pink-600 transition-colors"
+              class="flex items-center text-slate-600 hover:text-pink-600 transition-colors"
             >
               <Icon class="w-5 h-5 mr-2" name="uil:instagram" />
               <span>Instagram</span>
             </a>
 
             <a 
-              href="https://facebook.com/el-teu-club" 
+              href="https://facebook.com/AEBLaPalma/" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+              class="flex items-center text-slate-600 hover:text-blue-600 transition-colors"
             >
               <Icon class="w-5 h-5 mr-2" name="uil:facebook" />
               <span>Facebook</span>
             </a>
 
             <a 
-              href="https://tiktok.com/@el-teu-club" 
+              href="https://tiktok.com/@aeblapalma" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="flex items-center text-gray-600 hover:text-black transition-colors"
+              class="flex items-center text-slate-600 hover:text-slate-950 transition-colors"
             >
               <Icon class="w-5 h-5 mr-2" name="uil:video" />
               <span>TikTok</span>
             </a>
 
             <a 
-              href="https://wa.me/34600000000" 
+              href="https://wa.me/34644279680" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="flex items-center text-gray-600 hover:text-green-500 transition-colors"
+              class="flex items-center text-slate-600 hover:text-green-500 transition-colors"
             >
               <Icon class="w-5 h-5 mr-2" name="uil:whatsapp" />
               <span>WhatsApp</span>
@@ -130,9 +142,9 @@ const menuitems = [
         target="_blank" 
         rel="noopener noreferrer" 
         title="Facebook"
-        class="text-gray-600 hover:text-blue-600 transition-colors p-2"
+        class="text-slate-500 hover:text-blue-600 transition-colors p-2"
       >
-        <Icon class="w-6 h-6" name="uil:facebook" />
+        <Icon class="w-5 h-5" name="uil:facebook" />
       </a>
 
       <a 
@@ -140,9 +152,9 @@ const menuitems = [
         target="_blank" 
         rel="noopener noreferrer" 
         title="Instagram"
-        class="text-gray-600 hover:text-pink-600 transition-colors p-2"
+        class="text-slate-500 hover:text-pink-600 transition-colors p-2"
       >
-        <Icon class="w-6 h-6" name="uil:instagram" />
+        <Icon class="w-5 h-5" name="uil:instagram" />
       </a>
 
       <a 
@@ -150,9 +162,9 @@ const menuitems = [
         target="_blank" 
         rel="noopener noreferrer" 
         title="TikTok"
-        class="text-gray-600 hover:text-red-500 transition-colors p-2"
+        class="text-slate-500 hover:text-slate-950 transition-colors p-2"
       >
-        <Icon class="w-6 h-6" name="uil:video" />
+        <Icon class="w-5 h-5" name="uil:video" />
       </a>
 
       <a 
@@ -160,9 +172,9 @@ const menuitems = [
         target="_blank" 
         rel="noopener noreferrer" 
         title="WhatsApp"
-        class="text-gray-600 hover:text-green-500 transition-colors p-2"
+        class="text-slate-500 hover:text-green-500 transition-colors p-2"
       >
-        <Icon class="w-6 h-6" name="uil:whatsapp" />
+        <Icon class="w-5 h-5" name="uil:whatsapp" />
       </a>
     </div>
   </header>

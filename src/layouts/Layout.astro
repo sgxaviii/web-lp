@@ -68,3 +68,34 @@ const makeTitle = title
     </style>
   </body>
 </html>
+
+
+<style is:global>
+  /* 🎨 DEFINICIÓ DE COLORS DEL CLUB */
+  :root {
+    --color-amarilloClub: #FBBF24;       /* Groc del club */
+    --color-amarilloBrillante: #F59E0B;  /* Groc hover */
+    --color-azulElectrico: #1D4ED8;      /* Blau principal */
+    --color-azulOscuro: #1E3A8A;         /* Blau fosc */
+    --color-red-650: #E02424;            /* Vermell YouTube */
+    --color-red-750: #9B1C1C;
+  }
+
+  /* 🛠️ CLASSES DE TAILWIND PERSONALITZADES */
+  .bg-amarilloClub { background-color: var(--color-amarilloClub); }
+  .text-amarilloClub { color: var(--color-amarilloClub); }
+  .border-amarilloClub { border-color: var(--color-amarilloClub); }
+  .hover\:text-amarilloBrillante:hover { color: var(--color-amarilloBrillante); }
+
+  .bg-azulElectrico { background-color: var(--color-azulElectrico); }
+  .text-azulElectrico { color: var(--color-azulElectrico); }
+  .border-azulElectrico { border-color: var(--color-azulElectrico); }
+  .hover\:border-azulElectrico:hover { border-color: var(--color-azulElectrico); }
+
+  .bg-azulOscuro { background-color: var(--color-azulOscuro); }
+  .text-azulOscuro { color: var(--color-azulOscuro); }
+  .hover\:bg-azulOscuro:hover { background-color: var(--color-azulOscuro); }
+
+  .bg-red-650 { background-color: var(--color-red-650); }
+  .hover\:bg-red-750:hover { background-color: var(--color-red-750); }
+</style>

@@ -43,24 +43,30 @@ const features = [
 ---
 
 <div class="mt-16 md:mt-0">
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-    PER QUÈ EL NOSTRE CLUB ÉS EL TEU LLOC?
+  {/* 🌟 Títol principal adaptat amb el blau elèctric del club */}
+  <h2 class="text-4xl lg:text-5xl font-black lg:tracking-tight uppercase text-slate-900">
+    PER QUÈ EL NOSTRE CLUB ÉS <span class="text-azulElectrico">EL TEU LLOC</span>?
   </h2>
-  <p class="text-lg mt-4 text-slate-600">
+  <p class="text-lg mt-4 text-slate-600 max-w-2xl">
     A l'AEB La Palma entenem el bàsquet com una eina formativa. T'oferim un entorn saludable, competitiu i compromès on créixer com a esportista i com a persona.
   </p>
 </div>
 
-<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
+<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-x-12 gap-y-16">
   {
     features.map((item) => (
       <div class="flex gap-4 items-start">
-        <div class="mt-1 bg-black rounded-full  p-2 w-8 h-8 shrink-0">
-          <Icon class="text-white" name={item.icon} />
+        {/* 🌟 Icona amb el fons fosc i l'icona en groc del club per reforçar la marca */}
+        <div class="mt-1 bg-slate-900 rounded-full w-10 h-10 flex items-center justify-center shrink-0 shadow-sm border border-slate-800">
+          <Icon class="text-amarilloClub w-5 h-5" name={item.icon} />
         </div>
         <div>
-          <h3 class="font-semibold text-lg">{item.title}</h3>{" "}
-          <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
+          <h3 class="font-bold text-slate-950 text-lg uppercase tracking-tight">
+            {item.title}
+          </h3>
+          <p class="text-slate-500 mt-2 leading-relaxed text-sm">
+            {item.description}
+          </p>
         </div>
       </div>
     ))

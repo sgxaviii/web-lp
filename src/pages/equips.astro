@@ -1,14 +1,18 @@
 ---
-import { getCollection } from "astro:content";
+import { sanityClient } from "sanity:client";
+import imageUrlBuilder from "@sanity/image-url";
 import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 
-// Obtenim tots els equips de la col·lecció "equips"
-const totsElsEquips = await getCollection("equips");
+// 🌟 Configura el generador d'enllaços de les imatges de Sanity
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source) {
+  return builder.image(source);
+}
 
-// Ordenem els equips alfabèticament pel seu nom
-totsElsEquips.sort((a, b) => a.data.nom.localeCompare(b.data.nom));
+// 🌟 Demanem tots els equips a Sanity i els ordenem alfabèticament (ascendent)
+const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom asc)`);
 ---
 
 <Layout title="Els Nostres Equips - CB Bàsquet">
@@ -31,48 +35,55 @@ totsElsEquips.sort((a, b) => a.data.nom.localeCompare(b.data.nom));
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {
             totsElsEquips.map((equipo) => {
-              // Utilitzem la primera imatge de la galeria de l'equip com a portada.
-              // Si no n'hi ha cap, posem una imatge de bàsquet per defecte (placeholder).
-              const imatgePortada = equipo.data.fotografies && equipo.data.fotografies.length > 0
-                ? equipo.data.fotografies[0]
+              // 🌟 Utilitzem la primera imatge de la "galeria" de Sanity com a portada.
+              // Generem l'URL amb les mides exactes o posem el placeholder si no n'hi ha.
+              const imatgePortada = equipo.galeria && equipo.galeria.length > 0
+                ? urlFor(equipo.galeria[0]).width(600).height(400).fit("crop").url()
                 : "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=600&auto=format&fit=crop";
 
               return (
                 <div class="bg-slate-900/60 backdrop-blur-md rounded-2xl shadow-lg border border-slate-800 overflow-hidden group hover:border-azulElectrico hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
                   
                   {/* Part superior: Imatge i Dades */}
-                  <a href={`/equips/${equipo.slug}`} class="block flex-grow">
+                  {/* 🌟 Compte! A Sanity el slug es llegeix amb .slug.current */}
+                  <a href={`/equips/${equipo.slug.current}`} class="block flex-grow">
                     
                     {/* Contenidor de la foto amb zoom al passar el ratolí */}
                     <div class="relative aspect-video overflow-hidden bg-slate-950 border-b border-slate-800">
                       <img
                         src={imatgePortada}
-                        alt={`Fotografia oficial de l'equip ${equipo.data.nom}`}
+                        alt={`Fotografia oficial de l'equip ${equipo.nom}`}
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                         loading="lazy"
                       />
                       
-                      {/* Etiqueta flotant de la Categoria */}
-                      <span class="absolute top-3 left-3 bg-amarilloClub text-white uppercase tracking-wider text-[10px] font-black px-2.5 py-1 rounded-md shadow-md">
-                        {equipo.data.categoria}
-                      </span>
+                      {/* 🌟 Etiqueta flotant de la Categoria: Groc del club i text blau fosc */}
+                      {equipo.categoria && (
+                        <span class="absolute top-3 left-3 bg-amarilloClub text-azulOscuro uppercase tracking-wider text-[10px] font-black px-2.5 py-1 rounded-md shadow-md">
+                          {equipo.categoria}
+                        </span>
+                      )}
                     </div>
 
                     {/* Textos de la targeta */}
                     <div class="p-5">
+                      {/* 🌟 Nom de l'equip: Canvia al groc del club quan es passa el ratolí (hover) */}
                       <h2 class="text-xl font-black text-white uppercase tracking-tight group-hover:text-amarilloClub transition-colors duration-200">
-                        {equipo.data.nom}
+                        {equipo.nom}
                       </h2>
-                      <p class="text-sm text-gray-400 mt-2">
-                        Entrenador/a: <span class="text-gray-200 font-medium">{equipo.data.entrenador}</span>
-                      </p>
+                      {equipo.entrenador && (
+                        <p class="text-sm text-gray-400 mt-2">
+                          Entrenador/a: <span class="text-gray-200 font-medium">{equipo.entrenador}</span>
+                        </p>
+                      )}
                     </div>
                   </a>
 
                   {/* Botó inferior d'acció */}
                   <div class="p-5 pt-0">
+                    {/* 🌟 Botó: Blau elèctric i hover fosc */}
                     <a
-                      href={`/equips/${equipo.slug}`}
+                      href={`/equips/${equipo.slug.current}`}
                       class="block text-center bg-azulElectrico hover:bg-azulOscuro text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition duration-200 border border-azulElectrico/20"
                     >
                       Veure fitxa i partits →

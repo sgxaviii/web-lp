@@ -1,6 +1,6 @@
 ---
 import { Picture } from "astro:assets";
-import logoImage from "@/assets/logo.png";
+import logoImage from "@/assets/logo.jpg";
 import Link from "@/components/ui/link.astro";
 import { Icon } from "astro-icon/components";
 ---
@@ -10,7 +10,7 @@ import { Icon } from "astro-icon/components";
   <div class="py-6 md:order-1 hidden md:block">
     <Picture
       src={logoImage}
-      alt="Astronaut in the air"
+      alt="Escut oficial AEB La Palma"
       widths={[200, 400, 600]}
       sizes="(max-width: 800px) 100vw, 620px"
       loading="eager"
@@ -19,30 +19,31 @@ import { Icon } from "astro-icon/components";
   </div>
   <div>
     <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
-      AEB LA PALMA: més que un club, una família a la pista
+      class="text-5xl lg:text-6xl xl:text-7xl font-black lg:tracking-tight xl:tracking-tighter text-slate-900 uppercase">
+      AEB LA PALMA: més que un club, una <span class="text-azulElectrico">família</span> a la pista
     </h1>
     <p class="text-lg mt-4 text-slate-600 max-w-xl">
-      A l'AEB La Palma vivim el bàsquet des de la base fins al sènior. Formem esportistes, compartim valors i competim amb el cor a cada partit. Uneix-te al groc-i-blau!
+      A l'AEB La Palma vivim el bàsquet des de la base fins al sènior. Formem esportistes, compartim valors i competim amb el cor a cada partit. Uneix-te al <span class="text-amarilloClub font-bold bg-slate-900 px-1.5 py-0.5 rounded">groc</span>-i-<span class="text-azulElectrico font-bold">blau</span>!
     </p>
+    
     <div class="mt-6 flex flex-col sm:flex-row gap-3">
+      {/* 🌟 BOTÓ PRINCIPAL: Blau elèctric del club amb hover fosc */}
       <Link
         href="/equips"
-        target="_blank"
-        class="flex gap-1 items-center justify-center"
+        class="flex gap-2 items-center justify-center bg-azulElectrico hover:bg-azulOscuro text-white font-bold px-6 py-3 rounded-xl transition duration-200 shadow-md border border-azulElectrico/20"
         rel="noopener">
         <Icon class="text-white w-5 h-5" name="uil:basketball" />
-
         Equips
       </Link>
+      
+      {/* 🌟 BOTÓ SECUNDARI: Estil Outline que reacciona amb els colors del club */}
       <Link
         size="lg"
-        style="outline"
         rel="noopener"
         href="/about"
-        class="flex gap-1 items-center justify-center"
-        target="_blank">
-        <Icon class="text-black w-4 h-4" name="uil:dna" />
+        class="flex gap-2 items-center justify-center border-2 border-slate-300 hover:border-azulElectrico text-slate-700 hover:text-azulElectrico font-bold px-6 py-3 rounded-xl transition duration-200"
+        style="outline">
+        <Icon class="w-4 h-4" name="uil:dna" />
         Club
       </Link>
     </div>
