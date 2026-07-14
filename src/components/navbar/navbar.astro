@@ -23,7 +23,11 @@ const menuitems = [
   {
     title: "Contacte",
     path: "/contact",
-  }
+  },
+  {
+    title: "Casal",
+    path: "/casal",
+  },
 ];
 ---
 
@@ -73,22 +77,64 @@ const menuitems = [
             ))
           }
           
-          <li class="lg:hidden border-t border-gray-100 mt-2 pt-2">
+          {/* 📱 XARXES SOCIALS - VERSIÓ MÒBIL (Ocult en pantalles grans) */}
+          <li class="lg:hidden border-t border-gray-100 mt-4 pt-4 grid grid-cols-2 gap-4">
             <a 
               href="https://instagram.com/aeblapalma" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="flex py-2 items-center text-gray-600 hover:text-pink-600 transition-colors"
+              class="flex items-center text-gray-600 hover:text-pink-600 transition-colors"
             >
               <Icon class="w-5 h-5 mr-2" name="uil:instagram" />
               <span>Instagram</span>
+            </a>
+
+            <a 
+              href="https://facebook.com/el-teu-club" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+            >
+              <Icon class="w-5 h-5 mr-2" name="uil:facebook" />
+              <span>Facebook</span>
+            </a>
+
+            <a 
+              href="https://tiktok.com/@el-teu-club" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="flex items-center text-gray-600 hover:text-black transition-colors"
+            >
+              <Icon class="w-5 h-5 mr-2" name="uil:video" />
+              <span>TikTok</span>
+            </a>
+
+            <a 
+              href="https://wa.me/34600000000" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="flex items-center text-gray-600 hover:text-green-500 transition-colors"
+            >
+              <Icon class="w-5 h-5 mr-2" name="uil:whatsapp" />
+              <span>WhatsApp</span>
             </a>
           </li>
         </ul>
       </MenuItems>
     </Astronav>
     
-    <div class="hidden lg:flex items-center">
+    {/* 💻 XARXES SOCIALS - VERSIÓ ESCRIPTORI (Ocult en mòbils) */}
+    <div class="hidden lg:flex items-center gap-1">
+      <a 
+        href="https://facebook.com/AEBLaPalma/" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        title="Facebook"
+        class="text-gray-600 hover:text-blue-600 transition-colors p-2"
+      >
+        <Icon class="w-6 h-6" name="uil:facebook" />
+      </a>
+
       <a 
         href="https://instagram.com/aeblapalma" 
         target="_blank" 
@@ -97,6 +143,26 @@ const menuitems = [
         class="text-gray-600 hover:text-pink-600 transition-colors p-2"
       >
         <Icon class="w-6 h-6" name="uil:instagram" />
+      </a>
+
+      <a 
+        href="https://tiktok.com/@aeblapalma" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        title="TikTok"
+        class="text-gray-600 hover:text-red-500 transition-colors p-2"
+      >
+        <Icon class="w-6 h-6" name="uil:video" />
+      </a>
+
+      <a 
+        href="https://wa.me/34644279680" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        title="WhatsApp"
+        class="text-gray-600 hover:text-green-500 transition-colors p-2"
+      >
+        <Icon class="w-6 h-6" name="uil:whatsapp" />
       </a>
     </div>
   </header>
