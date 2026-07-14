@@ -8,36 +8,42 @@ const features = [
     description:
       "Des de l'Escola de Bàsquet fins a competir en categories absolutes. Creiem en el talent de casa i en un camí de creixement formatiu i humà a llarg termini.",
     icon: "uil:basketball",
+    link: "/equips" // O la pàgina on tinguis el llistat d'equips / escola
   },
   {
     title: "Entrenadors Qualificats",
     description:
       "Comptem amb un cos tècnic titulat i compromès que no només ensenya tàctica i tècnica, sinó que encomana la passió pel bàsquet i el respecte mutu.",
     icon: "uil:thumbs-up",
+    link: "/about#entrenadors" // Apunta a l'apartat d'entrenadors de la pàgina /about
   },
   {
     title: "Valors que fan Equip",
     description:
       "L'esforç, el compromís, el respecte i la companyonia són les nostres premisses innegociables. Guanyem junts, aprenem junts.",
     icon: "uil:fire",
+    link: "/about#valors" // Apunta a la filosofia o valors dins de /about
   },
   {
     title: "Instal·lacions i Comunitat",
     description:
       "Entrenem i juguem al Pavelló Municipal amb l'equipament idoni i una afició que omple les grades cada cap de setmana per empènyer els nostres equips.",
     icon: "uil:building",
+    link: "/equipaments" // Apunta a la nova pàgina d'equipaments
   },
   {
     title: "Competició per a Tothom",
     description:
       "Tinguis l'edat que tinguis o el teu nivell actual, tenim un espai dissenyat per a tu: des de trobades lúdiques d'iniciació fins a lligues federades exigents.",
     icon: "uil:statistics",
+    link: "/equips" // O la pàgina corresponent de lligues o inscripcions de jugadors
   },
   {
     title: "Més enllà dels 40 Minuts",
     description:
       "Organitzem campus d'estiu, tornejos especials, esdeveniments socials i activitats que fan que el club bategui durant tot l'any, més enllà dels partits oficials.",
     icon: "uil:bolt",
+    link: "/casal" // Enllaça a la pàgina del Casal d'Estiu o Esdeveniments
   },
 ];
 ---
@@ -55,14 +61,25 @@ const features = [
 <div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-x-12 gap-y-16">
   {
     features.map((item) => (
-      <div class="flex gap-4 items-start">
+      <div class="flex gap-4 items-start group">
         {/* 🌟 Icona amb el fons fosc i l'icona en groc del club per reforçar la marca */}
-        <div class="mt-1 bg-slate-900 rounded-full w-10 h-10 flex items-center justify-center shrink-0 shadow-sm border border-slate-800">
-          <Icon class="text-amarilloClub w-5 h-5" name={item.icon} />
-        </div>
+        <a 
+          href={item.link} 
+          class="mt-1 bg-slate-900 rounded-full w-10 h-10 flex items-center justify-center shrink-0 shadow-sm border border-slate-800 transition-colors duration-200 hover:bg-azulElectrico"
+          aria-label={`Anar a ${item.title}`}
+        >
+          <Icon class="text-amarilloClub w-5 h-5 transition-colors duration-200" name={item.icon} />
+        </a>
         <div>
-          <h3 class="font-bold text-slate-950 text-lg uppercase tracking-tight">
-            {item.title}
+          <h3 class="font-bold text-slate-955 text-lg uppercase tracking-tight">
+            {/* Enllaç al títol amb efecte de color en fer hover a tot el bloc o només al títol */}
+            <a 
+              href={item.link} 
+              class="hover:text-azulElectrico transition-colors duration-200 inline-flex items-center gap-1 group-hover:text-azulElectrico"
+            >
+              {item.title}
+              <Icon class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-azulElectrico" name="uil:arrow-right" />
+            </a>
           </h3>
           <p class="text-slate-500 mt-2 leading-relaxed text-sm">
             {item.description}
