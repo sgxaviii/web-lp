@@ -1,105 +1,107 @@
 ---
-import { getCollection } from "astro:content";
+export const prerender = true; // 👈 AFEGEIX AIXÒ AQUÍ DALT
+
+import { sanityClient } from "sanity:client";
+import imageUrlBuilder from "@sanity/image-url";
 import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 
-// Generem les rutes estàtiques per a cada equip de la col·lecció
+// 🌟 Configura el generador d'enllaços de les imatges de Sanity
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// 🌟 Generem les rutes estàtiques demanant les dades a Sanity en lloc de Markdown
 export async function getStaticPaths() {
-  const equips = await getCollection("equips");
-  return equips.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
+  const equips = await sanityClient.fetch(`*[_type == "equip"]{ "slug": slug.current }`);
+  return equips.map((equip) => ({
+    params: { slug: equip.slug },
   }));
 }
 
-// Obtenim l'equip actual mitjançant les props
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+// 🌟 Obtenim el slug actual de la URL i demanem tot el document de l'equip a Sanity
+const { slug } = Astro.params;
+const query = `*[_type == "equip" && slug.current == $slug][0]`;
+const equip = await sanityClient.fetch(query, { slug });
 
-// 🕒 LÒGICA PER FILTRAR PARTITS:
-// Agafem la data actual i filtrem la llista de partits de l'equip
+// Si per algun motiu no troba l'equip a la base de dades, redirigeix
+if (!equip) {
+  return Astro.redirect("/404");
+}
+
+// 🕒 LÒGICA PER FILTRAR I SEPARAR PARTITS
 const avui = new Date();
-const partitsFuturs = entry.data.partits
-  ? entry.data.partits.filter((partit) => new Date(partit.data) >= avui)
-  : [];
+avui.setHours(0, 0, 0, 0); // Posem l'hora a zero perquè el partit d'avui surti com a "futur"
 
-// Ordenem els partits propers cronològicament (del més aviat al més tard)
+// 1. Pròxims partits (Data d'avui cap endavant)
+const partitsFuturs = equip.partits
+  ? equip.partits.filter((partit) => new Date(partit.data) >= avui)
+  : [];
+// Els ordenem del més aviat al més tard
 partitsFuturs.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
+
+// 2. Partits passats / Resultats (Data anterior a avui)
+const partitsPassats = equip.partits
+  ? equip.partits.filter((partit) => new Date(partit.data) < avui)
+  : [];
+// Els ordenem del més recent al més antic
+partitsPassats.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
 ---
 
-<Layout title={`${entry.data.nom} - CB Bàsquet`}>
+<Layout title={`${equip.nom} - AEB La Palma`}>
   <Container>
     <div class="mx-auto max-w-5xl mt-14 relative z-10">
       
-      <!-- Botó de retorn -->
       <a href="/equips" class="text-amarilloClub hover:text-amarilloBrillante text-sm font-bold mb-6 inline-block transition">
         ← Tornar a la llista d'equips
       </a>
       
-      <!-- Capçalera: Categoria i Nom -->
       <div class="border-b border-slate-900 pb-6 mb-8">
-        <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-          {entry.data.categoria}
-        </span>
+        {equip.categoria && (
+          <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+            {equip.categoria}
+          </span>
+        )}
         <h1 class="text-4xl lg:text-5xl font-black text-slate-900 mt-4 uppercase tracking-tight">
-          {entry.data.nom}
+          {equip.nom}
         </h1>
-        <p class="text-gray-600 mt-3 font-medium text-lg">
-          Entrenador/a: <span class="text-gray-500">{entry.data.entrenador}</span>
-        </p>
+        {equip.entrenador && (
+          <p class="text-gray-600 mt-3 font-medium text-lg">
+            Entrenador/a: <span class="text-gray-500">{equip.entrenador}</span>
+          </p>
+        )}
       </div>
 
-      <!-- Descripció de l'equip (Contingut principal del fitxer Markdown) -->
-      <div class="prose prose-invert prose-lg max-w-none text-gray-500 mb-12">
-        <Content />
-      </div>
-
-      <!-- Carrusel de Fotografies (Placeholder) -->
-      <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 mb-12 shadow-md backdrop-blur-sm">
+{/* =========================================
+          CAIXA 0: HORARIS D'ENTRENAMENT (A dalt)
+      ========================================= */}
+      <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm mb-12">
         <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
-          📸 Galeria d'Imatges
+          📅 Horaris d'Entrenament
         </h2>
         
-        <!-- Contenidor del carrusel amb scroll horitzontal -->
-        <div class="flex overflow-x-auto gap-4 snap-x py-2 scrollbar-hide">
-          {entry.data.fotografies && entry.data.fotografies.length > 0 ? (
-            entry.data.fotografies.map((foto) => (
-              <img 
-                src={foto} 
-                alt={`Fotografia de l'equip ${entry.data.nom}`} 
-                class="w-72 h-48 object-cover rounded-xl snap-center shrink-0 border border-slate-700 shadow-sm" 
-              />
-            ))
-          ) : (
-            <div class="w-full h-48 bg-slate-950/50 flex flex-col items-center justify-center rounded-xl text-gray-500 border border-slate-800 border-dashed">
-              <span class="text-2xl mb-2">📷</span>
-              <p>Espai per al carrusel de fotografies</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <!-- Secció Inferior a 2 columnes: Horaris i Partits -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 items-start">
-        
-        <!-- Horaris d'Entrenament -->
-        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm">
-          <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
-            📅 Horaris d'Entrenament
-          </h2>
-          <ul class="space-y-3">
-            {entry.data.horaris ? entry.data.horaris.map((horari) => (
+        {equip.horaris && equip.horaris.length > 0 ? (
+          <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {equip.horaris.map((horari) => (
               <li class="bg-slate-950/60 text-gray-200 p-4 rounded-xl border border-slate-800 shadow-inner flex items-start gap-3">
                 <span class="text-azulElectrico mt-0.5">🏀</span>
-                <span>{horari}</span>
+                <span class="font-medium">{horari}</span>
               </li>
-            )) : (
-              <li class="text-gray-500 italic">Horaris pendents de confirmar.</li>
-            )}
+            ))}
           </ul>
-        </div>
+        ) : (
+          <div class="bg-slate-950/40 p-4 rounded-xl border border-slate-800 border-dashed text-gray-500 italic">
+            Horaris pendents de confirmar.
+          </div>
+        )}
+      </div>
 
-        <!-- Pròxims Partits (Només futurs) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 items-start">
+        
+        {/* =========================================
+            CAIXA 1: PRÒXIMS PARTITS (FUTURS)
+        ========================================= */}
         <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm">
           <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
             🏆 Pròxims Partits
@@ -125,19 +127,94 @@ partitsFuturs.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTi
             ) : (
               <div class="text-center bg-slate-950/40 p-6 rounded-xl border border-slate-800 border-dashed">
                 <p class="text-gray-400">No hi ha partits oficials programats pròximament.</p>
-                <p class="text-xs text-gray-500 mt-1">Torna a consultar el calendari més endavant.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* =========================================
+            CAIXA 2: RESULTATS I PARTITS PASSATS
+        ========================================= */}
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm">
+          <h2 class="text-2xl font-bold text-amarilloClub mb-4 flex items-center gap-2">
+            ✅ Resultats Anteriors
+          </h2>
+          
+          <div class="space-y-6">
+            {partitsPassats.length > 0 ? (
+              partitsPassats.map((partit, index) => (
+                <div class="bg-slate-950/60 p-5 rounded-xl border border-slate-800 shadow-inner">
+                  
+                  {/* Capçalera del partit */}
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="font-bold text-white text-lg">{partit.rival}</span>
+                    <span class={`text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider ${partit.local ? 'bg-azulElectrico/80 text-white' : 'bg-gray-700 text-gray-200'}`}>
+                      {partit.local ? 'Local' : 'Visitant'}
+                    </span>
+                  </div>
+                  
+                  {/* Data */}
+                  <div class="text-sm text-gray-400 mb-4">
+                    <p>📅 {new Date(partit.data).toLocaleDateString('ca-ES', { day: '2-digit', month: 'long', year: 'numeric' })} - {partit.pista}</p>
+                  </div>
+
+                  {/* Marcador i YouTube */}
+                  <div class="flex flex-wrap items-center gap-4 mb-2">
+                    <div class="flex items-center gap-3 bg-slate-900 py-2 px-4 rounded-lg border border-slate-700 w-fit">
+                      <div class="text-center">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Local</p>
+                        <p class="text-xl font-black text-white">{partit.resultatLocal ?? '-'}</p>
+                      </div>
+                      <div class="text-amarilloClub font-black text-lg">VS</div>
+                      <div class="text-center">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Visitant</p>
+                        <p class="text-xl font-black text-white">{partit.resultatVisitant ?? '-'}</p>
+                      </div>
+                    </div>
+
+                    {partit.videoYoutube && (
+                      <a 
+                        href={partit.videoYoutube} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="inline-flex items-center gap-2 bg-red-650 hover:bg-red-750 text-white font-bold text-xs px-3 py-2.5 rounded-lg transition shadow-md"
+                      >
+                        🎥 YouTube
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Galeria D'Imatges (Només pel partit més recent on index === 0) */}
+                  {index === 0 && (partit.galeria || equip.galeria) && (
+                    <div class="mt-5 pt-4 border-t border-slate-800/80">
+                      <h3 class="text-sm font-bold text-amarilloClub mb-3">📸 Galeria Destacada</h3>
+                      <div class="flex overflow-x-auto gap-3 snap-x pb-2 scrollbar-hide">
+                        {(partit.galeria || equip.galeria).map((foto) => (
+                          <img 
+                            src={urlFor(foto).width(400).height(300).fit("crop").url()} 
+                            alt={`Fotografia del partit contra ${partit.rival}`} 
+                            class="w-40 h-28 object-cover rounded-xl snap-center shrink-0 border border-slate-700 shadow-sm" 
+                            loading="lazy"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                </div>
+              ))
+            ) : (
+              <div class="text-center bg-slate-950/40 p-6 rounded-xl border border-slate-800 border-dashed">
+                <p class="text-gray-500">Encara no hi ha partits jugats.</p>
               </div>
             )}
           </div>
         </div>
 
       </div>
-
-    </div>
   </Container>
 </Layout>
 
-<!-- Amagar barra de scroll del carrusel però permetre desplaçament -->
 <style>
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
