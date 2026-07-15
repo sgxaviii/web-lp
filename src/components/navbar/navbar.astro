@@ -31,19 +31,24 @@ const menuitems = [
     path: "/about",
   },
   {
-    title: "Casal",
-    path: "/casal",
-    badge: true, // Activem l'etiqueta d'estiu estàtica
-  },
-  {
     title: "Equipaments",
     path: "/equipaments"
   },
   {
+    title: "Activitats Extra",
+    path: "/activitats",
+    badge: true,
+    // 🌟 AFEGITS ELS FILLS AQUÍ:
+    children: [
+      { title: "Sopar de Temporada", path: "/activitats/sopar" },
+      { title: "Torneig 3x3", path: "/activitats/3x3" },
+      { title: "Casal d'Estiu", path: "/activitats/casal" }
+    ]
+  }, // 👈 Afegida la coma que faltava aquí per evitar errors de compilació
+  {
     title: "Contacte",
     path: "/contact",
   },
-
 ];
 ---
 
@@ -71,6 +76,7 @@ const menuitems = [
                     title={item.title}
                     path={item.path}
                     children={item.children}
+                    badge={item.badge}
                     lastItem={index === menuitems.length - 1}
                   />
                 )}

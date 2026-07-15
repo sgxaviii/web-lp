@@ -1,7 +1,8 @@
 ---
 import { Dropdown as MenuDropdown, DropdownItems } from "astro-navbar";
 
-const { title, children, lastItem, path } = Astro.props;
+// 🌟 Afegim 'badge' a les propietats que rep el component
+const { title, children, lastItem, path, badge } = Astro.props;
 ---
 
 {/* 1. Afegim la classe 'group' a la llista per controlar el pas del ratolí */}
@@ -13,6 +14,14 @@ const { title, children, lastItem, path } = Astro.props;
       class="flex items-center gap-1 w-full lg:w-auto lg:px-3 py-2 text-slate-600 hover:text-azulElectrico font-semibold transition-colors duration-200"
     >
       <span>{title}</span>
+
+      {/* 🌟 Pintem la badge d'Estiu si s'ha activat al menú */}
+      {badge && (
+        <span class="ml-1 px-2 py-0.5 text-[9px] font-black uppercase text-azulOscuro bg-amarilloClub rounded-md shadow-sm shrink-0">
+          Estiu
+        </span>
+      )}
+
       {/* Canviem group-open per group-hover a la fletxa perquè giri en passar el ratolí */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
