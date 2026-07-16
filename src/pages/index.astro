@@ -1,17 +1,36 @@
 ---
-import Container from "@/components/container.astro";
-import Cta from "@/components/cta.astro";
-import Features from "@/components/features.astro";
-import Hero from "@/components/hero.astro";
-import Logos from "@/components/logos.astro";
-import Layout from "@/layouts/Layout.astro";
+// src/pages/index.astro
+import Container from "../components/container.astro";
+import Cta from "../components/cta.astro";
+import Features from "../components/features.astro";
+import Hero from "../components/hero.astro";
+import Logos from "../components/logos.astro";
+import Layout from "../layouts/Layout.astro";
+import { sanityClient } from "sanity:client";
+
+// 🌟 Solució 1: Importem amb camí relatiu (evitem problemes amb l'àlies @/)
+// ⚠️ Assegura't que el fitxer es digui exactament "PatrocinadorsLogos.astro" amb majúscules!
+import PatrocinadorsLogos from "../components/patrocinadors.astro";
+import Gallery from "../components/gallery.astro"; 
+
+// 🌟 Solució 2: Demanem "link" de Sanity en lloc de "enllaç" per quadrar amb el teu component
+const patrocinadors = await sanityClient.fetch(`*[_type == "patrocinador"]{ nom, logo, link }`);
 ---
 
-<Layout title="">
+<Layout title="AEB La Palma - Més que un club, una família">
   <Container>
     <Hero />
     <Features />
+    
+    {/* La teva nova finestra al club des de la Base de Dades */}
+    <Gallery />
+    
     <Cta />
     <Logos />
+    
+    {/* Renderitzat condicional dels patrocinadors */}
+    {patrocinadors && patrocinadors.length > 0 && (
+      <PatrocinadorsLogos patrocinadors={patrocinadors} />
+    )}
   </Container>
 </Layout>

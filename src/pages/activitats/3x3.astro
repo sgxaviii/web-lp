@@ -29,7 +29,6 @@ const dadesTorneig = await sanityClient.fetch(
       icona
     },
     serveisInclosos,
-    // Demanem les imatges de la galeria de fotos d'edicions anteriors
     galeria[]{
       asset,
       alt
@@ -43,7 +42,7 @@ const {
   edicio = "XV",
   dates = "Del 5 al 7 de Juliol de 2026",
   lloc = "Pistes Exteriors i Pavelló AEB La Palma",
-  linkMaps = "", // Per defecte buit per si es vol autogenerar
+  linkMaps = "",
   preuInscripcio = "40€ per equip",
   dataLimitInscripcio = "30 de Juny de 2026",
   categories = [],
@@ -105,7 +104,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           </div>
           <div>
             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-              On es juga?
+              On es juega?
               <Icon class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-200" name="uil:external-link-alt" />
             </h3>
             <p class="text-sm font-bold text-white mt-1 leading-tight">{lloc}</p>
@@ -122,7 +121,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           </div>
         </div>
 
-        {/* 🌟 TARGETA MODIFICADA: Ara és un enllaç interactiu al formulari d'inscripció */}
+        {/* TARGETA INSCRIPCIÓ */}
         <a 
           href={linkInscripcio} 
           target="_blank" 
@@ -207,13 +206,13 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       </section>
 
       {/* =========================================
-          SECCIÓ: EL REGLAMENT I PREMIS
+          SECCIÓ: EL REGLAMENT I PREMIS (CORREGIDA)
       ========================================= */}
       <section class="py-12 bg-slate-50 p-8 md:p-12 rounded-3xl border border-slate-150 shadow-inner grid md:grid-cols-2 gap-8 items-center">
         <div>
           <h3 class="text-2xl font-black text-slate-900 uppercase">🏆 Premis i Trofeus</h3>
           <p class="text-slate-600 mt-3 text-sm leading-relaxed">
-            Hi haurà trofeus per als guanyadors i finalistes de cada categoria. Per a la categoria **Sènior**, a més del trofeu, hi haurà **premis en metàl·lic** i obsequis dels nostres col·laboradors locals. També organitzarem un **Concurs de Triples** obert a tots els participants amb premi especial!
+            Hi haurà trofeus per als guanyadors i finalistes de cada categoria. Per a la categoria <strong class="font-bold text-slate-900">Sènior</strong>, a més del trofeu, hi haurà <strong class="font-bold text-slate-900">premis en metàl·lic</strong> i obsequis dels nostres col·laboradors locals. També organitzarem un <strong class="font-bold text-slate-900">Concurs de Triples</strong> obert a tots els participants amb premi especial!
           </p>
         </div>
         <div class="border-t md:border-t-0 md:border-l border-slate-200 pt-6 md:pt-0 md:pl-8">
@@ -225,7 +224,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       </section>
 
       {/* =========================================
-          🌟 SECCIÓ: FOTOGRAFIES D'ANYS PASSATS
+          SECCIÓ: FOTOGRAFIES D'ANYS PASSATS
       ========================================= */}
       {galeria && galeria.length > 0 && (
         <section class="py-16">
@@ -241,7 +240,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
             </p>
           </div>
 
-          {/* Graella de fotos moderna (bento grid adaptatiu) */}
+          {/* Graella de fotos moderna */}
           <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {galeria.map((foto, index) => (
               <div class={`overflow-hidden rounded-2xl bg-slate-100 shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 group ${
@@ -260,7 +259,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       )}
 
       {/* =========================================
-          SOCI / CONTACTE CTA FINAL (Inscripció)
+          SOCI / CONTACTE CTA FINAL
       ========================================= */}
       <section class="my-24 max-w-3xl mx-auto text-center">
         <div class="bg-slate-900 text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">

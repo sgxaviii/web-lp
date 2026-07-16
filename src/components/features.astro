@@ -8,84 +8,102 @@ const features = [
     description:
       "Des de l'Escola de Bàsquet fins a competir en categories absolutes. Creiem en el talent de casa i en un camí de creixement formatiu i humà a llarg termini.",
     icon: "uil:basketball",
-    link: "/equips" // O la pàgina on tinguis el llistat d'equips / escola
+    link: "/equips"
   },
   {
     title: "Entrenadors Qualificats",
     description:
       "Comptem amb un cos tècnic titulat i compromès que no només ensenya tàctica i tècnica, sinó que encomana la passió pel bàsquet i el respecte mutu.",
     icon: "uil:thumbs-up",
-    link: "/about#entrenadors" // Apunta a l'apartat d'entrenadors de la pàgina /about
+    link: "/about#entrenadors"
   },
   {
     title: "Valors que fan Equip",
     description:
       "L'esforç, el compromís, el respecte i la companyonia són les nostres premisses innegociables. Guanyem junts, aprenem junts.",
     icon: "uil:fire",
-    link: "/about#valors" // Apunta a la filosofia o valors dins de /about
+    link: "/about#valors"
   },
   {
     title: "Instal·lacions i Comunitat",
     description:
       "Entrenem i juguem al Pavelló Municipal amb l'equipament idoni i una afició que omple les grades cada cap de setmana per empènyer els nostres equips.",
     icon: "uil:building",
-    link: "/equipaments" // Apunta a la nova pàgina d'equipaments
+    link: "/equipaments"
   },
   {
     title: "Competició per a Tothom",
     description:
       "Tinguis l'edat que tinguis o el teu nivell actual, tenim un espai dissenyat per a tu: des de trobades lúdiques d'iniciació fins a lligues federades exigents.",
     icon: "uil:statistics",
-    link: "/equips" // O la pàgina corresponent de lligues o inscripcions de jugadors
+    link: "/equips"
   },
   {
     title: "Més enllà dels 40 Minuts",
     description:
       "Organitzem campus d'estiu, tornejos especials, esdeveniments socials i activitats que fan que el club bategui durant tot l'any, més enllà dels partits oficials.",
     icon: "uil:bolt",
-    link: "/activitats" // Enllaça a la pàgina del Casal d'Estiu o Esdeveniments
+    link: "/activitats"
   },
 ];
 ---
 
-<div class="mt-16 md:mt-0">
-  {/* 🌟 Títol principal adaptat amb el blau elèctric del club */}
-  <h2 class="text-4xl lg:text-5xl font-black lg:tracking-tight uppercase text-slate-900">
-    PER QUÈ EL NOSTRE CLUB ÉS <span class="text-azulElectrico">EL TEU LLOC</span>?
-  </h2>
-  <p class="text-lg mt-4 text-slate-600 max-w-2xl">
-    A l'AEB La Palma entenem el bàsquet com una eina formativa. T'oferim un entorn saludable, competitiu i compromès on créixer com a esportista i com a persona.
-  </p>
-</div>
+{/* 🌟 CONTENIDOR PRINCIPAL FOSC I DINÀMIC */}
+<section class="relative bg-slate-950 rounded-[2.5rem] py-16 px-8 md:px-12 my-20 border border-slate-900 overflow-hidden shadow-2xl">
+  
+  {/* 🎨 LLUMS DE FONS DE COLOR (Efecte "Glow" molt subtil per donar vida) */}
+  <div class="absolute -top-40 -right-40 w-96 h-96 bg-azulElectrico/10 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amarilloClub/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-x-12 gap-y-16">
-  {
-    features.map((item) => (
-      <div class="flex gap-4 items-start group">
-        {/* 🌟 Icona amb el fons fosc i l'icona en groc del club per reforçar la marca */}
-        <a 
-          href={item.link} 
-          class="mt-1 bg-slate-900 rounded-full w-10 h-10 flex items-center justify-center shrink-0 shadow-sm border border-slate-800 transition-colors duration-200 hover:bg-azulElectrico"
-          aria-label={`Anar a ${item.title}`}
-        >
-          <Icon class="text-amarilloClub w-5 h-5 transition-colors duration-200" name={item.icon} />
-        </a>
-        <div>
-          <h3 class="font-bold text-slate-955 text-lg uppercase tracking-tight">
-            {/* Enllaç al títol amb efecte de color en fer hover a tot el bloc o només al títol */}
+  {/* Contingut posicionat per sobre de les llums */}
+  <div class="relative z-10">
+    
+    {/* Capçalera de la secció adaptada per a fons fosc */}
+    <div class="max-w-2xl">
+      <h2 class="text-4xl lg:text-5xl font-black lg:tracking-tight uppercase text-white">
+        PER QUÈ EL NOSTRE CLUB ÉS <span class="text-azulElectrico">EL TEU LLOC</span>?
+      </h2>
+      <p class="text-lg mt-4 text-slate-400">
+        A l'AEB La Palma entenem el bàsquet com una eina formativa. T'oferim un entorn saludable, competitiu i compromès on créixer com a esportista i com a persona.
+      </p>
+    </div>
+
+    {/* Grelha de característiques */}
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-x-12 gap-y-16">
+      {
+        features.map((item) => (
+          <div class="flex gap-4 items-start group">
+            
+            {/* 🌟 Icona optimitzada per a fons fosc (reacciona al fer hover a tot el bloc) */}
             <a 
               href={item.link} 
-              class="hover:text-azulElectrico transition-colors duration-200 inline-flex items-center gap-1 group-hover:text-azulElectrico"
+              class="mt-1 bg-slate-900/80 rounded-full w-11 h-11 flex items-center justify-center shrink-0 shadow-inner border border-slate-800/80 transition-all duration-300 group-hover:bg-azulElectrico group-hover:border-azulElectrico group-hover:scale-110"
+              aria-label={`Anar a ${item.title}`}
             >
-              {item.title}
-              <Icon class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-azulElectrico" name="uil:arrow-right" />
+              <Icon class="text-amarilloClub w-5 h-5 transition-colors duration-200 group-hover:text-white" name={item.icon} />
             </a>
-          </h3>
-          <p class="text-slate-500 mt-2 leading-relaxed text-sm">
-            {item.description}
-          </p>
-        </div>
-      </div>
-    ))
-  }
-</div>
+            
+            <div>
+              {/* Títol en blanc amb hover groc/blau */}
+              <h3 class="font-bold text-white text-lg uppercase tracking-tight">
+                <a 
+                  href={item.link} 
+                  class="hover:text-amarilloClub transition-colors duration-200 inline-flex items-center gap-1 group-hover:text-amarilloClub"
+                >
+                  {item.title}
+                  <Icon class="w-4 h-4 opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-200 text-amarilloClub" name="uil:arrow-right" />
+                </a>
+              </h3>
+              
+              {/* Descripció en gris clar per a una lectura còmoda */}
+              <p class="text-slate-400 mt-2 leading-relaxed text-sm">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+  </div>
+</section>

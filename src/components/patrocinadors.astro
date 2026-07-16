@@ -1,0 +1,55 @@
+---
+import imageUrlBuilder from "@sanity/image-url";
+import { sanityClient } from "sanity:client";
+
+// Configura el generador d'linkos de les imatges de Sanity
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// Definim que el component rebrà la llista de patrocinadors des de la pàgina
+interface Props {
+  patrocinadors: Array<{
+    nom: string;
+    logo: any;
+    link?: string;
+  }>;
+}
+
+const { patrocinadors } = Astro.props;
+---
+
+<div class="mt-24">
+  <h2 class="text-center text-slate-500 uppercase tracking-wider text-sm font-bold">
+    Col·laboren amb el club
+  </h2>
+  
+  <div class="flex gap-8 md:gap-16 items-center justify-center mt-10 flex-wrap px-4">
+    {patrocinadors.map((patro) => {
+      const content = (
+        <img
+          src={urlFor(patro.logo).width(240).height(120).fit("max").url()}
+          alt={`Logo de ${patro.nom}`}
+          class="h-10 md:h-14 w-auto object-contain opacity-50 hover:opacity-100 transition-all duration-300 filter grayscale hover:grayscale-0"
+          loading="lazy"
+        />
+      );
+
+      // Si té link el fem clicable, si no, només mostrem el logo
+      return patro.link ? (
+        <a 
+          href={patro.link} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="hover:scale-110 transition-transform duration-200 block"
+          title={patro.nom}
+        >
+          {content}
+        </a>
+      ) : (
+        <div class="title={patro.nom}">{content}</div>
+      );
+    })}
+  </div>
+</div>

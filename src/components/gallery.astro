@@ -1,0 +1,257 @@
+---
+// src/components/gallery.astro
+import { Icon } from "astro-icon/components";
+import { sanityClient } from "sanity:client";
+
+// 🌟 Demanem les imatges de la galeria a Sanity
+let fotos = [];
+try {
+  fotos = await sanityClient.fetch(
+    `*[_type == "fotoGaleria"] | order(ordre asc, _createdAt desc) [0..4] {
+      titol,
+      "url": imatge.asset->url,
+      peuDeFoto
+    }`
+  );
+} catch (error) {
+  console.error("Error carregant les fotos de Sanity:", error);
+}
+
+// 🌟 FOTOS PER DEFECTE (si la base de dades està buida)
+const fotosFallback = [
+  {
+    titol: "Entrenament de l'infantil masculí",
+    url: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&q=80&w=800",
+    peuDeFoto: "La base: on comença tot"
+  },
+  {
+    titol: "Celebració a la pista",
+    url: "https://images.unsplash.com/photo-1519766304817-4f37bda74a27?auto=format&fit=crop&q=80&w=800",
+    peuDeFoto: "Fent pinya després de la victòria"
+  },
+  {
+    titol: "La grada plena de gom a gom",
+    url: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=800",
+    peuDeFoto: "L'afició que mai ens falla"
+  },
+  {
+    titol: "Equip sènior en acció",
+    url: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=800",
+    peuDeFoto: "Passió i caràcter a la pista"
+  },
+  {
+    titol: "Valors del club",
+    url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800",
+    peuDeFoto: "Companyerisme davant de tot"
+  }
+];
+
+const galeria = fotos.length > 0 ? fotos : fotosFallback;
+---
+
+{/* 🌟 SECCIÓ DE GALERIA EN FONS FOSC I DINÀMIC */}
+<section class="relative bg-slate-950 rounded-[2.5rem] py-16 px-8 md:px-12 my-20 border border-slate-900 overflow-hidden shadow-2xl">
+  
+  {/* 🎨 LLUMS DE FONS (Efecte "Glow" amb els colors del club) */}
+  <div class="absolute -top-40 -left-40 w-96 h-96 bg-azulElectrico/10 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-amarilloClub/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="relative z-10">
+    
+    {/* Capçalera del visor en blanc i gris clar */}
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <span class="inline-block bg-slate-900 border border-slate-800 text-azulElectrico uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-inner">
+        Som club, som batec
+      </span>
+      <h2 class="text-4xl lg:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+        Moments que fan <span class="text-azulElectrico">Família</span>
+      </h2>
+      <p class="text-lg mt-4 text-slate-400 leading-relaxed">
+        Fes clic a qualsevol imatge per veure-la en gran i descarregar-la directament al teu dispositiu.
+      </p>
+    </div>
+
+    {/* 🌟 MOSAIC D'IMATGES (Millorat per fons fosc) */}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-5 auto-rows-[220px]">
+      {galeria.map((foto, index) => {
+        let gridClass = "md:col-span-4"; 
+        if (index === 0) gridClass = "md:col-span-8 md:row-span-2"; 
+        if (index === 1) gridClass = "md:col-span-4 md:row-span-2"; 
+        if (index === 3) gridClass = "md:col-span-6"; 
+        if (index === 4) gridClass = "md:col-span-6"; 
+
+        return (
+          <button
+            type="button"
+            class={`${gridClass} galeria-item relative w-full h-full text-left rounded-3xl overflow-hidden group shadow-md hover:shadow-azulElectrico/10 hover:shadow-2xl transition-all duration-300 bg-slate-900 border border-slate-800/80 cursor-pointer focus:outline-none focus:ring-4 focus:ring-azulElectrico/30 hover:border-azulElectrico/50`}
+            data-url={foto.url}
+            data-title={foto.titol}
+          >
+            <img 
+              src={foto.url} 
+              alt={foto.titol} 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out brightness-95 group-hover:brightness-100"
+              loading="lazy"
+            />
+            
+            {/* Degradat de la imatge adaptat al nou estil fosc */}
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              <p class="text-white font-black text-lg uppercase tracking-tight translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                {foto.titol}
+              </p>
+              <div class="flex items-center justify-between mt-2 translate-y-3 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+                <span class="text-amarilloClub text-xs font-bold uppercase tracking-wider">
+                  {foto.peuDeFoto || "Veure i descarregar"}
+                </span>
+                <Icon class="text-white w-7 h-7 bg-azulElectrico p-1.5 rounded-full shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300" name="uil:search-plus" />
+              </div>
+            </div>
+          </button>
+        );
+      })}
+    </div>
+
+  </div>
+</section>
+
+{/* =========================================
+    🌟 MODAL / LIGHTBOX DE DESCÀRREGA (Millorat visualment)
+========================================= */}
+<div 
+  id="visor-modal" 
+  class="fixed inset-0 bg-slate-950/98 z-50 flex flex-col items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+>
+  {/* Botó de Tancar (A dalt a la dreta) */}
+  <button 
+    id="tancar-modal" 
+    class="absolute top-6 right-6 text-white/80 hover:text-white cursor-pointer transition p-3 bg-white/5 border border-white/10 rounded-full hover:bg-white/15"
+    aria-label="Tancar visor"
+  >
+    <Icon class="w-6 h-6" name="uil:times" />
+  </button>
+
+  {/* Contenidor de la Imatge amb ombra i marc elèctric subtil */}
+  <div class="max-w-4xl max-h-[70vh] flex items-center justify-center overflow-hidden rounded-2xl border border-slate-800 shadow-2xl shadow-azulElectrico/5">
+    <img 
+      id="modal-img" 
+      src="" 
+      alt="" 
+      class="max-w-full max-h-[70vh] object-contain"
+    />
+  </div>
+
+  {/* Informació i accions (A baix) */}
+  <div class="text-center mt-6 max-w-xl">
+    <h3 id="modal-titol" class="text-white font-black text-xl md:text-2xl uppercase tracking-tight"></h3>
+    
+    <div class="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
+      {/* Botó de descarregar amb estils del club reforçats */}
+      <button 
+        id="boto-descarregar" 
+        class="inline-flex items-center justify-center gap-2 bg-azulElectrico hover:bg-azulElectrico/90 text-white font-black px-6 py-3 rounded-xl transition duration-200 cursor-pointer shadow-lg shadow-azulElectrico/20 active:scale-95"
+      >
+        <Icon class="w-5 h-5" name="uil:import" />
+        Descarregar Foto
+      </button>
+
+      {/* Botó secundari de tancar */}
+      <button 
+        id="boto-tancar-secundari" 
+        class="inline-flex items-center justify-center gap-2 border border-slate-800 hover:border-slate-700 hover:bg-slate-900 text-slate-300 hover:text-white font-black px-6 py-3 rounded-xl transition duration-200 cursor-pointer"
+      >
+        Tancar
+      </button>
+    </div>
+  </div>
+</div>
+
+{/* =========================================
+    🌟 SCRIPT INTERACTIU (Client-Side JS - Sense canvis de funcionalitat)
+========================================= */}
+<script>
+  const items = document.querySelectorAll('.galeria-item');
+  const modal = document.getElementById('visor-modal');
+  const modalImg = document.getElementById('modal-img') as HTMLImageElement;
+  const modalTitol = document.getElementById('modal-titol');
+  const botoDescarregar = document.getElementById('boto-descarregar');
+  const tancarModalBoto = document.getElementById('tancar-modal');
+  const tancarModalBotoSecundari = document.getElementById('boto-tancar-secundari');
+
+  let imatgeActualUrl = '';
+  let imatgeActualNom = '';
+
+  // Obrir el modal amb les dades de la foto clicada
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const url = item.getAttribute('data-url');
+      const titol = item.getAttribute('data-title');
+
+      if (url && modalImg && modalTitol && modal) {
+        imatgeActualUrl = url;
+        imatgeActualNom = (titol || 'aeb-la-palma').toLowerCase().replace(/[^a-z0-9]/gi, '_') + '.jpg';
+
+        modalImg.src = url;
+        modalImg.alt = titol || '';
+        modalTitol.textContent = titol || '';
+
+        // Mostrem el modal amb transició suau
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+      }
+    });
+  });
+
+  // Tancar el modal
+  function tancarModal() {
+    if (modal) {
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+  }
+
+  tancarModalBoto?.addEventListener('click', tancarModal);
+  tancarModalBotoSecundari?.addEventListener('click', tancarModal);
+
+  // Tancar fent clic fora de la imatge (al fons negre)
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      tancarModal();
+    }
+  });
+
+  // Tancar amb la tecla Escape del teclat
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') tancarModal();
+  });
+
+  // 🌟 FUNCIÓ DE DESCÀRREGA SEGURA
+  botoDescarregar?.addEventListener('click', async () => {
+    if (!imatgeActualUrl) return;
+
+    const textOriginal = botoDescarregar.innerHTML;
+    botoDescarregar.innerHTML = `<span class="animate-pulse">Descarregant...</span>`;
+    botoDescarregar.setAttribute('disabled', 'true');
+
+    try {
+      const resposta = await fetch(imatgeActualUrl);
+      const blob = await resposta.blob();
+      
+      const blobUrl = window.URL.createObjectURL(blob);
+      const enllacTemporal = document.createElement('a');
+      enllacTemporal.href = blobUrl;
+      enllacTemporal.download = imatgeActualNom;
+      
+      document.body.appendChild(enllacTemporal);
+      enllacTemporal.click();
+      
+      document.body.removeChild(enllacTemporal);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Error forçant la descàrrega directa, provant mètode alternatiu:", error);
+      window.open(imatgeActualUrl, '_blank');
+    } finally {
+      botoDescarregar.innerHTML = textOriginal;
+      botoDescarregar.removeAttribute('disabled');
+    }
+  });
+</script>

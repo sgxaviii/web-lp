@@ -1,10 +1,119 @@
-<footer class="my-20">
-  <p class="text-center text-sm text-slate-500">
-    Copyright © {new Date().getFullYear()} AEB La Palma. Tots els drets reservats.
-  </p>
-  <!--
-    Can we ask you a favor 🙏
-    Please keep this backlink on your website if possible.
-    or Purchase a commercial license from https://web3templates.com
-  -->
+---
+// src/components/Footer.astro
+import Container from "@/components/container.astro";
+import { Icon } from "astro-icon/components";
+
+// Any actual per al Copyright dinàmic
+const anyActual = new Date().getFullYear();
+
+// Enllaços de contacte i xarxes (Modifica'ls amb les teves dades reals)
+const instagramUrl = "https://www.instagram.com/aeblapalma/"; // Enllaç real d'Instagram
+const whatsappUrl = "https://wa.me/34600000000"; // Enllaç de WhatsApp (canvia el telèfon)
+const correuContacte = "info@aeblapalma.cat";
+const direccioPoliesportiu = "Pavelló Municipal, Carrer de l'Esport, s/n, 08756 La Palma de Cervelló";
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccioPoliesportiu)}`;
+---
+
+<footer class="bg-slate-900 text-slate-400 mt-24 pt-16 pb-8 border-t border-slate-800 rounded-t-[2.5rem] relative overflow-hidden">
+  {/* Element decoratiu de fons en forma de pilota de bàsquet soft */}
+  <div class="absolute -right-24 -bottom-24 text-slate-850 pointer-events-none">
+    <Icon class="w-96 h-96 opacity-10" name="uil:basketball" />
+  </div>
+
+  <Container>
+    <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pb-12 border-b border-slate-800">
+      
+      {/* COLUMNA 1: Sobre el Club i Xarxes Socials */}
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <div class="bg-amarilloClub text-azulOscuro p-1.5 rounded-lg">
+            <Icon class="w-6 h-6" name="uil:basketball" />
+          </div>
+          <span class="font-black text-white text-lg tracking-wider uppercase">AEB La Palma</span>
+        </div>
+        <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
+          Més que un club, una gran família dedicada a promoure el bàsquet, els valors de l'esport de lleure i la convivència a La Palma de Cervelló.
+        </p>
+        
+        {/* Enllaços de Xarxes */}
+        <div class="flex gap-3 pt-2">
+          <a 
+            href={instagramUrl} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="bg-slate-800 text-slate-300 p-2.5 rounded-xl hover:text-white hover:bg-azulElectrico transition duration-200"
+            aria-label="Segueix-nos a Instagram"
+          >
+            <Icon class="w-5 h-5" name="uil:instagram" />
+          </a>
+          <a 
+            href={whatsappUrl} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="bg-slate-800 text-slate-300 p-2.5 rounded-xl hover:text-white hover:bg-emerald-600 transition duration-200"
+            aria-label="Contacta per WhatsApp"
+          >
+            <Icon class="w-5 h-5" name="uil:whatsapp" />
+          </a>
+        </div>
+      </div>
+
+      {/* COLUMNA 2: Contacte i Ubicació */}
+      <div class="space-y-4">
+        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-widest">Contacte i Horaris</h3>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href={`mailto:${correuContacte}`} class="flex items-center gap-3 hover:text-white transition duration-200 group">
+              <div class="bg-slate-800 p-2 rounded-lg group-hover:bg-slate-700 transition duration-200 shrink-0">
+                <Icon class="w-4 h-4 text-amarilloClub" name="uil:envelope" />
+              </div>
+              <span class="truncate">{correuContacte}</span>
+            </a>
+          </li>
+          <li>
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 hover:text-white transition duration-200 group">
+              <div class="bg-slate-800 p-2 rounded-lg group-hover:bg-slate-700 transition duration-200 shrink-0 mt-0.5">
+                <Icon class="w-4 h-4 text-amarilloClub" name="uil:map-marker" />
+              </div>
+              <span class="leading-relaxed text-xs">{direccioPoliesportiu}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* COLUMNA 3: Enllaços d'Interès / Seccions */}
+      <div class="space-y-4">
+        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-widest">Enllaços ràpids</h3>
+        <ul class="grid grid-cols-2 gap-2 text-sm">
+          <li><a href="/" class="hover:text-white transition duration-200">Inici</a></li>
+          <li><a href="/activitats" class="hover:text-white transition duration-200">Activitats</a></li>
+          <li><a href="/activitats/3x3" class="hover:text-white transition duration-200">Torneig 3x3</a></li>
+          <li><a href="/contact" class="hover:text-white transition duration-200">Contactar</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    {/* ========================================================
+        BARRA INFERIOR (Copyright, Tractament de dades i Cookies)
+        ======================================================== */}
+    <div class="relative z-10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+      <div>
+        <p>Copyright © {anyActual} AEB La Palma. Tots els drets reservats.</p>
+      </div>
+
+      {/* Enllaços Legals */}
+      <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center">
+        <a href="/legal/privacitat" class="hover:text-slate-300 transition duration-200">
+          Tractament de dades i Privacitat
+        </a>
+        <a href="/legal/cookies" class="hover:text-slate-300 transition duration-200">
+          Política de Cookies
+        </a>
+        <a href="/legal/avis-legal" class="hover:text-slate-300 transition duration-200">
+          Avís Legal
+        </a>
+      </div>
+    </div>
+  </Container>
 </footer>
