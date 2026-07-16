@@ -1,7 +1,15 @@
 ---
+// src/layouts/Layout.astro
 import { SEO } from "astro-seo";
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
+
+// 🏀 1. Importem el component d'optimització d'imatges d'Astro
+import { Image } from "astro:assets";
+
+// 🏀 2. Importem la teva imatge local (.png)
+import fonsLocal from "../assets/fons-aeb.png";
+
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
 import "../styles/global.css";
@@ -10,23 +18,17 @@ export interface Props {
   title: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-
-const resolvedImageWithDomain = new URL(
-  "/opengraph.jpg",
-  Astro.site
-).toString();
-
 const { title } = Astro.props;
 
-// 🌟 Títol dinàmic adaptat al club
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const resolvedImageWithDomain = new URL("/opengraph.jpg", Astro.site || "http://localhost:4321").toString();
+
 const makeTitle = title
   ? title + " | AEB La Palma"
   : "AEB La Palma - Club de Bàsquet a La Palma de Cervelló";
 ---
 
 <!doctype html>
-<!-- 🌐 Canviat a l'idioma català -->
 <html lang="ca" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
@@ -34,13 +36,12 @@ const makeTitle = title
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- 🌟 SEO optimitzat per a la realitat de l'AEB La Palma -->
     <SEO
       title={makeTitle}
       description="Web oficial de l'AEB La Palma. Club de bàsquet i formació en valors a La Palma de Cervelló. Equips, entrenaments, escola i competicions."
       canonical={canonicalURL}
       twitter={{
-        creator: "@aeblapalma", // Canvia-ho pel vostre compte real de Twitter/X si en teniu
+        creator: "@aeblapalma",
         site: "@aeblapalma",
         card: "summary_large_image",
       }}
@@ -57,14 +58,31 @@ const makeTitle = title
       }}
     />
   </head>
-  <body class="bg-[#fcfbf7] text-slate-900">
-    <Navbar />
-    <slot />
-    <Footer />
+  
+  <body class="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
+    
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none [backface-visibility:hidden] [transform:translate3d(0,0,0)] bg-slate-950">
+      <Image
+        src={fonsLocal} 
+        alt="Fons de pantalla oficial AEB La Palma"
+        format="webp" 
+        quality="mid" 
+        class="w-full h-full object-cover object-center [content-visibility:visible!important]" 
+      />
+      <div class="absolute inset-0 bg-slate-950/90"></div>
+    </div>
+
+    <div class="relative z-10 flex flex-col min-h-screen justify-between">
+      <Navbar />
+      <main class="flex-grow">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+
     <style is:global>
-      /* Improve Page speed */
-      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
-      img {
+      /* Improve Page speed (excloent la imatge de fons per evitar parpelleig) */
+      img:not([alt*="Fons"]) {
         content-visibility: auto;
       }
     </style>
@@ -72,31 +90,26 @@ const makeTitle = title
 </html>
 
 <style is:global>
-  /* 🎨 DEFINICIÓ DE COLORS DEL CLUB */
+  /* [El teu bloc de colors del club es manté exactament igual aquí...] */
   :root {
-    --color-amarilloClub: #FBBF24;       /* Groc del club */
-    --color-amarilloBrillante: #F59E0B;  /* Groc hover */
-    --color-azulElectrico: #1D4ED8;      /* Blau principal */
-    --color-azulOscuro: #1E3A8A;         /* Blau fosc */
-    --color-red-650: #E02424;            /* Vermell YouTube */
+    --color-amarilloClub: #FBBF24;
+    --color-amarilloBrillante: #F59E0B;
+    --color-azulElectrico: #1D4ED8;
+    --color-azulOscuro: #1E3A8A;
+    --color-red-650: #E02424;
     --color-red-750: #9B1C1C;
   }
-
-  /* 🛠️ CLASSES DE TAILWIND PERSONALITZADES */
   .bg-amarilloClub { background-color: var(--color-amarilloClub); }
   .text-amarilloClub { color: var(--color-amarilloClub); }
   .border-amarilloClub { border-color: var(--color-amarilloClub); }
   .hover\:text-amarilloBrillante:hover { color: var(--color-amarilloBrillante); }
-
   .bg-azulElectrico { background-color: var(--color-azulElectrico); }
   .text-azulElectrico { color: var(--color-azulElectrico); }
   .border-azulElectrico { border-color: var(--color-azulElectrico); }
   .hover\:border-azulElectrico:hover { border-color: var(--color-azulElectrico); }
-
   .bg-azulOscuro { background-color: var(--color-azulOscuro); }
   .text-azulOscuro { color: var(--color-azulOscuro); }
   .hover\:bg-azulOscuro:hover { background-color: var(--color-azulOscuro); }
-
   .bg-red-650 { background-color: var(--color-red-650); }
   .hover\:bg-red-750:hover { background-color: var(--color-red-750); }
 </style>

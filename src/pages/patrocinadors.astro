@@ -19,10 +19,10 @@ const patrocinadors = await sanityClient.fetch(`*[_type == "patrocinador"] | ord
       
       {/* Capçalera de la pàgina */}
       <div class="border-b border-slate-900 pb-6 mb-12 text-center md:text-left">
-        <h1 class="text-4xl lg:text-5xl font-black text-slate-900 uppercase tracking-tight">
+        <h1 class="text-4xl lg:text-5xl font-black text-slate-50 uppercase tracking-tight">
           Patrocinadors Oficials
         </h1>
-        <p class="text-gray-600 mt-4 text-lg max-w-2xl leading-relaxed">
+        <p class="text-slate-400 mt-4 text-lg max-w-2xl leading-relaxed">
           Gràcies al compromís i suport d'aquestes empreses i entitats, fem possible que l'esport, la competició i els nostres valors segueixin creixent dia a dia.
         </p>
       </div>
@@ -80,7 +80,7 @@ const patrocinadors = await sanityClient.fetch(`*[_type == "patrocinador"] | ord
       ) : (
         <div class="text-center bg-slate-900/40 p-12 rounded-2xl border border-slate-800 border-dashed max-w-xl mx-auto">
           <p class="text-gray-400 text-lg">Actualment estem actualitzant la llista de patrocinadors.</p>
-          <p class="text-gray-500 text-sm mt-2">Vols patrocinar al club? Posa't en contacte amb la junta directiva!</p>
+          <p class="text-slate-400 text-sm mt-2">Vols patrocinar al club? Posa't en contacte amb la junta directiva!</p>
         </div>
       )}
 

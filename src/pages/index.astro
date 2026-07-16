@@ -8,16 +8,25 @@ import Logos from "../components/logos.astro";
 import Layout from "../layouts/Layout.astro";
 import { sanityClient } from "sanity:client";
 
-// 🌟 Solució 1: Importem amb camí relatiu (evitem problemes amb l'àlies @/)
-// ⚠️ Assegura't que el fitxer es digui exactament "PatrocinadorsLogos.astro" amb majúscules!
+// 🌟 Importacions de components
 import PatrocinadorsLogos from "../components/patrocinadors.astro";
 import Gallery from "../components/gallery.astro"; 
 
-// 🌟 Solució 2: Demanem "link" de Sanity en lloc de "enllaç" per quadrar amb el teu component
+// 🌟 Petició de patrocinadors
 const patrocinadors = await sanityClient.fetch(`*[_type == "patrocinador"]{ nom, logo, link }`);
+
+// 🏀 Petició de la imatge de fons a Sanity
+const configuracioWeb = await sanityClient.fetch(`
+  *[_type == "configuracio"][0]{
+    "imatge_fons": imatge_fons.asset->url
+  }
+`);
+
+// Imatge per defecte en cas que falli Sanity o estigui buit
+const fonsDePantalla = configuracioWeb?.imatge_fons || "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=1920&auto=format&fit=crop";
 ---
 
-<Layout title="AEB La Palma - Més que un club, una família">
+<Layout title="AEB La Palma - Més que un club, una família" bgImage={fonsDePantalla}>
   <Container>
     <Hero />
     <Features />

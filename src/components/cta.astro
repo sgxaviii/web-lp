@@ -3,39 +3,40 @@ import Link from "./ui/link.astro";
 ---
 
 <div
-  class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-2 border-amarilloClub p-8 md:px-20 md:py-16 mt-20 mx-auto max-w-5xl rounded-2xl flex flex-col items-center text-center shadow-2xl relative overflow-hidden group">
+  class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-2 border-amarilloClub/80 hover:border-amarilloClub p-8 md:px-20 md:py-16 mt-20 mx-auto max-w-5xl rounded-3xl flex flex-col items-center text-center shadow-2xl hover:shadow-amarilloClub/10 relative overflow-hidden group transition-all duration-500"
+>
   
-  <!-- Efecte decoratiu de fons per donar un toc elèctric (opcional) -->
-  <div class="absolute top-0 right-0 w-48 h-48 bg-azulElectrico/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute bottom-0 left-0 w-48 h-48 bg-amarilloClub/5 rounded-full blur-3xl pointer-events-none"></div>
+  {/* Efectes ambientals de fons millorats */}
+  <div class="absolute -top-12 -right-12 w-64 h-64 bg-azulElectrico/10 rounded-full blur-3xl pointer-events-none group-hover:bg-azulElectrico/15 transition-colors duration-500"></div>
+  <div class="absolute -bottom-12 -left-12 w-64 h-64 bg-amarilloClub/5 rounded-full blur-3xl pointer-events-none group-hover:bg-amarilloClub/10 transition-colors duration-500"></div>
 
-  <!-- Títol Principal -->
+  {/* Títol Principal */}
   <h2 class="text-white text-3xl md:text-5xl font-black tracking-tight uppercase max-w-3xl leading-tight">
     Vols vestir la nostra samarreta <span class="text-amarilloClub">la pròxima temporada?</span>
   </h2>
   
-  <!-- Descripció -->
+  {/* Descripció */}
   <p class="text-slate-300 mt-5 text-base md:text-lg max-w-2xl font-medium leading-relaxed">
     Els nostres equips ja s'estan preparant i sempre busquem nous jugadors i jugadores amb ganes de gaudir d'aquest esport. Vine a provar un entrenament completament de franc i sense cap compromís!
   </p>
   
-  <!-- Botons d'Acció -->
-  <div class="flex flex-col sm:flex-row gap-4 mt-8 w-full justify-center items-center">
+  {/* Botons d'Acció amb efectes Hover Premium */}
+  <div class="flex flex-col sm:flex-row gap-4 mt-8 w-full justify-center items-center relative z-10">
     
-    {/* Botó Principal: Contacte */}
+    {/* 🌟 Botó Principal (Contacte): Groc club que brilla i s'eleva en fer hover */}
     <Link 
       href="/contact" 
       style="primary" 
-      class="w-full sm:w-auto px-8 py-3 bg-azulElectrico hover:bg-indigo-700 text-white font-black uppercase tracking-wider rounded-xl shadow-lg transition duration-200 text-center text-sm"
+      class="w-full sm:w-auto px-8 py-3.5 bg-amarilloClub hover:bg-amarilloBrillante text-slate-950 font-black uppercase tracking-wider rounded-xl shadow-lg hover:shadow-xl hover:shadow-amarilloClub/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-center text-sm"
     >
       📞 Contacta ara
     </Link>
 
-    {/* Botó Secundari: Veure Equips */}
+    {/* 🌟 Botó Secundari (Horaris): Estil fosc transparent amb vora que s'il·lumina en Blau Elèctric */}
     <Link 
       href="/equips" 
       style="primary" 
-      class="w-full sm:w-auto px-8 py-3 bg-transparent hover:bg-slate-800 text-slate-300 hover:text-white font-bold rounded-xl border border-slate-700 transition duration-200 text-center text-sm"
+      class="w-full sm:w-auto px-8 py-3.5 bg-slate-950/40 hover:bg-azulElectrico/5 text-slate-300 hover:text-white font-bold rounded-xl border border-slate-800 hover:border-azulElectrico/50 hover:-translate-y-0.5 active:translate-y-0 hover:shadow-lg hover:shadow-azulElectrico/5 transition-all duration-300 text-center text-sm"
     >
       🏀 Veure horaris
     </Link>

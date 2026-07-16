@@ -22,7 +22,7 @@ const equipaments = [
   {
     id: "fitness",
     titol: "Sala de Fitness i Musculació",
-    descripcio: "Un espai completament equipat amb maquinària d'última generació per a la millora de la condició física, el treball de força, flexibilitat i cardio.",
+    descripcio: "Un espai completament equipat amb maquinària d'última generació per a la millora de la condició física, el travail de força, flexibilitat i cardio.",
     detalls: [
       "Zona de Cardio: cintes, el·líptiques i simuladors de rem.",
       "Zona de Força: màquines de politges guiades de gamma alta.",
@@ -98,16 +98,18 @@ const equipaments = [
         <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-3 py-1 rounded-full shadow-sm">
           El nostre Club • Les nostres instal·lacions
         </span>
-        <h1 class="text-5xl lg:text-6xl font-black text-slate-900 mt-4 uppercase tracking-tight leading-none">
+        <h1 class="text-5xl lg:text-6xl font-black text-slate-50 mt-4 uppercase tracking-tight leading-none">
           Equipaments del <br />
           <span class="text-azulElectrico">Poliesportiu</span>
         </h1>
-        <p class="text-lg mt-6 text-slate-600 max-w-xl mx-auto leading-relaxed">
+        {/* 🔴 CORREGIT: El text de l'hero ara utilitza text-slate-300 per garantir una bona visibilitat */}
+        <p class="text-lg mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed">
           Descobreix unes instal·lacions dissenyades per a donar el millor servei als nostres esportistes i socis. Espais amplis, moderns i adaptats a cada disciplina.
         </p>
       </section>
 
-      <hr class="border-slate-100 my-8" />
+      {/* 🔴 CORREGIT: Separador enfosquit adaptat a la línia de disseny fosc */}
+      <hr class="border-slate-800/80 my-8" />
 
       {/* =========================================
           SECCIÓ: LLISTAT D'EQUIPAMENTS (ALTERNATS)
@@ -124,36 +126,42 @@ const equipaments = [
             {/* Bloc d'Imatge amb el marc estètic del club */}
             <div class={`relative ${index % 2 === 1 ? 'lg:order-last' : ''}`}>
               <div class="absolute -inset-1.5 bg-gradient-to-r from-azulElectrico to-amarilloClub rounded-3xl blur opacity-25"></div>
+              {/* 🔴 CORREGIT: Vora de la imatge canviada a border-slate-800 per integrar-se en el fons fosc */}
               <img 
                 src={equip.imatge} 
                 alt={equip.alt} 
-                class="relative w-full h-[300px] md:h-[400px] object-cover rounded-3xl border border-slate-150 shadow-xl"
+                class="relative w-full h-[300px] md:h-[400px] object-cover rounded-3xl border border-slate-800/80 shadow-2xl"
               />
             </div>
 
             {/* Bloc de text explicatiu */}
             <div class="space-y-6">
-              <span class="bg-slate-100 text-slate-800 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full">
+              {/* 🔴 CORREGIT: L'etiqueta d'instal·lació s'ha adaptat amb estil vidre fumat fosc i lletres grogues */}
+              <span class="bg-slate-950/80 text-amarilloClub border border-slate-800/80 uppercase tracking-widest text-xs font-black px-3 py-1.5 rounded-full">
                 Instal·lació {index + 1}
               </span>
               
-              <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase leading-tight">
+              <h2 class="text-3xl lg:text-4xl font-black text-slate-50 uppercase leading-tight">
                 {equip.titol}
               </h2>
               
-              <p class="text-slate-600 leading-relaxed text-base">
+              {/* 🔴 CORREGIT: S'ha passat el color del text a slate-300 */}
+              <p class="text-slate-300 leading-relaxed text-base">
                 {equip.descripcio}
               </p>
 
-              {/* Llista de punts forts (amb l'icona check en estil d'esport) */}
-              <div class="pt-4 border-t border-slate-100">
+              {/* Llista de punts forts */}
+              {/* 🔴 CORREGIT: Línia de separació intermèdia adaptada al mode fosc */}
+              <div class="pt-4 border-t border-slate-800/80">
                 <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
                   L'equipament inclou:
                 </h3>
                 <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {equip.detalls.map((detall) => (
-                    <li class="flex items-start text-sm text-slate-600">
-                      <div class="bg-azulElectrico/10 text-azulElectrico p-1 rounded-lg mr-3 mt-0.5 shrink-0">
+                    /* 🔴 CORREGIT: El text de cada detall s'ha aclarit a text-slate-300 */
+                    <li class="flex items-start text-sm text-slate-300">
+                      {/* 🔴 CORREGIT: La icona de validació ara té una vora subtil i fons adaptat */}
+                      <div class="bg-azulElectrico/15 text-azulElectrico p-1 rounded-lg mr-3 mt-0.5 shrink-0 border border-azulElectrico/25">
                         <Icon class="w-4 h-4" name="uil:check" />
                       </div>
                       <span>{detall}</span>
@@ -167,43 +175,45 @@ const equipaments = [
         ))}
 
         {/* =========================================================================
-            🚩 PLACEHOLDER: SALES D'ACOLLIDA (#sales-acollida)
-            Modifica o elimina aquest bloc quan ja tinguis definit aquest equipament a la base de dades / llista.
+            🚩 SECCIÓ PLACEHOLDER: SALES D'ACOLLIDA (#sales-acollida)
+            🔴 CORREGIT: S'han canviat completament els colors d'aquest bloc perquè no destaqués en un blanc cridaner.
         ========================================================================= */}
         <div 
           id="sales-acollida" 
-          class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center scroll-mt-24 border-2 border-dashed border-slate-200 p-8 rounded-3xl bg-slate-50/50"
+          class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center scroll-mt-24 border-2 border-dashed border-slate-800/80 p-8 rounded-3xl bg-slate-950/40"
         >
           {/* Bloc d'Imatge temporal */}
           <div class="relative">
-            <div class="absolute -inset-1.5 bg-slate-300 rounded-3xl blur opacity-20"></div>
-            <div class="relative w-full h-[300px] md:h-[400px] bg-slate-100 rounded-3xl flex flex-col items-center justify-center border border-slate-200">
-              <Icon class="w-16 h-16 text-slate-400 mb-2" name="uil:image-v" />
-              <p class="text-xs text-slate-400 font-mono">ID de l'ancoratge: #sales-acollida</p>
+            <div class="absolute -inset-1.5 bg-slate-800 rounded-3xl blur opacity-15"></div>
+            <div class="relative w-full h-[300px] md:h-[400px] bg-slate-950/60 rounded-3xl flex flex-col items-center justify-center border border-slate-800">
+              <Icon class="w-16 h-16 text-slate-600 mb-2" name="uil:image-v" />
+              <p class="text-xs text-slate-500 font-mono">ID de l'ancoratge: #sales-acollida</p>
             </div>
           </div>
 
           {/* Bloc de text explicatiu */}
           <div class="space-y-6">
-            <span class="bg-amber-100 text-amber-800 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full">
+            {/* 🔴 CORREGIT: Etiqueta d'alerta daurada adaptada al mode fosc */}
+            <span class="bg-amber-950/40 text-amber-400 border border-amber-800/40 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full">
               🚨 Espai temporal (Placeholder)
             </span>
             
-            <h2 class="text-3xl lg:text-4xl font-black text-slate-400 uppercase leading-tight">
+            <h2 class="text-3xl lg:text-4xl font-black text-slate-500 uppercase leading-tight">
               Sales d'Acollida i Lleure
             </h2>
             
-            <p class="text-slate-500 leading-relaxed text-base">
+            <p class="text-slate-400 leading-relaxed text-base">
               Aquest espai està reservat per a descriure les nostres futures àrees d'acollida de matí/tarda, ludoteca o sales de reunions familiars i de l'AMPA. 
             </p>
 
-            <div class="pt-4 border-t border-slate-250">
-              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+            {/* 🔴 CORREGIT: Separador adaptat al disseny general fosca */}
+            <div class="pt-4 border-t border-slate-800/80">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">
                 Serveis previstos:
               </h3>
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-400">
                 <li class="flex items-center text-sm">
-                  <Icon class="w-4 h-4 mr-2" name="uil:clock" /> Properament disponible
+                  <Icon class="w-4 h-4 mr-2 text-slate-500" name="uil:clock" /> Properament disponible
                 </li>
               </ul>
             </div>
@@ -217,8 +227,9 @@ const equipaments = [
           SOCI / CONTACTE CTA FINAL
       ========================================= */}
       <section class="my-24 max-w-3xl mx-auto text-center">
-        <div class="bg-slate-900 text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 text-slate-800/30">
+        {/* 🔴 CORREGIT: Fons convertit a bg-slate-950/80 amb filtre de desenfocament (backdrop-blur-md) i vora fosc */}
+        <div class="bg-slate-950/80 backdrop-blur-md text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 text-slate-900/40">
             <Icon class="w-60 h-60" name="uil:basketball" />
           </div>
           
@@ -236,7 +247,7 @@ const equipaments = [
             <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
               <a 
                 href="/contact" 
-                class="inline-flex items-center justify-center gap-2 bg-azulElectrico hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg"
+                class="inline-flex items-center justify-center gap-2 bg-azulElectrico hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg hover:shadow-azulElectrico/25"
               >
                 <Icon class="w-5 h-5" name="uil:envelope" />
                 Contactar ara

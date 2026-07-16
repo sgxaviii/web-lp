@@ -37,12 +37,12 @@ const { title, children, lastItem, path, badge } = Astro.props;
 
     {/* 2. Màgia de Tailwind: afegim 'lg:group-hover:block' perquè es mostri en passar el ratolí en pantalles grans */}
     <DropdownItems class="hidden lg:group-hover:block w-full lg:w-48 absolute z-50">
-      <div class="lg:absolute lg:bg-white lg:shadow-md lg:rounded-md lg:border lg:border-gray-100 p-2 pl-4 lg:pl-2 space-y-1 bg-white left-0 top-full">
+      <div class="lg:absolute lg:bg-slate-900  lg:shadow-md lg:rounded-md lg:border lg:border-gray-100 p-2 pl-4 lg:pl-2 space-y-1 bg-slate-900  left-0 top-full">
         {
           children.map((child) => (
             <a
               href={child.path}
-              class="block py-2 text-slate-600 hover:text-azulElectrico font-medium text-sm transition-colors"
+              class="block py-2 text-slate-300 hover:text-azulElectrico font-medium text-sm transition-colors"
             >
               {child.title}
             </a>

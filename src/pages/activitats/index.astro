@@ -26,7 +26,7 @@ try {
   console.error("Error al carregar les activitats des de Sanity:", error);
 }
 
-// 🌟 FUNCIÓ HELPER 1: Colors per a les icones
+// 🌟 FUNCIÓ HELPER 1: Colors per a les icones (ara adaptats a fons fosc)
 const obtenirColorIcona = (icona: string) => {
   switch (icona) {
     case "uil:basketball":
@@ -34,42 +34,47 @@ const obtenirColorIcona = (icona: string) => {
     case "uil:restaurant":
       return "text-amarilloClub bg-amarilloClub/10";
     case "uil:sun":
-      return "text-orange-500 bg-orange-50";
+      return "text-orange-400 bg-orange-950/30";
     case "uil:users-alt":
-      return "text-blue-600 bg-blue-50";
+      return "text-blue-400 bg-blue-950/30";
     default:
-      return "text-slate-600 bg-slate-100";
+      return "text-slate-400 bg-slate-900/50";
   }
 };
 
-// 🌟 FUNCIÓ HELPER 2: Mapeig segur de colors per a les etiquetes
-// D'aquesta manera, Tailwind compilarà SÍ O SÍ aquestes classes perquè estan escrites literalment aquí.
-const obtenirEstilEtiqueta = (colorDefinit: string, textEtiqueta: string) => {
+// 🌟 FUNCIÓ HELPER 2: Mapeig segur de colors en fons fosc (suaus, translúcids i d'alt contrast)
+const obtenirEstilEtiqueta = (colorDefinit: any, textEtiqueta: string) => {
   const text = textEtiqueta ? textEtiqueta.toLowerCase() : "";
   
-  // 1. Detecció automàtica de seguretat per a la urgència de places
+  // 1. Detecció automàtica de seguretat per a la urgència de places (Taronja Ambre Fosc)
   if (text.includes("places") || text.includes("últimes") || text.includes("limitades")) {
-    return "bg-orange-100 text-orange-850 border-orange-200";
+    return "bg-orange-950/40 text-orange-400 border-orange-850/40";
   }
 
-  // 2. Normalitzem el valor que arriba de Sanity per si escriuen en català, anglès o envien la classe antiga
-  const color = (colorDefinit || "").toLowerCase().trim();
+  // 2. Normalitzem el valor: detectem si ve com a text o com a objecte Color de Sanity (amb .hex)
+  let color = "";
+  if (typeof colorDefinit === "string") {
+    color = colorDefinit.toLowerCase().trim();
+  } else if (colorDefinit && typeof colorDefinit === "object" && colorDefinit.hex) {
+    color = colorDefinit.hex.toLowerCase();
+  }
 
-  if (color.includes("emerald") || color.includes("verd") || color === "green") {
-    return "bg-emerald-100 text-emerald-800 border-emerald-200/60";
+  // 3. Mapeig de colors adaptats per a fons foscos
+  if (color.includes("emerald") || color.includes("verd") || color === "green" || color.includes("10b981")) {
+    return "bg-emerald-950/40 text-emerald-400 border-emerald-800/40";
   }
-  if (color.includes("orange") || color.includes("taronja")) {
-    return "bg-orange-100 text-orange-800 border-orange-200/60";
+  if (color.includes("orange") || color.includes("taronja") || color.includes("f97316")) {
+    return "bg-orange-950/40 text-orange-400 border-orange-800/40";
   }
-  if (color.includes("amber") || color.includes("groc") || color === "yellow") {
-    return "bg-amber-100 text-amber-900 border-amber-200/60";
+  if (color.includes("amber") || color.includes("groc") || color === "yellow" || color.includes("f59e0b")) {
+    return "bg-amber-950/40 text-amber-400 border-amber-800/40";
   }
-  if (color.includes("blue") || color.includes("blau")) {
-    return "bg-blue-100 text-blue-800 border-blue-200/60";
+  if (color.includes("blue") || color.includes("blau") || color.includes("3b82f6")) {
+    return "bg-blue-950/40 text-blue-400 border-blue-800/40";
   }
   
-  // Color per defecte (gris neutre)
-  return "bg-slate-100 text-slate-600 border-slate-200/60";
+  // Color per defecte (gris fumat elegant)
+  return "bg-slate-900/60 text-slate-300 border-slate-800";
 };
 ---
 
@@ -84,37 +89,38 @@ const obtenirEstilEtiqueta = (colorDefinit: string, textEtiqueta: string) => {
         <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-3 py-1 rounded-full shadow-sm">
           Més enllà de la pista
         </span>
-        <h1 class="text-5xl lg:text-6xl font-black text-slate-900 mt-4 uppercase tracking-tight leading-none">
+        <h1 class="text-5xl lg:text-6xl font-black text-slate-50 mt-4 uppercase tracking-tight leading-none">
           Les nostres <br />
           <span class="text-azulElectrico">Activitats Extra</span>
         </h1>
-        <p class="text-lg mt-6 text-slate-600 max-w-xl mx-auto leading-relaxed">
+        <p class="text-lg mt-6 text-slate-400 max-w-xl mx-auto leading-relaxed">
           A l'AEB La Palma no tot és la lliga regular. Organitzem esdeveniments esportius, casals de lleure i trobades socials per estrènyer llaços entre jugadors, famílies i tota la vila.
         </p>
       </section>
 
-      <hr class="border-slate-100 my-8" />
+      {/* 🔴 CORREGIT: Línia divisòria fosca en lloc de blanca */}
+      <hr class="border-slate-800/80 my-8" />
 
       {/* =========================================
           DIRECTORI D'ACTIVITATS (GRAELLA DINÀMICA)
       ========================================= */}
       <section class="py-6">
         {activitats.length === 0 ? (
-          <div class="text-center py-12 bg-slate-50 rounded-3xl border border-slate-200">
-            <Icon class="w-12 h-12 text-slate-400 mx-auto mb-4" name="uil:info-circle" />
-            <p class="text-slate-600 font-medium">No s'ha trobat cap activitat publicada al gestor de continguts.</p>
+          /* 🔴 CORREGIT: Caixa de llista buida adaptada al fons fosc */
+          <div class="text-center py-12 bg-slate-900/50 rounded-3xl border border-slate-800">
+            <Icon class="w-12 h-12 text-slate-500 mx-auto mb-4" name="uil:info-circle" />
+            <p class="text-slate-400 font-medium">No s'ha trobat cap activitat publicada al gestor de continguts.</p>
           </div>
         ) : (
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {activitats.map((act) => {
               const destinacioRedireccio = act.ruta || (act.slug ? `/activitats/${act.slug}` : "#");
               const colorIconaClasses = obtenirColorIcona(act.icona);
-              
-              // 🌟 Calculem dinàmicament l'estil de l'etiqueta de forma segura per a Tailwind
               const classesEtiqueta = obtenirEstilEtiqueta(act.etiquetaColor, act.etiqueta);
 
               return (
-                <div class="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-slate-300 transition duration-300 group relative overflow-hidden">
+                /* 🔴 CORREGIT: Caixes dels equips amb vores fosques border-slate-800/80 i efecte vidre fumat */
+                <div class="bg-slate-900/60 rounded-3xl border border-slate-800/80 p-6 md:p-8 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-slate-700 transition duration-300 group relative overflow-hidden backdrop-blur-sm">
                   <div>
                     {/* Capçalera de la targeta (Categoria + Etiqueta d'estat) */}
                     <div class="flex justify-between items-center mb-6">
@@ -122,7 +128,7 @@ const obtenirEstilEtiqueta = (colorDefinit: string, textEtiqueta: string) => {
                         {act.categoria || "Activitat"}
                       </span>
                       {act.etiqueta && (
-                        <span class={`text-xs font-bold px-3 py-1 rounded-full border ${classesEtiqueta}`}>
+                        <span class={`text-xs font-bold px-3 py-1 rounded-full ${classesEtiqueta}`}>
                           {act.etiqueta}
                         </span>
                       )}
@@ -133,22 +139,23 @@ const obtenirEstilEtiqueta = (colorDefinit: string, textEtiqueta: string) => {
                       <div class={`p-3 rounded-2xl shrink-0 group-hover:scale-110 transition-transform duration-300 ${colorIconaClasses}`}>
                         <Icon class="w-7 h-7" name={act.icona || "uil:apps"} />
                       </div>
-                      <h2 class="text-2xl font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-azulElectrico transition duration-200">
+                      <h2 class="text-2xl font-black text-slate-50 uppercase tracking-tight leading-tight group-hover:text-amarilloClub transition duration-200">
                         {act.titol}
                       </h2>
                     </div>
 
                     {/* Descripció curta */}
-                    <p class="text-slate-600 text-sm leading-relaxed mb-8">
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">
                       {act.descripcio}
                     </p>
                   </div>
 
                   {/* Botó d'acció per accedir a la pàgina de destí */}
-                  <div class="border-t border-slate-100 pt-6 mt-auto">
+                  {/* 🔴 CORREGIT: Divisor de botó fosc */}
+                  <div class="border-t border-slate-800/60 pt-6 mt-auto">
                     <a 
                       href={destinacioRedireccio}
-                      class="inline-flex items-center gap-2 text-slate-900 hover:text-azulElectrico font-black text-sm uppercase tracking-wider transition duration-200"
+                      class="inline-flex items-center gap-2 text-slate-50 hover:text-amarilloClub font-black text-sm uppercase tracking-wider transition duration-200"
                     >
                       Saber-ne més
                       <Icon class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform duration-200" name="uil:arrow-right" />
@@ -165,8 +172,8 @@ const obtenirEstilEtiqueta = (colorDefinit: string, textEtiqueta: string) => {
           CTA FINAL: DUBTES O PROPOSTES
       ========================================= */}
       <section class="my-24 max-w-3xl mx-auto text-center">
-        <div class="bg-slate-900 text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 text-slate-800/30">
+        <div class="bg-slate-900/80 text-white p-8 md:p-12 rounded-3xl border border-slate-800/80 shadow-xl relative overflow-hidden backdrop-blur-sm">
+          <div class="absolute -right-10 -bottom-10 text-slate-800/20">
             <Icon class="w-60 h-60" name="uil:basketball" />
           </div>
           

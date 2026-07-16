@@ -1,7 +1,7 @@
 ---
 // src/pages/club/historia.astro
 
-// 1. Importem el Layout principal del teu projecte (ajusta la ruta si el tens a "@/layouts/Layout.astro")
+// 1. Importem el Layout principal del teu projecte
 import Layout from "../../layouts/Layout.astro"; 
 import { Icon } from "astro-icon/components";
 
@@ -17,54 +17,54 @@ const etapes = [
   {
     anys: "2000 - 2010",
     titol: "Creixement i l'Era del Pavelló",
-    descripcio: "Amb l'arribada del nou mil·lenni i la inauguració del Pavelló Municipal, el club fa un salt de qualitat històric. Les seccions masculines i femenines es multipliquen, es consolida l'Escola de Bàsquet i s'aconsegueixen els primers ascensos a categories preferents. Ens convertim en el motor esportiu del poble.",
+    descripcio: "Amb l'arribada del nou mil·lenni i la inauguració del Pavelló Municipal, el club fait un salt de qualitat històric. Les seccions masculines i femenines es multipliquen, es consolida l'Escola de Bàsquet i s'aconsegueixen els primers ascensos a categories preferents. Ens convertim en el motor esportiu del poble.",
     imatge: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&q=80&w=800",
     alt: "Entrenaments al Pavelló Municipal"
   },
   {
     anys: "2011 - 2020",
     titol: "Consolidació de la Pedrera",
-    descripcio: "L'AEB La Palma es defineix clarament com un club de pedrera. Es crea la metodologia pròpia d'entrenament, apostant per la formation integral dels jugadors. El pavelló es comença a omplir cada cap de setmana amb una afició entregada, creant l'ambient de 'família' que ens caracteritza avui dia.",
+    descripcio: "L'AEB La Palma es defineix clarament com un club de pedrera. Es crea la metodologia pròpia d'entrenament, apostant per la formació integral dels jugadors. El pavelló es comença a omplir cada cap de setmana amb una afició entregada, creant l'ambient de 'família' que ens caracteritza avui dia.",
     imatge: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=800",
     alt: "Afició i grades plenes a La Palma"
   },
   {
     anys: "2021 - Present",
     titol: "Mirant al Futur sense Perdre l'ADN",
-    descripcio: "Avui, amb més equips federats que mai, des de l'Escola fins als sèniors absoluts, encetem una etapa de modernització. Digitalitzem el club, impulsem campus d'estiu internacionals i renovem els nostres equipaments, mantenint intacte el mateix compromís i valors humans amb els quals vam començar fa més de 30 anys.",
+    descripcio: "Avui, amb mès equips federats que mai, des de l'Escola fins als sèniors absoluts, encetem una etapa de modernització. Digitalitzem el club, impulsem campus d'estiu internacionals i renovem els nostres equipaments, mantenint intacte el mateix compromís i valors humans amb els quals vam començar fa més de 30 anys.",
     imatge: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=800",
     alt: "Equip sènior actual de l'AEB La Palma"
   }
 ];
 ---
 
-<!-- 2. Embolcallem tot el contingut dins del Layout per heretar el capçalera, peu de pàgina i els estils CSS -->
 <Layout title="La nostra Història - AEB La Palma">
   
-  <section class="relative bg-slate-950 rounded-[2.5rem] py-20 px-6 md:px-16 my-16 border border-slate-900 overflow-hidden shadow-2xl">
+  {/* 🔴 CORREGIT: Eliminat el requadre de fons de la secció (bg-slate-950, vores i ombres). Ara és totalment transparent */}
+  <section class="relative py-12 px-4 md:px-8 my-8 overflow-hidden">
     
-    <!-- LLUMS DE FONS DE COLOR CLUBS (Glows) -->
-    <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-azulElectrico/5 rounded-full blur-[150px] pointer-events-none"></div>
+    <!-- Subtils llums de fons per donar relleu (opcionals, es barregen amb el teu fons de pantalla) -->
+    <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-azulElectrico/10 rounded-full blur-[150px] pointer-events-none"></div>
     <div class="absolute -bottom-40 left-20 w-96 h-96 bg-amarilloClub/5 rounded-full blur-[120px] pointer-events-none"></div>
 
     <div class="relative z-10 max-w-6xl mx-auto">
       
       <!-- Capçalera -->
       <div class="text-center max-w-3xl mx-auto mb-24">
-        <span class="inline-block bg-slate-900 border border-slate-800 text-amarilloClub uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-inner mb-4">
+        <span class="inline-block bg-slate-950/90 border border-slate-800 text-amarilloClub uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-inner mb-4">
           Més de 30 anys d'història
         </span>
-        <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tight">
+        <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tight leading-none">
           EL NOSTRE CAMÍ, <br class="hidden sm:block"/>
           <span class="text-azulElectrico">LA NOSTRA HISTÒRIA</span>
         </h1>
-        <p class="text-lg mt-6 text-slate-400 leading-relaxed">
+        <p class="text-lg mt-6 text-slate-300 leading-relaxed max-w-2xl mx-auto">
           Des de les pistes de ciment de l'escola fins a competir arreu de Catalunya. Aquesta és la crònica d'un club humil que es va convertir en una gran família gràcies a l'esforç de tot un poble.
         </p>
       </div>
 
       <!-- Línia del temps intercalada -->
-      <div class="relative space-y-20 md:space-y-32 before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-[2px] before:bg-gradient-to-b before:from-azulElectrico/40 before:via-slate-800 before:to-transparent">
+      <div class="relative space-y-20 md:space-y-32 before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-[2px] before:bg-gradient-to-b before:from-azulElectrico/60 before:via-slate-800 before:to-transparent">
         
         {etapes.map((etapa, index) => {
           const isEven = index % 2 === 0;
@@ -75,38 +75,37 @@ const etapes = [
             <div class={`relative flex flex-col md:flex-row items-center gap-8 md:gap-16 ${directionClass}`}>
               
               <!-- Punt indicador del timeline -->
-              <div class="absolute left-4 md:left-1/2 w-8 h-8 bg-slate-950 border-4 border-azulElectrico rounded-full -translate-x-1/2 z-20 shadow-md shadow-azulElectrico/40 flex items-center justify-center">
+              <div class="absolute left-4 md:left-1/2 w-8 h-8 bg-slate-950 border-4 border-azulElectrico rounded-full -translate-x-1/2 z-20 shadow-lg shadow-azulElectrico/30 flex items-center justify-center">
                 <div class="w-2 h-2 bg-amarilloClub rounded-full"></div>
               </div>
 
-              <!-- Text explicatiu -->
-              <div class="w-full md:w-1/2 pl-12 md:pl-0 text-left md:group">
-                <div class={`bg-slate-900/40 backdrop-blur-sm border border-slate-900 p-6 md:p-8 rounded-3xl hover:border-slate-800 transition-all duration-300 shadow-xl ${alignClass}`}>
-                  <span class="inline-block px-3 py-1 bg-azulElectrico text-white text-xs font-black rounded-lg uppercase tracking-wider mb-3 shadow-md">
+              {/* Text explicatiu */}
+              <div class="w-full md:w-1/2 pl-12 md:pl-0 text-left group">
+                <div class={`bg-slate-950/80 backdrop-blur-md border border-slate-800/80 p-6 md:p-8 rounded-3xl hover:border-azulElectrico/50 transition-all duration-300 shadow-xl ${alignClass}`}>
+                  
+                  <span class="inline-block px-3 py-1 bg-azulElectrico/15 text-azulElectrico border border-azulElectrico/30 text-xs font-black rounded-lg uppercase tracking-wider mb-3 shadow-md">
                     {etapa.anys}
                   </span>
-                  <h3 class="text-xl md:text-2xl font-black text-white uppercase tracking-tight mt-1">
+                  
+                  <h3 class="text-xl md:text-2xl font-black text-white uppercase tracking-tight mt-1 group-hover:text-azulElectrico transition-colors duration-200">
                     {etapa.titol}
                   </h3>
-                  <p class="text-slate-400 mt-4 leading-relaxed text-sm md:text-base">
+                  
+                  <p class="text-slate-300 mt-4 leading-relaxed text-sm md:text-base">
                     {etapa.descripcio}
                   </p>
                 </div>
               </div>
 
-              <!-- Imatge d'etapa -->
+              {/* Imatge d'etapa (Nítida i transparent respecte el fons de la web) */}
               <div class="w-full md:w-1/2 pl-12 md:pl-0">
-                <div class="relative group rounded-3xl overflow-hidden shadow-2xl border border-slate-900 transition-all duration-500 hover:border-azulElectrico/40 hover:shadow-azulElectrico/5 aspect-[4/3] md:aspect-[16/10]">
-                  <div class="absolute inset-0 border-2 border-transparent group-hover:border-amarilloClub/30 rounded-3xl z-20 transition-colors duration-500 pointer-events-none"></div>
-                  
+                <div class="relative group rounded-3xl overflow-hidden shadow-2xl border border-slate-800/80 transition-all duration-500 hover:border-azulElectrico/50 hover:shadow-azulElectrico/10 aspect-[4/3] md:aspect-[16/10]">
                   <img 
                     src={etapa.imatge} 
                     alt={etapa.alt} 
-                    class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 brightness-90 group-hover:brightness-100"
+                    class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                   />
-                  
-                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent z-10"></div>
                 </div>
               </div>
 
@@ -117,18 +116,18 @@ const etapes = [
       </div>
 
       <!-- Bloc final de crida a l'acció -->
-      <div class="mt-32 text-center bg-gradient-to-r from-azulElectrico/10 via-slate-900/60 to-amarilloClub/5 border border-slate-900 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto backdrop-blur-md">
-        <Icon class="text-amarilloClub w-10 h-10 mx-auto mb-4 animate-bounce" name="uil:basketball" />
+      <div class="mt-32 text-center bg-slate-950/80 backdrop-blur-md border border-slate-800/80 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto shadow-2xl">
+        <Icon class="text-amarilloClub w-10 h-10 mx-auto mb-4 animate-pulse" name="uil:basketball" />
         <h2 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">
           I LA HISTÒRIA CONTINUA... <span class="text-azulElectrico">AMB TU!</span>
         </h2>
-        <p class="text-slate-400 mt-3 text-sm md:text-base max-w-2xl mx-auto">
+        <p class="text-slate-300 mt-3 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
           Cada triple, cada entrenament i cada crit d'ànim des de la grada forma part del proper capítol del club. Vols formar-ne part?
         </p>
-        <div class="mt-6">
+        <div class="mt-8">
           <a 
             href="/contact" 
-            class="inline-flex items-center gap-2 bg-azulElectrico hover:bg-azulElectrico/90 text-white font-black px-6 py-3 rounded-xl transition duration-200 shadow-lg shadow-azulElectrico/20 hover:scale-105"
+            class="inline-flex items-center gap-2 bg-azulElectrico hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg shadow-azulElectrico/20 hover:scale-102"
           >
             Uneix-te a la Família
             <Icon class="w-5 h-5" name="uil:arrow-right" />

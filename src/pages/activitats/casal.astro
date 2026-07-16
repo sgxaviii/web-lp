@@ -1,4 +1,5 @@
 ---
+// src/pages/activitats/index.astro
 import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 import { Icon } from "astro-icon/components";
@@ -72,11 +73,11 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
           <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-3 py-1 rounded-full shadow-sm">
             Estiu 2026 • Inscripcions Obertes
           </span>
-          <h1 class="text-5xl lg:text-6xl font-black text-slate-900 mt-4 uppercase tracking-tight leading-none">
+          <h1 class="text-5xl lg:text-6xl font-black text-slate-50 mt-4 uppercase tracking-tight leading-none">
             {titolHero} <br />
             <span class="text-azulElectrico">{subtitolHero}</span>
           </h1>
-          <p class="text-lg mt-6 text-slate-600 max-w-xl leading-relaxed">
+          <p class="text-lg mt-6 text-slate-400 max-w-xl leading-relaxed">
             {descripcioHero}
           </p>
           
@@ -90,7 +91,7 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
             </a>
             <a 
               href="#info" 
-              class="inline-flex items-center justify-center gap-2 border-2 border-slate-200 hover:border-azulElectrico text-slate-700 hover:text-azulElectrico font-bold px-8 py-4 rounded-2xl transition duration-200"
+              class="inline-flex items-center justify-center gap-2 border-2 border-slate-700 hover:border-blue-400 bg-slate-900/40 text-slate-300 hover:text-blue-400 font-bold px-8 py-4 rounded-2xl transition duration-200"
             >
               Més informació
             </a>
@@ -103,22 +104,22 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
           <img 
             src={imatgePortada} 
             alt="Imatge promocional del Casal d'Estiu" 
-            class="relative w-full h-[350px] md:h-[450px] object-cover rounded-3xl border border-slate-150 shadow-2xl"
+            class="relative w-full h-[350px] md:h-[450px] object-cover rounded-3xl border border-slate-800 shadow-2xl"
           />
         </div>
       </section>
 
-      <hr class="border-slate-100 my-16" />
+      <hr class="border-slate-800/80 my-16" />
 
       {/* =========================================
           SECCIÓ: QUÈ OFERIM (SERVEIS CLICABLES)
       ========================================= */}
       <section id="info" class="scroll-mt-20">
         <div class="text-center max-w-2xl mx-auto">
-          <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase">
+          <h2 class="text-3xl lg:text-4xl font-black text-slate-50 uppercase">
             Un casal ple d'<span class="text-azulElectrico">activitats</span>
           </h2>
-          <p class="text-slate-500 mt-3">
+          <p class="text-slate-400 mt-3">
             Combinem l'esport de la canasta amb activitats d'estiu divertides i refrescants, dirigides per monitors titulats de la casa.
           </p>
         </div>
@@ -131,22 +132,22 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
             return (
               <Contenidor 
                 href={servei.enllac}
-                class={`bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition duration-200 flex flex-col items-start group ${
-                  téEnllac ? 'hover:shadow-md hover:border-slate-200 cursor-pointer' : ''
+                class={`bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 shadow-sm transition duration-200 flex flex-col items-start group ${
+                  téEnllac ? 'hover:shadow-md hover:border-slate-700 cursor-pointer' : ''
                 }`}
               >
                 <div class="bg-slate-900 text-amarilloClub p-3 rounded-xl mb-4 group-hover:bg-azulElectrico transition-colors duration-200">
                   <Icon class="w-6 h-6" name={servei.icona || "uil:basketball"} />
                 </div>
                 
-                <h3 class="font-bold text-slate-900 uppercase text-lg mb-2 inline-flex items-center gap-1.5 group-hover:text-azulElectrico transition-colors duration-200">
+                <h3 class="font-bold text-slate-50 uppercase text-lg mb-2 inline-flex items-center gap-1.5 group-hover:text-azulElectrico transition-colors duration-200">
                   {servei.titol}
                   {téEnllac && (
                     <Icon class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-200 text-azulElectrico transform translate-x-[-4px] group-hover:translate-x-0" name="uil:arrow-right" />
                   )}
                 </h3>
                 
-                <p class="text-slate-500 text-sm leading-relaxed">
+                <p class="text-slate-400 text-sm leading-relaxed">
                   {servei.descripcio}
                 </p>
               </Contenidor>
@@ -158,7 +159,7 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
       {/* =========================================
           SECCIÓ: CALENDARI I PREUS (DINÀMICS)
       ========================================= */}
-      <section class="mt-24 bg-slate-900/60 backdrop-blur-md text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl">
+      <section class="mt-24 bg-slate-900/60 text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl">
         <div class="grid lg:grid-cols-2 gap-12 items-start">
           
           <div>
@@ -180,7 +181,7 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
                     <p class="text-xs text-slate-400">{torn.dates}</p>
                   </div>
                   <span class={`text-[10px] font-black uppercase px-2.5 py-1 rounded-md ${
-                    torn.estat === "Últimes Places" ? 'bg-red-650 text-white' : 
+                    torn.estat === "Últimes Places" ? 'bg-orange-950/40 text-orange-400 border border-orange-800/40' : 
                     torn.estat === "Complet" ? 'bg-slate-700 text-slate-300' : 'bg-azulElectrico text-white'
                   }`}>
                     {torn.estat}
@@ -223,16 +224,20 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
       {/* =========================================
           SECCIÓ: INSCRIPCIONS (FORMULARI ÚNIC)
       ========================================= */}
-      <section id="inscripcio" class="my-24 max-w-3xl mx-auto text-center scroll-mt-20">
-        <div class="bg-slate-50 border border-slate-100 p-8 md:p-12 rounded-3xl shadow-sm">
-          <div class="bg-azulElectrico/10 text-azulElectrico w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Icon class="w-6 h-6" name="uil:clipboard-notes" />
+      <section id="inscripcio" class="mt-24 bg-slate-900/60 text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl">
+        {/* 🔴 CORREGIT: Ara utilitza la mateixa estructura de targeta que "Tarifes i Horaris" */}
+        <div class="bg-slate-950/80 border border-slate-800 p-8 md:p-12 rounded-2xl shadow-inner text-center">
+          
+          {/* Icona adaptada al mode fosc */}
+          <div class="bg-azulElectrico/15 text-azulElectrico w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-azulElectrico/20">
+            <Icon class="w-7 h-7" name="uil:clipboard-notes" />
           </div>
           
-          <h2 class="text-3xl lg:text-4xl font-black text-slate-900 uppercase">
-            Fes la teva <span class="text-azulElectrico">Inscripció</span>
+          {/* Títols d'alt contrast */}
+          <h2 class="text-3xl lg:text-4xl font-black text-white uppercase">
+            Fes la teva <span class="text-amarilloClub">Inscripció</span>
           </h2>
-          <p class="text-slate-600 mt-4 max-w-xl mx-auto leading-relaxed">
+          <p class="text-slate-300 mt-4 max-w-xl mx-auto leading-relaxed text-sm md:text-base">
             El procés de sol·licitud de plaça es realitza completament en línia. Omple el nostre formulari de Google de forma ràpida i còmoda des de qualsevol dispositiu.
           </p>
 
@@ -248,9 +253,10 @@ const telefonContacte = dadesCasal?.telefonContacte || "93 000 00 00";
             </a>
           </div>
 
+          {/* Text d'ajuda amb contrast òptic excel·lent */}
           <p class="text-xs text-slate-400 mt-8 leading-relaxed">
             Un cop enviat el formulari, l'equip de coordinació es posarà en contacte amb vosaltres per confirmar la plaça. <br class="hidden sm:inline" />
-            Per a qualsevol dubte tècnic, pots contactar trucant al <span class="font-bold text-slate-600">{telefonContacte}</span> o escrivint a <span class="font-bold text-slate-600">{emailContacte}</span>.
+            Per a qualsevol dubte tècnic, pots contactar trucant al <span class="font-bold text-white">{telefonContacte}</span> o escrivint a <span class="font-bold text-white">{emailContacte}</span>.
           </p>
         </div>
       </section>
