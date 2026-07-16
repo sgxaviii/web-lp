@@ -1,4 +1,5 @@
 ---
+// src/pages/equips.astro
 import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
 import Layout from "@/layouts/Layout.astro";
@@ -24,9 +25,22 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom 
           <span class="text-slate-900 uppercase tracking-tight font-black">Els Nostres Equips</span>
         </Fragment>
         <Fragment slot="desc">
-          <span class="text-gray-400 text-lg">
+          <span class="text-gray-400 text-lg block">
             Descobreix totes les plantilles que defensen els colors del nostre club aquesta temporada.
           </span>
+          
+          <div class="mt-6 flex justify-center">
+            <a 
+              href="https://www.basquetcatala.cat/club/3189" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amarilloClub px-5 py-2.5 rounded-full text-xs md:text-sm font-bold text-gray-300 hover:text-white transition duration-300 shadow-lg group/fed"
+            >
+              <span class="text-amarilloClub">🏀</span>
+              <span>Fitxa Oficial a la Federació Catalana de Basquetbol</span>
+              <span class="text-amarilloClub group-hover/fed:translate-x-1 transition-transform duration-200">→</span>
+            </a>
+          </div>
         </Fragment>
       </Sectionhead>
 
@@ -34,9 +48,8 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom 
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {
-            totsElsEquips.map((equipo) => {
+            totsElsEquips && totsElsEquips.map((equipo) => {
               // 🌟 Utilitzem la primera imatge de la "galeria" de Sanity com a portada.
-              // Generem l'URL amb les mides exactes o posem el placeholder si no n'hi ha.
               const imatgePortada = equipo.galeria && equipo.galeria.length > 0
                 ? urlFor(equipo.galeria[0]).width(600).height(400).fit("crop").url()
                 : "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=600&auto=format&fit=crop";
@@ -45,10 +58,9 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom 
                 <div class="bg-slate-900/60 backdrop-blur-md rounded-2xl shadow-lg border border-slate-800 overflow-hidden group hover:border-azulElectrico hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
                   
                   {/* Part superior: Imatge i Dades */}
-                  {/* 🌟 Compte! A Sanity el slug es llegeix amb .slug.current */}
                   <a href={`/equips/${equipo.slug.current}`} class="block flex-grow">
                     
-                    {/* Contenidor de la foto amb zoom al passar el ratolí */}
+                    {/* Contenidor de la foto amb zoom */}
                     <div class="relative aspect-video overflow-hidden bg-slate-950 border-b border-slate-800">
                       <img
                         src={imatgePortada}
@@ -57,7 +69,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom 
                         loading="lazy"
                       />
                       
-                      {/* 🌟 Etiqueta flotant de la Categoria: Groc del club i text blau fosc */}
+                      {/* Etiqueta flotant de la Categoria */}
                       {equipo.categoria && (
                         <span class="absolute top-3 left-3 bg-amarilloClub text-azulOscuro uppercase tracking-wider text-[10px] font-black px-2.5 py-1 rounded-md shadow-md">
                           {equipo.categoria}
@@ -67,7 +79,6 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom 
 
                     {/* Textos de la targeta */}
                     <div class="p-5">
-                      {/* 🌟 Nom de l'equip: Canvia al groc del club quan es passa el ratolí (hover) */}
                       <h2 class="text-xl font-black text-white uppercase tracking-tight group-hover:text-amarilloClub transition-colors duration-200">
                         {equipo.nom}
                       </h2>
@@ -81,7 +92,6 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom 
 
                   {/* Botó inferior d'acció */}
                   <div class="p-5 pt-0">
-                    {/* 🌟 Botó: Blau elèctric i hover fosc */}
                     <a
                       href={`/equips/${equipo.slug.current}`}
                       class="block text-center bg-azulElectrico hover:bg-azulOscuro text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition duration-200 border border-azulElectrico/20"
