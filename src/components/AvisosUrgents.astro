@@ -1,0 +1,109 @@
+---
+import { sanityClient } from "sanity:client";
+
+// 🏀 Demanem només els avisos que estan actius ordenats pels més recents
+const avisos = await sanityClient.fetch(`
+  *[_type == "avis" && actiu == true] | order(_createdAt desc){
+    titol,
+    detall
+  }
+`);
+
+// Si no hi ha cap avís urgent, Astro no renderitzarà absolutament res
+const hiHaAvisos = avisos && avisos.length > 0;
+
+// 🌟 SOLUCIÓ PER AL TALL: Si la llista és massa curta, omplim la tira repetint els elements
+// perquè sigui prou llarga i l'animació infinita de -100% no faci salts visuals.
+let avisosRepetits = [];
+if (hiHaAvisos) {
+  if (avisos.length === 1) {
+    // Si només hi ha 1 avís, el repetim 5 vegades dins de la mateixa tira
+    avisosRepetits = Array(5).fill(avisos[0]);
+  } else if (avisos.length === 2) {
+    // Si n'hi ha 2, els dupliquem (total 4)
+    avisosRepetits = [...avisos, ...avisos];
+  } else {
+    // Si n'hi ha 3 o més, ja és prou llarga autònomament
+    avisosRepetits = [...avisos];
+  }
+}
+---
+
+{hiHaAvisos && (
+  <div class="w-full bg-red-950/50 border-y border-red-500/30 backdrop-blur-md relative z-30 overflow-hidden shadow-lg shadow-red-950/20">
+    <div class="max-w-7xl mx-auto flex items-center h-12">
+      
+      {/* Etiqueta fixa d'Alerta / Urgent */}
+      <div class="bg-red-700 text-white font-black uppercase text-xs tracking-wider px-4 h-full flex items-center gap-2 relative z-10 shadow-md shrink-0 select-none">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+        </span>
+        ⚠️ ÚLTIMA HORA
+      </div>
+
+      {/* Contenidor principal de la tira (Marquee) */}
+      <div class="relative w-full overflow-hidden flex items-center h-full text-sm marquee-wrapper">
+        <div class="flex whitespace-nowrap min-w-full">
+          
+          {/* TIRA 1: Utilitzem la llista processada 'avisosRepetits' */}
+          <div class="animate-marquee flex items-center gap-6 pr-6 shrink-0">
+            {avisosRepetits.map((avis) => (
+              <div class="flex items-center gap-3 bg-red-900/30 px-4 py-1 rounded-full border border-red-700/40 shadow-inner select-none">
+                <span class="text-amber-400 uppercase font-black tracking-wide text-xs shrink-0">
+                  {avis.titol}
+                </span>
+                {avis.detall && (
+                  <>
+                    <span class="text-red-400/50 font-light shrink-0">|</span>
+                    <span class="text-slate-200 font-semibold whitespace-nowrap">
+                      {avis.detall}
+                    </span>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* TIRA 2: Còpia idèntica obligatòria per al bucle infinit perfecte */}
+          <div class="animate-marquee flex items-center gap-6 pr-6 shrink-0" aria-hidden="true">
+            {avisosRepetits.map((avis) => (
+              <div class="flex items-center gap-3 bg-red-900/30 px-4 py-1 rounded-full border border-red-700/40 shadow-inner select-none">
+                <span class="text-amber-400 uppercase font-black tracking-wide text-xs shrink-0">
+                  {avis.titol}
+                </span>
+                {avis.detall && (
+                  <>
+                    <span class="text-red-400/50 font-light shrink-0">|</span>
+                    <span class="text-slate-200 font-semibold whitespace-nowrap">
+                      {avis.detall}
+                    </span>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+)}
+
+<style>
+  /* Animació de desplaçament horitzontal 100% fluid */
+  @keyframes marquee {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+  }
+
+  .animate-marquee {
+    animation: marquee 35s linear infinite;
+  }
+
+  /* Es congelen les DUES tires alhora i no es desquadren mai */
+  .marquee-wrapper:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+</style>

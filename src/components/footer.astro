@@ -10,14 +10,19 @@ const anyActual = new Date().getFullYear();
 const instagramUrl = "https://www.instagram.com/aeblapalma/"; // Enllaç real d'Instagram
 const whatsappUrl = "https://wa.me/34600000000"; // Enllaç de WhatsApp (canvia el telèfon)
 const correuContacte = "info@aeblapalma.cat";
+const facebookUrl = "https://www.facebook.com/aeblapalma"; // Enllaç real de Facebook
+const tiktokUrl = "https://www.tiktok.com/@aeblapalma"; // Enllaç real de TikTok
 const direccioPoliesportiu = "Carrer del Canigó, 9, 08756 La Palma de Cervelló";
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccioPoliesportiu)}`;
+
+// 🌟 URL del teu perfil personal de GitHub
+const githubUrl = "https://github.com/sgxaviii";
 ---
 
 <footer class="bg-slate-900 text-slate-400 mt-24 pt-16 pb-8 border-t border-slate-800 rounded-t-[2.5rem] relative overflow-hidden">
-  {/* Element decoratiu de fons en forma de pilota de bàsquet soft */}
-  <div class="absolute -right-24 -bottom-24 text-slate-850 pointer-events-none">
-    <Icon class="w-96 h-96 opacity-10" name="uil:basketball" />
+  {/* Element decoratiu de fons en forma de marca d'aigua */}
+  <div class="absolute -right-20 -bottom-20 pointer-events-none select-none">
+    <img src="/logo.png" class="w-96 h-96 opacity-[0.04] object-contain" alt="" />
   </div>
 
   <Container>
@@ -25,12 +30,27 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
       
       {/* COLUMNA 1: Sobre el Club i Xarxes Socials */}
       <div class="space-y-4">
-        <div class="flex items-center gap-2">
-          <div class="bg-amarilloClub text-azulOscuro p-1.5 rounded-lg">
-            <Icon class="w-6 h-6" name="uil:basketball" />
+        
+        {/* 🌟 MODIFICAT: S'ha convertit tot el contenidor en un enllaç a l'inici, unificant logo i títol */}
+        <a 
+          href="/" 
+          class="inline-flex items-center gap-3 hover:opacity-90 transition-opacity duration-200 select-none"
+          aria-label="AEB La Palma - Tornar a l'inici"
+        >
+          {/* El saquet groc del logo ara és un div intern */}
+          <div class="bg-amarilloClub p-1.5 rounded-lg flex items-center justify-center shrink-0 w-12 h-12">
+            <img 
+              src="/logo.png" 
+              alt="Logo AEB La Palma" 
+              class="w-8 h-8 object-contain" 
+              style="filter: brightness(0) saturate(100%) invert(22%) sepia(96%) saturate(2745%) hue-rotate(220deg) brightness(93%) contrast(94%);"
+            />
           </div>
+
+          {/* El títol ara és perfectament clicable també */}
           <span class="font-black text-white text-lg tracking-wider uppercase">AEB La Palma</span>
-        </div>
+        </a>
+
         <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
           Més que un club, una gran família dedicada a promoure el bàsquet, els valors de l'esport de lleure i la convivència a La Palma de Cervelló.
         </p>
@@ -41,7 +61,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
             href={instagramUrl} 
             target="_blank" 
             rel="noopener noreferrer" 
-            class="bg-slate-800 text-slate-300 p-2.5 rounded-xl hover:text-white hover:bg-azulElectrico transition duration-200"
+            class="bg-slate-800 text-slate-300 p-2.5 rounded-xl hover:text-white hover:bg-pink-600 transition duration-200"
             aria-label="Segueix-nos a Instagram"
           >
             <Icon class="w-5 h-5" name="uil:instagram" />
@@ -55,10 +75,28 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           >
             <Icon class="w-5 h-5" name="uil:whatsapp" />
           </a>
+                    <a 
+            href={facebookUrl} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="bg-slate-800 text-slate-300 p-2.5 rounded-xl hover:text-white hover:bg-blue-600 transition duration-200"
+            aria-label="Segueix-nos a Facebook"
+          >
+            <Icon class="w-5 h-5" name="uil:facebook" />
+          </a>
+                    <a 
+            href={tiktokUrl} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="bg-slate-800 text-slate-300 p-2.5 rounded-xl hover:text-white hover:bg-[#FE2C55] transition duration-200"
+            aria-label="Segueix-nos a TikTok"
+          >
+            <Icon class="w-5 h-5" name="uil:video" />
+          </a>
         </div>
       </div>
 
-      {/* COLUMNA 2: Contacte i Ubicació */}
+      {/* COLUMNA 2: Contacte i Horaris */}
       <div class="space-y-4">
         <h3 class="text-xs font-bold text-slate-200 uppercase tracking-widest">Contacte i Horaris</h3>
         <ul class="space-y-3 text-sm">
@@ -94,12 +132,21 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 
     </div>
 
-    {/* ========================================================
-        BARRA INFERIOR (Copyright, Tractament de dades i Cookies)
-        ======================================================== */}
+    {/* BARRA INFERIOR (Copyright, Crèdits, Dades i Cookies) */}
     <div class="relative z-10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-      <div>
+      
+      <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
         <p>Copyright © {anyActual} AEB La Palma. Tots els drets reservats.</p>
+        <span class="hidden sm:inline text-slate-700">|</span>
+        <a 
+          href={githubUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="inline-flex items-center gap-1.5 text-slate-500 hover:text-white transition duration-200 group"
+        >
+          <Icon class="w-4 h-4 text-slate-600 group-hover:text-white transition duration-200" name="uil:github" />
+          <span>Fet per <span class="font-medium text-slate-400 group-hover:text-white">Xavi Momplet</span></span>
+        </a>
       </div>
 
       {/* Enllaços Legals */}

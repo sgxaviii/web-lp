@@ -2,7 +2,7 @@
 import imageUrlBuilder from "@sanity/image-url";
 import { sanityClient } from "sanity:client";
 
-// Configura el generador d'linkos de les imatges de Sanity
+// Configura el generador d'enllaços de les imatges de Sanity
 const builder = imageUrlBuilder(sanityClient);
 function urlFor(source) {
   return builder.image(source);
@@ -18,37 +18,52 @@ interface Props {
 }
 
 const { patrocinadors } = Astro.props;
+
+// Estil comú per a les targetes (tant si són enllaços com si no)
+const cardClassName = "flex items-center justify-center p-5 bg-slate-950/40 border border-slate-800/80 rounded-2xl w-36 h-20 sm:w-44 sm:h-24 md:w-48 md:h-28 transition duration-300 group hover:border-azulElectrico hover:bg-slate-950/80 hover:scale-105 shadow-md shadow-slate-950/10";
 ---
 
-<div class="mt-24">
-  <h2 class="text-center text-slate-400 uppercase tracking-wider text-sm font-bold">
-    Col·laboren amb el club
+{/* Contenidor general amb estil de bloc premium integrat */}
+<div class="mt-24 bg-slate-900/30 border border-slate-800/40 rounded-[2.5rem] p-8 md:p-12 text-center relative overflow-hidden backdrop-blur-xs">
+  
+  {/* Títol de la secció amb detall de color */}
+  <h2 class="text-white uppercase tracking-widest text-xs font-black">
+    Col·laboren amb el club<span class="text-amarilloClub">.</span>
   </h2>
   
-  <div class="flex gap-8 md:gap-16 items-center justify-center mt-10 flex-wrap px-4">
+  {/* Flex layout auto-centrat per als patrocinadors */}
+  <div class="flex gap-4 md:gap-6 items-center justify-center mt-10 flex-wrap px-2">
     {patrocinadors.map((patro) => {
-      const content = (
+      
+      {/* Contingut interior: La imatge ara s'adapta al contenidor fosc de manera harmònica */}
+      const imageContent = (
         <img
           src={urlFor(patro.logo).width(240).height(120).fit("max").url()}
           alt={`Logo de ${patro.nom}`}
-          class="h-10 md:h-14 w-auto object-contain opacity-50 hover:opacity-100 transition-all duration-300 filter grayscale hover:grayscale-0"
+          class="max-h-full max-w-full object-contain opacity-40 group-hover:opacity-100 group-hover:grayscale-0 filter grayscale transition duration-300"
           loading="lazy"
         />
       );
 
-      // Si té link el fem clicable, si no, només mostrem el logo
+      // Si té enllaç el fem clicable, si no, mostrem la targeta estàtica
       return patro.link ? (
         <a 
           href={patro.link} 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="hover:scale-110 transition-transform duration-200 block"
+          class={cardClassName}
           title={patro.nom}
         >
-          {content}
+          {imageContent}
         </a>
       ) : (
-        <div class="title={patro.nom}">{content}</div>
+        /* 🌟 CORREGIT: Arreglat l'error del title i afegit el mateix estil visual de targeta */
+        <div 
+          class={cardClassName}
+          title={patro.nom}
+        >
+          {imageContent}
+        </div>
       );
     })}
   </div>

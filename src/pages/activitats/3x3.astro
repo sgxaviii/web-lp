@@ -60,7 +60,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
     <div class="mt-14 relative z-10">
       
       {/* 🔴 CORREGIT: Llums de fons corporatius que floten darrere la pàgina per un estil premium de lliga */}
-      <div class="absolute top-10 left-1/4 w-[500px] h-[500px] bg-azulElectrico/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+      <div class="absolute top-10 left-1/4 w-[500px] h-[500px] bg-[#1D4ED8]/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
       <div class="absolute top-1/2 right-10 w-[400px] h-[400px] bg-amarilloClub/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
       
       {/* =========================================
@@ -72,7 +72,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
         </span>
         <h1 class="text-5xl lg:text-6xl font-black text-white mt-6 uppercase tracking-tight leading-none">
           {edicio} Torneig <br />
-          <span class="text-azulElectrico">3x3 d'Estiu</span>
+          <span class="text-[#1D4ED8]">3x3 d'Estiu</span>
         </h1>
         {/* 🔴 CORREGIT: Text aclarit a text-slate-300 per contrastar millor */}
         <p class="text-lg mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed">
@@ -104,7 +104,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           href={googleMapsUrl} 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="bg-slate-950/80 backdrop-blur-md text-white p-6 rounded-2xl border border-slate-800/80 shadow-lg flex items-center gap-4 hover:border-azulElectrico/50 hover:bg-slate-900/60 transition duration-300 group"
+          class="bg-slate-950/80 backdrop-blur-md text-white p-6 rounded-2xl border border-slate-800/80 shadow-lg flex items-center gap-4 hover:border-[#1D4ED8]/50 hover:bg-slate-900/60 transition duration-300 group"
           title="Obrir ubicació a Google Maps"
         >
           <div class="text-amarilloClub bg-slate-900 p-3 rounded-xl shrink-0 border border-slate-800/80 group-hover:scale-110 transition-transform duration-300">
@@ -113,9 +113,9 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           <div>
             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
               On es juga?
-              <Icon class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-300 text-azulElectrico" name="uil:external-link-alt" />
+              <Icon class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-300 text-[#1D4ED8]" name="uil:external-link-alt" />
             </h3>
-            <p class="text-sm font-bold text-white mt-1 leading-tight group-hover:text-azulElectrico transition-colors duration-200">{lloc}</p>
+            <p class="text-sm font-bold text-white mt-1 leading-tight group-hover:text-[#1D4ED8] transition-colors duration-200">{lloc}</p>
           </div>
         </a>
 
@@ -139,12 +139,12 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           title="Anar al formulari d'inscripció"
         >
           <div class="text-red-400 bg-slate-900 p-3 rounded-xl shrink-0 border border-slate-800/80 group-hover:scale-110 transition-transform duration-300">
-            <Icon class="w-6 h-6 animate-pulse" name="uil:exclamation-octagon" />
+            <Icon class="w-6 h-6" name="uil:exclamation-octagon" />
           </div>
           <div>
             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono text-red-400 flex items-center gap-1">
               ⚠️ Atenció!
-              <Icon class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-300" name="uil:external-link-alt" />
+              <Icon class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-300 text-red-400" name="uil:external-link-alt" />
             </h3>
             <p class="text-sm font-bold text-white mt-1">Límit: <span class="text-amarilloClub">{dataLimitInscripcio}</span></p>
           </div>
@@ -171,8 +171,8 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           <div class="grid gap-4 pt-4">
             {categories.map((cat) => (
               /* 🔴 CORREGIT: Targetes de categories passades a fons fosc premium i eliminat el bg-slate-50 clar */
-              <div class="flex items-center gap-4 bg-slate-950/60 backdrop-blur-sm p-4 rounded-2xl border border-slate-800/80 shadow-md hover:border-azulElectrico/30 transition-all duration-300">
-                <div class="bg-azulElectrico/10 text-azulElectrico p-3 rounded-xl shrink-0 border border-azulElectrico/20">
+              <div class="flex items-center gap-4 bg-slate-950/60 backdrop-blur-sm p-4 rounded-2xl border border-slate-800/80 shadow-md hover:border-[#1D4ED8]/30 transition-all duration-300">
+                <div class="bg-[#1D4ED8]/10 text-[#1D4ED8] p-3 rounded-xl shrink-0 border border-[#1D4ED8]/20">
                   <Icon class="w-6 h-6" name={cat.icona || "uil:basketball"} />
                 </div>
                 <div>
@@ -230,7 +230,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           </p>
         </div>
         <div class="border-t md:border-t-0 md:border-l border-slate-800/80 pt-6 md:pt-0 md:pl-8">
-          <h3 class="text-2xl font-black text-azulElectrico uppercase flex items-center gap-2">
+          <h3 class="text-2xl font-black text-[#1D4ED8] uppercase flex items-center gap-2">
             📋 Reglament
           </h3>
           <p class="text-slate-300 mt-3 text-sm leading-relaxed">
@@ -245,7 +245,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       {galeria && galeria.length > 0 && (
         <section class="py-16 relative z-10">
           <div class="text-center max-w-2xl mx-auto mb-12">
-            <span class="inline-block bg-azulElectrico/15 text-azulElectrico border border-azulElectrico/30 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full">
+            <span class="inline-block bg-[#1D4ED8]/15 text-[#1D4ED8] border border-[#1D4ED8]/30 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full">
               Records i moments
             </span>
             <h2 class="text-3xl lg:text-4xl font-black text-white uppercase mt-3">
@@ -259,7 +259,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           {/* Graella de fotos moderna (Imatges completament brillants i nítides, sense cap overlay fosc) */}
           <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {galeria.map((foto, index) => (
-              <div class={`overflow-hidden rounded-2xl bg-slate-950 shadow-lg border border-slate-800/80 hover:border-azulElectrico/50 transition-all duration-300 group ${
+              <div class={`overflow-hidden rounded-2xl bg-slate-950 shadow-lg border border-slate-800/80 hover:border-[#1D4ED8]/50 transition-all duration-300 group ${
                 index === 1 || index === 6 ? 'md:col-span-2 md:row-span-2' : ''
               }`}>
                 <img
@@ -300,7 +300,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
                 href={linkInscripcio} 
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center gap-2 bg-azulElectrico hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg shadow-azulElectrico/20 hover:scale-102"
+                class="inline-flex items-center justify-center gap-2 bg-[#1D4ED8] hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg shadow-[#1D4ED8]/20 hover:scale-102"
               >
                 <Icon class="w-5 h-5" name="uil:clipboard-notes" />
                 Formulari d'Inscripció

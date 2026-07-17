@@ -17,10 +17,10 @@ import Button from "./ui/button.astro";
       type="text"
       placeholder="Nom complet"
       required
-      class="w-full px-4 py-3 border-2 placeholder:text-slate-400 rounded-md outline-hidden focus:ring-4 border-gray-300 focus:border-azulElectrico ring-azulElectrico/20 transition duration-200"
+      class="w-full px-4 py-3 bg-slate-950/40 text-white border-2 placeholder:text-slate-500 rounded-xl outline-hidden focus:ring-4 border-slate-800 focus:border-azulElectrico focus:bg-slate-950/80 ring-azulElectrico/25 transition duration-200"
       name="name"
     />
-    <div class="empty-feedback invalid-feedback text-red-650 text-sm mt-1 font-medium">
+    <div class="empty-feedback invalid-feedback text-red-500 text-sm mt-1 font-medium">
       Si us plau, introdueix el teu nom complet.
     </div>
   </div>
@@ -34,17 +34,17 @@ import Button from "./ui/button.astro";
       placeholder="Correu electrònic"
       name="email"
       required
-      class="w-full px-4 py-3 border-2 placeholder:text-slate-400 rounded-md outline-hidden focus:ring-4 border-gray-300 focus:border-azulElectrico ring-azulElectrico/20 transition duration-200"
+      class="w-full px-4 py-3 bg-slate-950/40 text-white border-2 placeholder:text-slate-500 rounded-xl outline-hidden focus:ring-4 border-slate-800 focus:border-azulElectrico focus:bg-slate-950/80 ring-azulElectrico/25 transition duration-200"
     />
-    <div class="empty-feedback text-red-650 text-sm mt-1 font-medium">
+    <div class="empty-feedback text-red-500 text-sm mt-1 font-medium">
       Si us plau, introdueix la teva adreça de correu electrònic.
     </div>
-    <div class="invalid-feedback text-red-650 text-sm mt-1 font-medium">
+    <div class="invalid-feedback text-red-500 text-sm mt-1 font-medium">
       Si us plau, introdueix una adreça vàlida.
     </div>
   </div>
 
-  {/* 📞 Input: Número de telèfon (Nou camp) */}
+  {/* 📞 Input: Número de telèfon */}
   <div class="mb-5">
     <label for="phone_number" class="sr-only">Número de telèfon</label>
     <input
@@ -54,25 +54,25 @@ import Button from "./ui/button.astro";
       name="phone"
       required
       pattern="^(?:\+34|0034|34)?[6789]\d{8}$"
-      class="w-full px-4 py-3 border-2 placeholder:text-slate-400 rounded-md outline-hidden focus:ring-4 border-gray-300 focus:border-azulElectrico ring-azulElectrico/20 transition duration-200"
+      class="w-full px-4 py-3 bg-slate-950/40 text-white border-2 placeholder:text-slate-500 rounded-xl outline-hidden focus:ring-4 border-slate-800 focus:border-azulElectrico focus:bg-slate-950/80 ring-azulElectrico/25 transition duration-200"
     />
-    <div class="empty-feedback text-red-650 text-sm mt-1 font-medium">
+    <div class="empty-feedback text-red-500 text-sm mt-1 font-medium">
       Si us plau, introdueix el teu número de telèfon.
     </div>
-    <div class="invalid-feedback text-red-650 text-sm mt-1 font-medium">
+    <div class="invalid-feedback text-red-500 text-sm mt-1 font-medium">
       Introdueix un telèfon espanyol vàlid de 9 dígits (amb o sense prefix +34).
     </div>
   </div>
 
   {/* Textarea: Missatge */}
-  <div class="mb-3">
+  <div class="mb-4">
     <textarea
       name="message"
       required
-      placeholder="El teu missatge"
-      class="w-full px-4 py-3 border-2 placeholder:text-slate-400 rounded-md outline-hidden h-36 focus:ring-4 border-gray-300 focus:border-azulElectrico ring-azulElectrico/20 transition duration-200"
+      placeholder="El teu missatge..."
+      class="w-full px-4 py-3 bg-slate-950/40 text-white border-2 placeholder:text-slate-500 rounded-xl outline-hidden h-36 focus:ring-4 border-slate-800 focus:border-azulElectrico focus:bg-slate-950/80 ring-azulElectrico/25 transition duration-200 resize-none"
     ></textarea>
-    <div class="empty-feedback invalid-feedback text-red-650 text-sm mt-1 font-medium">
+    <div class="empty-feedback invalid-feedback text-red-500 text-sm mt-1 font-medium">
       Si us plau, introdueix el teu missatge.
     </div>
   </div>
@@ -83,9 +83,9 @@ import Button from "./ui/button.astro";
       type="submit" 
       size="lg" 
       block 
-      class="bg-azulElectrico hover:bg-azulOscuro text-white font-bold py-3 px-6 rounded-md shadow-md transition duration-200"
+      class="bg-azulElectrico hover:bg-azulOscuro text-white font-black uppercase tracking-wider py-3.5 px-6 rounded-xl shadow-md shadow-azulElectrico/10 hover:shadow-azulOscuro/20 transition duration-200 cursor-pointer"
     >
-      Envia
+      Envia el missatge
     </Button>
   </div>
 
@@ -103,15 +103,14 @@ import Button from "./ui/button.astro";
     display: block;
   }
 
-  /* Modificat per evitar que la vora d'error es mostri mentre s'escriu un telèfon correcte */
   .was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
     display: block;
   }
 
-  /* Vora vermella d'error de validació utilitzant el vermell personalitzat del club */
+  /* Vora vermella d'error integrada harmònicament sobre el fons fosc */
   .is-invalid,
   .was-validated :invalid {
-    border-color: var(--color-red-650, #E02424);
+    border-color: #EF4444 !important;
   }
 </style>
 
@@ -127,7 +126,6 @@ import Button from "./ui/button.astro";
       return;
     }
     
-    // Eliminem espais del telèfon abans d'enviar per si l'usuari n'ha posat (Ex: +34 600 00 00 00 -> +34600000000)
     const phoneInput = form.querySelector("#phone_number");
     if (phoneInput) {
       phoneInput.value = phoneInput.value.replace(/\s+/g, '');
@@ -138,7 +136,7 @@ import Button from "./ui/button.astro";
     const json = JSON.stringify(object);
 
     result.style.display = "block";
-    result.className = "mt-4 text-center font-bold text-sm text-amarilloClub";
+    result.className = "mt-4 text-center font-bold text-sm text-amarilloClub animate-pulse";
     result.innerHTML = "Enviant missatge...";
 
     fetch("https://api.web3forms.com/submit", {
@@ -152,17 +150,17 @@ import Button from "./ui/button.astro";
       .then(async (response) => {
         let json = await response.json();
         if (response.status == 200) {
-          result.className = "mt-4 text-center font-bold text-sm text-green-500";
+          result.className = "mt-4 text-center font-bold text-sm text-emerald-500";
           result.innerHTML = "Missatge enviat correctament!";
         } else {
           console.log(response);
-          result.className = "mt-4 text-center font-bold text-sm text-red-650";
+          result.className = "mt-4 text-center font-bold text-sm text-red-500";
           result.innerHTML = json.message || "Hi ha hagut un error.";
         }
       })
       .catch((error) => {
         console.log(error);
-        result.className = "mt-4 text-center font-bold text-sm text-red-650";
+        result.className = "mt-4 text-center font-bold text-sm text-red-500";
         result.innerHTML = "Alguna cosa ha anat malament!";
       })
       .then(function () {

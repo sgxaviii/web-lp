@@ -1,46 +1,65 @@
 ---
 import { Picture } from "astro:assets";
-import Link from "@/components/ui/link.astro";
 import { Icon } from "astro-icon/components";
 ---
 
-<main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24">
-  <div class="py-6 md:order-1 hidden md:block">
-    <img 
-      src="/logo.jpg" 
-      alt="Escut oficial AEB La Palma" 
-      class="w-full max-w-[600px] h-auto object-contain"
-      loading="eager"
-    />
+<main class="relative grid lg:grid-cols-2 place-items-center pt-10 pb-12 md:pt-16 md:pb-28 gap-8 overflow-hidden">
+  
+  {/* COLUMNA LOGO */}
+  <div class="relative w-full flex justify-center py-6 order-first lg:order-last">
+    
+    {/* Llum de fons (Glow Effect) corporatiu darrere del logo */}
+    <div class="absolute w-[70%] h-[70%] bg-[#1D4ED8]/10 rounded-full blur-[80px] pointer-events-none z-0"></div>
+    
+    <div class="relative z-10 max-w-[280px] sm:max-w-[380px] md:max-w-[450px] lg:max-w-[500px]">
+      <img 
+        src="/logo.jpg" 
+        alt="Escut oficial AEB La Palma" 
+        class="w-full h-auto object-contain drop-shadow-md rounded-3xl"
+        loading="eager"
+      />
+    </div>
   </div>
-  <div>
-    <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-black lg:tracking-tight xl:tracking-tighter text-slate-50 uppercase">
-      AEB LA PALMA: més que un club, una <span class="text-azulElectrico">família</span> a la pista
+
+  {/* COLUMNA TEXT */}
+  <div class="relative z-10 text-center lg:text-left flex flex-col items-center lg:items-start">
+    
+    {/* Petit Badge de Benvinguda */}
+    <div class="inline-flex items-center gap-2 bg-slate-800/60 border border-slate-750 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-slate-300 mb-5 shadow-sm select-none">
+      <span class="flex h-2 w-2 rounded-full bg-[#FBBF24]"></span>
+      ASSOCIACIÓ ESPORTIVA BÀSQUET
+    </div>
+
+    {/* Títol massiu amb degradat de text */}
+    <h1 class="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl font-black lg:tracking-tight xl:tracking-tighter uppercase leading-none select-none text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-250">
+      AEB LA PALMA
     </h1>
-    <p class="text-lg mt-4 text-slate-300 max-w-xl">
-      A l'AEB La Palma vivim el bàsquet des de la base fins al sènior. Formem esportistes, compartim valors i competim amb el cor a cada partit. Uneix-te al <span class="text-amarilloClub font-bold">groc</span>-i-<span class="text-azulElectrico font-bold">blau</span>!
+    
+    <p class="text-base sm:text-lg mt-5 text-slate-300 max-w-xl leading-relaxed">
+      A l'AEB La Palma vivim el bàsquet des de la base fins al sènior. Formem esportistes, compartim valors i competim amb el cor a cada partit. Uneix-te al <span class="text-[#FBBF24] font-extrabold">groc</span>-i-<span class="text-[#1D4ED8] font-extrabold">blau</span>!
     </p>
     
-    <div class="mt-6 flex flex-col sm:flex-row gap-3">
-      {/* 🌟 BOTÓ PRINCIPAL: Blau elèctric del club amb hover fosc */}
-      <Link
-        href="/equips"
-        class="flex gap-2 items-center justify-center bg-azulElectrico hover:bg-azulOscuro text-white font-bold px-6 py-3 rounded-xl transition duration-200 shadow-md border border-azulElectrico/20"
-        rel="noopener">
-        <Icon class="text-white w-5 h-5" name="uil:basketball" />
-        Equips
-      </Link>
+    {/* ⚡ BOTONS ACCENTUATS I OPTIMITZATS */}
+    <div class="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
       
-      {/* 🌟 BOTÓ SECUNDARI: Estil Outline que reacciona amb els colors del club */}
+      {/* 🔵 BOTÓ PRINCIPAL: Canviat a etiqueta <a> per assegurar el color blau i hover fluid a un blau més viu */}
+      <a
+        href="/equips"
+        class="flex gap-2.5 items-center justify-center bg-[#1D4ED8] hover:bg-blue-600 text-white font-black px-8 py-3.5 rounded-xl border-2 border-blue-400 hover:border-blue-300 text-sm tracking-wide uppercase w-full sm:w-auto transition-colors duration-200 ease-in-out"
+      >
+        <Icon class="text-white w-5 h-5" name="uil:basketball" />
+        Equips del club
+      </a>
+      
+      {/* 🟡 BOTÓ SECUNDARI: Club */}
       <a
         href="/club"
-        class="flex gap-2 items-center justify-center border-2 border-slate-700 hover:border-blue-400 bg-slate-900/40 text-slate-300 hover:text-blue-400 font-bold px-6 py-3 rounded-xl transition duration-200"
+        class="flex gap-2.5 items-center justify-center border-2 border-[#FBBF24] bg-[#FBBF24]/5 hover:bg-[#FBBF24] text-[#FBBF24] hover:text-[#1D4ED8] font-black px-8 py-3.5 rounded-xl text-sm tracking-wide uppercase w-full sm:w-auto transition-colors duration-200 ease-in-out"
       >
         <Icon class="w-4 h-4" name="uil:dna" />
-        Club
+        El Nostre DNA
       </a>
     </div>
   </div>
+
 </main>

@@ -62,26 +62,30 @@ const menuitems = [
     title: "Patrocinadors",
     path: "/patrocinadors"
   },
-
-
 ];
 ---
 
 <Container>
-  {/* 🌟 BARRA DE NAVEGACIÓ ESTILITZADA (Fosc prèmium, flotant i amb efecte vidre) */}
-  <header class="flex flex-col lg:flex-row justify-between items-center my-6 bg-slate-900/95 backdrop-blur-md border border-slate-800 px-6 py-4 rounded-3xl shadow-xl shadow-slate-950/20 relative z-50">
+  <header class="flex flex-col lg:flex-row justify-between items-stretch lg:items-center my-6 bg-slate-900/95 backdrop-blur-md border border-slate-800 px-6 py-4 rounded-3xl shadow-xl shadow-slate-950/20 relative z-50">
     <Astronav>
+      {/* CONTENIDOR CORREGIT PER A MÒBILS */}
       <div class="flex w-full lg:w-auto items-center justify-between">
-        {/* Logo del club actualitzat a text blanc */}
-        <a href="/" class="flex items-center space-x-2 text-xl font-black text-white uppercase tracking-tight hover:opacity-90 transition-opacity">
-          <Icon class="w-6 h-6 text-azulElectrico" name="uil:basketball" /> 
+        
+        {/* LOGO I TÍTOL */}
+        <a href="/" class="flex items-center space-x-3 text-lg sm:text-xl font-black text-white uppercase tracking-tight hover:opacity-90 transition-opacity select-none">
+          <img 
+            src="/logo.png" 
+            alt="Logo AEB La Palma" 
+            class="w-10 h-10 object-contain rounded-md"
+          /> 
           <span>AEB La Palma</span>
         </a>
         
-        {/* Icona del menú mòbil en blanc per millorar el contrast */}
-        <div class="block lg:hidden">
-          <MenuIcon class="w-6 h-6 text-white hover:text-amarilloClub transition-colors" />
+        {/* ICONA MÒBIL */}
+        <div class="block lg:hidden translate-y-[2px]">
+          <MenuIcon class="w-10 h-10 text-white hover:text-amarilloClub bg-transparent hover:bg-slate-800/60 p-2 rounded-xl transition-all duration-200 cursor-pointer" />
         </div>
+
       </div>
       
       <MenuItems class="hidden w-full lg:w-auto mt-4 lg:flex lg:mt-0 items-center">
@@ -101,7 +105,6 @@ const menuitems = [
 
                 {(!item.children || item.children.length === 0) && (
                   <li>
-                    {/* Textos del menú en gris clar i groc club al fer hover */}
                     <a
                       href={item.path}
                       class="flex lg:px-3 py-2 items-center text-slate-300 hover:text-amarilloClub font-semibold transition-colors duration-200">
@@ -118,7 +121,7 @@ const menuitems = [
             ))
           }
           
-          {/* 📱 XARXES SOCIALS - VERSIÓ MÒBIL (Ocult en pantalles grans) */}
+          {/* 📱 XARXES SOCIALS - VERSIÓ MÒBIL */}
           <li class="lg:hidden border-t border-slate-800 mt-4 pt-4 grid grid-cols-2 gap-4">
             <a 
               href="https://instagram.com/aeblapalma" 
@@ -144,7 +147,7 @@ const menuitems = [
               href="https://tiktok.com/@aeblapalma" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="flex items-center text-slate-400 hover:text-white transition-colors"
+              class="flex items-center text-slate-400 hover:text-[#FE2C55] transition-colors"
             >
               <Icon class="w-5 h-5 mr-2" name="uil:video" />
               <span>TikTok</span>
@@ -164,7 +167,7 @@ const menuitems = [
       </MenuItems>
     </Astronav>
     
-    {/* 💻 XARXES SOCIALS - VERSIÓ ESCRIPTORI (Ocult en mòbils) */}
+    {/* 💻 XARXES SOCIALS - VERSIÓ ESCRIPTORI */}
     <div class="hidden lg:flex items-center gap-1">
       <a 
         href="https://facebook.com/AEBLaPalma/" 
@@ -186,12 +189,13 @@ const menuitems = [
         <Icon class="w-5 h-5" name="uil:instagram" />
       </a>
 
+      {/* 🌟 CORREGIT: Canviat 'hover:text-white' per 'hover:text-[#FE2C55]' perquè es vegi vermell en ordinadors */}
       <a 
         href="https://tiktok.com/@aeblapalma" 
         target="_blank" 
         rel="noopener noreferrer" 
         title="TikTok"
-        class="text-slate-400 hover:text-white transition-colors p-2"
+        class="text-slate-400 hover:text-[#FE2C55] transition-colors p-2"
       >
         <Icon class="w-5 h-5" name="uil:video" />
       </a>

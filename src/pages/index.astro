@@ -11,6 +11,7 @@ import { sanityClient } from "sanity:client";
 // 🌟 Importacions de components
 import PatrocinadorsLogos from "../components/patrocinadors.astro";
 import Gallery from "../components/gallery.astro"; 
+import AvisosUrgents from "../components/AvisosUrgents.astro"; // 👈 AFEGEIX AIXÒ AQUÍ
 
 // 🌟 Petició de patrocinadors
 const patrocinadors = await sanityClient.fetch(`*[_type == "patrocinador"]{ nom, logo, link }`);
@@ -27,6 +28,10 @@ const fonsDePantalla = configuracioWeb?.imatge_fons || "https://images.unsplash.
 ---
 
 <Layout title="AEB La Palma - Més que un club, una família" bgImage={fonsDePantalla}>
+  
+  {/* 🔴 MODIFICAT: La tira d'avisos es col·loca aquí, a dalt de tot de la pàgina */}
+  <AvisosUrgents />
+
   <Container>
     <Hero />
     <Features />
