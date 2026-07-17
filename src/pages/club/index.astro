@@ -5,54 +5,55 @@ import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="El Club - AEB La Palma">
-  <section class="relative bg-slate-950 rounded-[2.5rem] py-20 px-6 md:px-16 my-16 border border-slate-900 overflow-hidden shadow-2xl">
+  {/* 🔴 MODIFICAT: S'ha eliminat el fons bg-slate-950, la vora i el contorn tancat del section */}
+  <section class="relative py-12 md:py-20 overflow-hidden z-10">
     
-    <!-- 🎨 EFECTES DE LLUM DE FONS -->
-    <div class="absolute -top-40 right-10 w-[500px] h-[500px] bg-azulElectrico/10 rounded-full blur-[150px] pointer-events-none"></div>
-    <div class="absolute -bottom-40 -left-10 w-[500px] h-[500px] bg-amarilloClub/5 rounded-full blur-[150px] pointer-events-none"></div>
+    <!-- 🎨 EFECTES DE LLUM AMBIENTAL OBERTS (Més grans per difuminar-se millor) -->
+    <div class="absolute -top-20 -right-20 w-[600px] h-[600px] bg-[#1D4ED8]/10 rounded-full blur-[160px] pointer-events-none"></div>
+    <div class="absolute bottom-0 -left-20 w-[600px] h-[600px] bg-[#FBBF24]/5 rounded-full blur-[160px] pointer-events-none"></div>
 
-    <div class="relative z-10 max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
       
       <!-- 🏀 CAPÇALERA PRINCIPAL -->
       <div class="text-center max-w-3xl mx-auto mb-16">
-        <span class="inline-block bg-slate-900 border border-slate-800 text-amarilloClub uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-inner mb-4">
+        <span class="inline-block bg-slate-900/80 border border-slate-800 text-[#FBBF24] uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-md mb-4">
           Benvinguts a l'AEB La Palma
         </span>
         <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tight">
           MÉS QUE UN CLUB, <br/>
-          <span class="text-azulElectrico">UNA GRAN FAMÍLIA</span>
+          <span class="text-[#1D4ED8]">UNA GRAN FAMÍLIA</span>
         </h1>
-        <p class="text-lg mt-6 text-slate-400 leading-relaxed">
+        <p class="text-lg mt-6 text-slate-300/90 leading-relaxed font-medium">
           Des de la nostra fundació, treballem per transmetre els valors de l'esport, el compromís i el treball en equip a través del bàsquet. Volem que cada jugador i jugadora trobi aquí el seu espai per créixer, tant a la pista com a la vida.
         </p>
       </div>
 
-      <!-- 🗺️ ENLLAÇOS PRINCIPALS (Triple Banner Interactiu) -->
+      <!-- 🗺️ ENLLAÇOS PRINCIPALS (Triple Banner Interactiu sense requandre exterior) -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         
         <!-- Targeta 1: QUI SOM (Brillantor Blau Elèctric) -->
         <a 
           href="/club/quisom" 
-          class="group relative flex flex-col justify-between bg-slate-900/40 backdrop-blur-md border border-slate-900 p-8 rounded-[2rem] overflow-hidden hover:border-[#1D4ED8]/30 hover:shadow-xl hover:shadow-[#1D4ED8]/5 transition-all duration-500 min-h-[380px]"
+          class="group relative flex flex-col justify-between bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-8 rounded-[2rem] overflow-hidden hover:border-[#1D4ED8]/50 hover:shadow-2xl hover:shadow-[#1D4ED8]/5 transition-all duration-500 min-h-[380px]"
         >
           <!-- Gradient intern al 10% -->
-          <div class="absolute inset-0 bg-gradient-to-br from-[#1D4ED8]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-[#1D4ED8]/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
           <div class="relative z-10">
             <!-- Icona amb canvi de color a Blau Elèctric actiu en hover -->
-            <div class="w-14 h-14 bg-slate-900 border border-slate-800 text-[#1D4ED8] rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:text-white group-hover:bg-[#1D4ED8] group-hover:border-[#1D4ED8] transition-all duration-300">
+            <div class="w-14 h-14 bg-slate-950 border border-slate-800 text-[#1D4ED8] rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:text-white group-hover:bg-[#1D4ED8] group-hover:border-[#1D4ED8] transition-all duration-300">
               <Icon class="w-7 h-7" name="uil:users-alt" />
             </div>
             
             <h2 class="text-2xl font-black text-white uppercase tracking-tight mt-8">
               Qui som
             </h2>
-            <p class="text-slate-400 mt-4 leading-relaxed text-sm">
+            <p class="text-slate-300/80 mt-4 leading-relaxed text-sm font-medium">
               Descobreix la nostra filosofia de club, els valors que ens defineixen (compromís, esforç i respecte) i l'equip humà i junta directiva que fa possible que la pilota continuï botant cada dia.
             </p>
           </div>
 
-          <div class="mt-8 flex items-center gap-2 text-white font-bold text-sm tracking-wider uppercase group-hover:text-amarilloClub transition-colors duration-300 relative z-10">
+          <div class="mt-8 flex items-center gap-2 text-white font-bold text-sm tracking-wider uppercase group-hover:text-[#FBBF24] transition-colors duration-300 relative z-10">
             <span>Filosofia</span>
             <Icon class="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" name="uil:arrow-right" />
           </div>
@@ -61,54 +62,54 @@ import { Icon } from "astro-icon/components";
         <!-- Targeta 2: LA NOSTRA HISTÒRIA (Brillantor Groc Club) -->
         <a 
           href="/club/historia" 
-          class="group relative flex flex-col justify-between bg-slate-900/40 backdrop-blur-md border border-slate-900 p-8 rounded-[2rem] overflow-hidden hover:border-[#FBBF24]/30 hover:shadow-xl hover:shadow-[#FBBF24]/5 transition-all duration-500 min-h-[380px]"
+          class="group relative flex flex-col justify-between bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-8 rounded-[2rem] overflow-hidden hover:border-[#FBBF24]/50 hover:shadow-2xl hover:shadow-[#FBBF24]/5 transition-all duration-500 min-h-[380px]"
         >
           <!-- Gradient intern al 10% -->
-          <div class="absolute inset-0 bg-gradient-to-br from-[#FBBF24]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-[#FBBF24]/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
           <div class="relative z-10">
             <!-- Icona amb canvi de color a Groc Club actiu en hover -->
-            <div class="w-14 h-14 bg-slate-900 border border-slate-800 text-[#FBBF24] rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:text-white group-hover:bg-[#FBBF24] group-hover:border-[#FBBF24] transition-all duration-300">
+            <div class="w-14 h-14 bg-slate-950 border border-slate-800 text-[#FBBF24] rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:text-slate-950 group-hover:bg-[#FBBF24] group-hover:border-[#FBBF24] transition-all duration-300">
               <Icon class="w-7 h-7" name="uil:history" />
             </div>
             
             <h2 class="text-2xl font-black text-white uppercase tracking-tight mt-8">
               La nostra història
             </h2>
-            <p class="text-slate-400 mt-4 leading-relaxed text-sm">
+            <p class="text-slate-300/80 mt-4 leading-relaxed text-sm font-medium">
               Viatja en el temps a través dels nostres més de 30 anys de trajectòria. Des dels inicis jugant a la pista exterior de l'escola fins a consolidar-nos com el club referent de bàsquet a La Palma.
             </p>
           </div>
 
-          <div class="mt-8 flex items-center gap-2 text-white font-bold text-sm tracking-wider uppercase group-hover:text-azulElectrico transition-colors duration-300 relative z-10">
+          <div class="mt-8 flex items-center gap-2 text-white font-bold text-sm tracking-wider uppercase group-hover:text-[#FBBF24] transition-colors duration-300 relative z-10">
             <span>La línia del temps</span>
             <Icon class="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" name="uil:arrow-right" />
           </div>
         </a>
 
-        <!-- Targeta 3: EQUIPAMENTS (Brillantor Turquesa) -->
+        <!-- Targeta 3: EQUIPAMENTS (Brillantor Cohesiva) -->
         <a 
           href="/club/equipaments" 
-          class="group relative flex flex-col justify-between bg-slate-900/40 backdrop-blur-md border border-slate-900 p-8 rounded-[2rem] overflow-hidden hover:border-teal-500/30 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-500 min-h-[380px]"
+          class="group relative flex flex-col justify-between bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-8 rounded-[2rem] overflow-hidden hover:border-slate-700 hover:shadow-2xl hover:shadow-white/5 transition-all duration-500 min-h-[380px]"
         >
-          <!-- Gradient intern al 10% -->
-          <div class="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <!-- Gradient intern suau -->
+          <div class="absolute inset-0 bg-gradient-to-br from-slate-800/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
           <div class="relative z-10">
-            <!-- Icona amb canvi de color a Turquesa actiu en hover -->
-            <div class="w-14 h-14 bg-slate-900 border border-slate-800 text-teal-500 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:text-white group-hover:bg-teal-500 group-hover:border-teal-500 transition-all duration-300">
+            <!-- Icona adaptada al fons modern -->
+            <div class="w-14 h-14 bg-slate-950 border border-slate-800 text-slate-300 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:text-white group-hover:bg-slate-800 group-hover:border-slate-700 transition-all duration-300">
               <Icon class="w-7 h-7" name="uil:map-marker" />
             </div>
             
             <h2 class="text-2xl font-black text-white uppercase tracking-tight mt-8">
               Equipaments
             </h2>
-            <p class="text-slate-400 mt-4 leading-relaxed text-sm">
+            <p class="text-slate-300/80 mt-4 leading-relaxed text-sm font-medium">
               Descobreix els espais on bateguem dia a dia: el pavelló poliesportiu municipal, la piscina i la resta d'instal·lacions on entrenem, competim i gaudim de l'esport.
             </p>
           </div>
 
-          <div class="mt-8 flex items-center gap-2 text-white font-bold text-sm tracking-wider uppercase group-hover:text-teal-400 transition-colors duration-300 relative z-10">
+          <div class="mt-8 flex items-center gap-2 text-white font-bold text-sm tracking-wider uppercase group-hover:text-[#FBBF24] transition-colors duration-300 relative z-10">
             <span>Explora els espais</span>
             <Icon class="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" name="uil:arrow-right" />
           </div>
@@ -116,23 +117,23 @@ import { Icon } from "astro-icon/components";
 
       </div>
 
-      <!-- 📈 COUNTER DE XIFRES -->
-      <div class="mt-20 pt-16 border-t border-slate-900 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <!-- 📈 COUNTER DE XIFRES (Més definit sobre el fons obert) -->
+      <div class="mt-20 pt-16 border-t border-slate-800/60 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         <div>
           <span class="block text-4xl md:text-5xl font-black text-white">+30</span>
-          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-1 block">Anys d'història</span>
+          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-2 block">Anys d'història</span>
         </div>
         <div>
-          <span class="block text-4xl md:text-5xl font-black text-azulElectrico">15+</span>
-          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-1 block">Equips federats</span>
+          <span class="block text-4xl md:text-5xl font-black text-[#1D4ED8]">15+</span>
+          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-2 block">Equips federats</span>
         </div>
         <div>
           <span class="block text-4xl md:text-5xl font-black text-white">200+</span>
-          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-1 block">Jugadors i jugadores</span>
+          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-2 block">Jugadors i jugadores</span>
         </div>
         <div>
-          <span class="block text-4xl md:text-5xl font-black text-amarilloClub">1</span>
-          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-1 block">Única afició</span>
+          <span class="block text-4xl md:text-5xl font-black text-[#FBBF24]">1</span>
+          <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-400 mt-2 block">Única afició</span>
         </div>
       </div>
 
