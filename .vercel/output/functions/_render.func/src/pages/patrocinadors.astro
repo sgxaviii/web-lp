@@ -1,0 +1,89 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import { sanityClient } from "sanity:client";
+import imageUrlBuilder from "@sanity/image-url";
+
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// Obtenim tots els patrocinadors de Sanity ordenats alfabèticament
+const patrocinadors = await sanityClient.fetch(`*[_type == "patrocinador"] | order(nom asc)`);
+---
+
+<Layout title="Patrocinadors - AEB La Palma">
+  <Container>
+    <div class="mx-auto max-w-5xl mt-14 relative z-10 mb-24">
+      
+      {/* Capçalera de la pàgina */}
+      <div class="border-b border-slate-900 pb-6 mb-12 text-center md:text-left">
+        <h1 class="text-4xl lg:text-5xl font-black text-slate-50 uppercase tracking-tight">
+          Patrocinadors Oficials
+        </h1>
+        <p class="text-slate-400 mt-4 text-lg max-w-2xl leading-relaxed">
+          Gràcies al compromís i suport d'aquestes empreses i entitats, fem possible que l'esport, la competició i els nostres valors segueixin creixent dia a dia.
+        </p>
+      </div>
+
+      {/* Grid de patrocinadors */}
+      {patrocinadors.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {patrocinadors.map((patro) => {
+            // 🌟 Si té link, la targeta sencera esdevé una etiqueta <a>, si no, un <div>
+            const CardTag = patro.link ? "a" : "div";
+            
+            return (
+              <CardTag 
+                href={patro.link} 
+                target={patro.link ? "_blank" : undefined} 
+                rel={patro.link ? "noopener noreferrer" : undefined}
+                class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 shadow-md backdrop-blur-sm flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] group block cursor-pointer text-left"
+              >
+                
+                <div>
+                  {/* Contenidor del Logo */}
+                  <div class="bg-slate-950/50 w-full p-6 rounded-xl border border-slate-800/80 h-36 flex items-center justify-center mb-5 shadow-inner">
+                    <img 
+                      src={urlFor(patro.logo).width(400).url()} 
+                      alt={`Logo de ${patro.nom}`} 
+                      class="max-h-full max-w-full object-contain filter drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* Títol */}
+                  <h2 class="text-xl font-bold text-white mb-2 group-hover:text-amarilloClub transition-colors">
+                    {patro.nom}
+                  </h2>
+
+                  {/* Descripció opcional */}
+                  {patro.descripcio && (
+                    <p class="text-sm text-gray-400 line-clamp-3 mb-4 leading-relaxed">
+                      {patro.descripcio}
+                    </p>
+                  )}
+                </div>
+
+                {/* 🌟 Botó d'enllaç web visual (ara és un span, ja que el link és tota la targeta) */}
+                {patro.link && (
+                  <span class="mt-4 inline-flex items-center justify-center gap-2 bg-slate-800 group-hover:bg-amarilloClub group-hover:text-azulOscuro text-white text-xs font-black px-4 py-3 rounded-xl transition-all duration-300 shadow-md w-full uppercase tracking-wider">
+                    Visitar Web Oficial ↗
+                  </span>
+                )}
+
+              </CardTag>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="text-center bg-slate-900/40 p-12 rounded-2xl border border-slate-800 border-dashed max-w-xl mx-auto">
+          <p class="text-gray-400 text-lg">Actualment estem actualitzant la llista de patrocinadors.</p>
+          <p class="text-slate-400 text-sm mt-2">Vols patrocinar al club? Posa't en contacte amb la junta directiva!</p>
+        </div>
+      )}
+
+    </div>
+  </Container>
+</Layout>

@@ -1,0 +1,86 @@
+import { $ as $$Layout, a as $$Container, b as $$Icon } from '../chunks/Layout_BLIPE-EI.mjs';
+import { f as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../chunks/astro/server_BknYMl1Y.mjs';
+import 'piccolore';
+import { createClient } from '@sanity/client';
+export { renderers } from '../renderers.mjs';
+
+const $$Multimedia = createComponent(async ($$result, $$props, $$slots) => {
+  const client = createClient({
+    projectId: "mytf86dr",
+    // El teu Project ID de Sanity
+    dataset: "production",
+    // El teu dataset
+    useCdn: true,
+    // true per a respostes súper ràpides
+    apiVersion: "2026-03-15"
+    // Versió de l'API de Sanity
+  });
+  const query = `*[_type == "album"] | order(_createdAt desc) {
+  _id,
+  titol,
+  descripcio,
+  data_esdeveniment,
+  categoria,
+  tipus,
+  enllac_amazon,
+  "imatge_portada": imatge_portada.asset->url,
+  color_tema
+}`;
+  const albums = await client.fetch(query);
+  const colorMap = {
+    blau: {
+      border: "hover:border-azulElectrico/40",
+      shadow: "hover:shadow-2xl hover:shadow-azulElectrico/25",
+      gradient: "from-azulElectrico/20",
+      text: "text-azulElectrico",
+      bgHover: "group-hover:bg-azulElectrico",
+      borderHover: "group-hover:border-azulElectrico",
+      badge: "bg-azulElectrico/10 text-azulElectrico border-azulElectrico/20"
+    },
+    groc: {
+      border: "hover:border-amarilloClub/45",
+      shadow: "hover:shadow-2xl hover:shadow-amarilloClub/20",
+      gradient: "from-amarilloClub/18",
+      text: "text-amarilloClub",
+      bgHover: "group-hover:bg-amarilloClub",
+      borderHover: "group-hover:border-amarilloClub",
+      badge: "bg-amarilloClub/10 text-amarilloClub border-amarilloClub/20"
+    },
+    turquesa: {
+      border: "hover:border-teal-500/45",
+      shadow: "hover:shadow-2xl hover:shadow-teal-500/15",
+      gradient: "from-teal-500/15",
+      text: "text-teal-500",
+      bgHover: "group-hover:bg-teal-500",
+      borderHover: "group-hover:border-teal-500",
+      badge: "bg-teal-500/10 text-teal-400 border-teal-500/20"
+    }
+  };
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Multim\xE8dia - AEB La Palma" }, { "default": async ($$result2) => renderTemplate` ${renderComponent($$result2, "Container", $$Container, {}, { "default": async ($$result3) => renderTemplate` ${maybeRenderHead()}<div class="mt-14 relative z-10">  <div class="absolute top-10 left-1/4 w-[500px] h-[500px] bg-azulElectrico/5 rounded-full blur-[120px] pointer-events-none -z-10"></div> <div class="absolute top-1/2 right-10 w-[400px] h-[400px] bg-amarilloClub/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>  <section class="text-center max-w-3xl mx-auto pt-8 pb-12 relative z-10"> <span class="inline-block bg-slate-950/90 border border-slate-800 text-amarilloClub uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-inner mb-4">
+Galeria Oficial
+</span> <h1 class="text-5xl lg:text-6xl font-black text-white mt-4 uppercase tracking-tight leading-none">
+ELS NOSTRES <br> <span class="text-azulElectrico">MOMENTS EN IMATGES</span> </h1>  <p class="text-lg mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed">
+Accedeix a totes les nostres carpetes compartides d'Amazon Photos. Memòria gràfica dels partits, presentacions, tornejos i activitats del club.
+</p> </section>  <hr class="border-slate-800/80 my-4">  <section class="py-8 relative z-10"> <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"> ${albums && albums.map((album) => {
+    const styles = colorMap[album.color_tema] || colorMap.blau;
+    const fallbackImage = "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=600&auto=format&fit=crop";
+    return (
+      /* 🔴 CORREGIT: Targetes passades a fons bg-slate-950/60 amb vores fosques premium per unificar la línia de disseny */
+      renderTemplate`<a${addAttribute(album.enllac_amazon, "href")} target="_blank" rel="noopener noreferrer"${addAttribute(`group relative flex flex-col justify-between bg-slate-950/60 backdrop-blur-md border border-slate-800/80 rounded-[2rem] overflow-hidden transition-all duration-500 min-h-[420px] ${styles.border} ${styles.shadow}`, "class")}> <div${addAttribute(`absolute inset-0 bg-gradient-to-br ${styles.gradient} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`, "class")}></div> <div>  <div class="relative h-48 w-full overflow-hidden border-b border-slate-800/80"> <img${addAttribute(album.imatge_portada || fallbackImage, "src")}${addAttribute(album.titol, "alt")} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy"> <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div> ${album.categoria && renderTemplate`<span class="absolute top-4 left-4 text-xs font-black uppercase tracking-wider bg-slate-950/90 border border-slate-850 text-white px-3 py-1 rounded-full backdrop-blur-sm"> ${album.categoria} </span>`} <div${addAttribute(`absolute top-4 right-4 w-9 h-9 rounded-xl border flex items-center justify-center backdrop-blur-sm ${styles.badge}`, "class")}> ${album.tipus === "fotos" && renderTemplate`${renderComponent($$result3, "Icon", $$Icon, { "class": "w-5 h-5", "name": "uil:camera" })}`} ${album.tipus === "videos" && renderTemplate`${renderComponent($$result3, "Icon", $$Icon, { "class": "w-5 h-5", "name": "uil:video" })}`} ${album.tipus === "mix" && renderTemplate`${renderComponent($$result3, "Icon", $$Icon, { "class": "w-5 h-5", "name": "uil:scenery" })}`} </div> </div>  <div class="p-6 relative z-10"> ${album.data_esdeveniment && renderTemplate`<span class="text-xs font-bold text-slate-400 uppercase tracking-widest block"> ${album.data_esdeveniment} </span>`} <h2 class="text-xl font-black text-white uppercase tracking-tight mt-2 line-clamp-1"> ${album.titol} </h2> ${album.descripcio && renderTemplate`<p class="text-slate-350 mt-3 leading-relaxed text-sm line-clamp-3"> ${album.descripcio} </p>`} </div> </div>  <div class="px-6 pb-6 pt-2 flex items-center justify-between relative z-10"> <div class="flex items-center gap-2 text-white font-bold text-sm tracking-wider uppercase group-hover:text-white transition-colors duration-300"> <span>Veure àlbum</span> ${renderComponent($$result3, "Icon", $$Icon, { "class": "w-4 h-4 transform group-hover:translate-x-1.5 transition-transform duration-300", "name": "uil:external-link-alt" })} </div> <div${addAttribute(`w-10 h-10 bg-slate-950 border border-slate-800/80 rounded-xl flex items-center justify-center shadow-inner ${styles.text} ${styles.bgHover} ${styles.borderHover} group-hover:text-white transition-all duration-300`, "class")}> ${renderComponent($$result3, "Icon", $$Icon, { "class": "w-5 h-5", "name": "uil:image-v" })} </div> </div> </a>`
+    );
+  })} </div> </section> </div> ` })} ` })}`;
+}, "/home/xmomplet/projectes/web-lp/src/pages/multimedia.astro", void 0);
+
+const $$file = "/home/xmomplet/projectes/web-lp/src/pages/multimedia.astro";
+const $$url = "/multimedia";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Multimedia,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };
