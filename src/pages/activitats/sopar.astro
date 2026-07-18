@@ -55,39 +55,42 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
 
 <Layout title="Sopar de Final de Temporada - AEB La Palma">
   <Container>
-    <div class="mt-14 relative z-10">
+    {/* 🌟 AFEGIT: 'overflow-x-clip' per garantir que res surti dels marges laterals a mòbil */}
+    <div class="mt-14 relative z-10 overflow-x-clip">
       
-      {/* 🔴 CORREGIT: Llums de fons corporatius per un estil de gamma alta sobre fons fosc */}
-      <div class="absolute top-10 left-1/4 w-[500px] h-[500px] bg-azulElectrico/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-      <div class="absolute top-1/2 right-10 w-[400px] h-[400px] bg-amarilloClub/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+      {/* 🌟 CORREGIT: Contenidor aïllat amb 'overflow-hidden' per als llums de fons. 
+          D'aquesta manera s'evita per complet l'efecte zoom-out a dispositius mòbils */}
+      <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div class="absolute top-10 left-1/4 w-[500px] h-[500px] bg-azulElectrico/5 rounded-full blur-[120px]"></div>
+        <div class="absolute top-1/2 right-10 w-[400px] h-[400px] bg-amarilloClub/5 rounded-full blur-[120px]"></div>
+      </div>
       
       {/* =========================================
           HERO DE LA PÀGINA
       ========================================= */}
-      <section class="text-center max-w-3xl mx-auto pt-8 pb-12 relative z-10">
-        <span class="inline-block bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-md">
+      <section class="text-center max-w-3xl mx-auto pt-8 pb-12 relative z-10 px-4">
+        <span class="inline-block bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-md text-[10px] sm:text-xs">
           Festa del Club • Tancament de Temporada
         </span>
-        <h1 class="text-5xl lg:text-6xl font-black text-white mt-6 uppercase tracking-tight leading-none">
+        {/* 🌟 CORREGIT: Mida adaptativa text-4xl per a mòbil, escalat a text-5xl/6xl en pantalles grans */}
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white mt-6 uppercase tracking-tight leading-none">
           Sopar de <br />
           <span class="text-azulElectrico">Final de Temporada</span>
         </h1>
-        {/* 🔴 CORREGIT: El color s'ha canviat de text-slate-600 a text-slate-300 per garantir una excel·lent llegibilitat */}
-        <p class="text-lg mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed">
-          Arriba el moment més esperat per fer pinya i celebrar tots els èxits de l'any. Jugadors, entrenadors, famílies i afició ens unim en una nit plena de germanor, bon menjar i riures. No t'ho perdis!
+        <p class="text-base sm:text-lg mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed">
+          Arriba el moment més esperat per faire pinya i celebrar tots els èxits de l'any. Jugadors, entrenadors, famílies i afició ens unim en una nit plena de germanor, bon menjar i riures. No t'ho perdis!
         </p>
       </section>
 
-      {/* 🔴 CORREGIT: Separador enfosquit per adaptar-se al fons del club */}
       <hr class="border-slate-800/80 my-4" />
 
       {/* =========================================
-          SECCIÓ: TARGETES D'INFORMACIÓ CLAU (MÀXIMA INTERACTIVITAT)
+          SECCIÓ: TARGETES D'INFORMACIÓ CLAU
       ========================================= */}
-      <section class="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+      {/* 🌟 CORREGIT: Canviat a grid-cols-1 per defecte i sm:grid-cols-2 per a tauletes */}
+      <section class="py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative z-10">
         
         {/* targeta 1: Data i Hora */}
-        {/* 🔴 CORREGIT: Aplicat bg-slate-950 de vidre i vores més fines amb menys contrast cromàtic */}
         <div class="bg-slate-950/80 backdrop-blur-md text-white p-6 rounded-2xl border border-slate-800/80 shadow-lg flex items-center gap-4">
           <div class="text-amarilloClub bg-slate-900 p-3 rounded-xl shrink-0 border border-slate-800/80">
             <Icon class="w-6 h-6" name="uil:calendar-alt" />
@@ -156,8 +159,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           SECCIÓ: MENÚS DE GERMANOR (2 COLUMNES)
       ========================================= */}
       <section class="py-12 relative z-10">
-        <div class="text-center max-w-2xl mx-auto mb-12">
-          {/* 🔴 CORREGIT: Badge adaptat a la paleta fosca de gamma alta */}
+        <div class="text-center max-w-2xl mx-auto mb-12 px-4">
           <span class="inline-block bg-slate-950/90 border border-slate-800 text-slate-300 uppercase tracking-widest text-xs font-bold px-4 py-1.5 rounded-full shadow-inner">
             Gastronomia de la festa
           </span>
@@ -169,12 +171,11 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           </p>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           
           {/* COLUMNA 1: MENÚ ADULTS */}
-          {/* 🔴 CORREGIT: Eliminats el fons clar "bg-slate-55" (erroni) i la vora blanca. Passat a fons fosc de vidre premium */}
-          <div class="bg-slate-950/80 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-slate-800/80 shadow-xl flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute -right-12 -bottom-12 text-slate-900/10 pointer-events-none">
+          <div class="bg-slate-950/80 backdrop-blur-md p-6 sm:p-10 rounded-3xl border border-slate-800/80 shadow-xl flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-12 -bottom-12 text-slate-900/10 pointer-events-none hidden sm:block">
               <Icon class="w-48 h-48" name="uil:restaurant" />
             </div>
 
@@ -203,9 +204,8 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           </div>
 
           {/* COLUMNA 2: MENÚ INFANTIL */}
-          {/* 🔴 CORREGIT: Harmonitzat amb el disseny general (bg-slate-950 de vidre) i optimitzat el contrast */}
-          <div class="bg-slate-950/80 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-slate-800/80 shadow-xl flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute -right-12 -bottom-12 text-slate-900/10 pointer-events-none">
+          <div class="bg-slate-950/80 backdrop-blur-md p-6 sm:p-10 rounded-3xl border border-slate-800/80 shadow-xl flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-12 -bottom-12 text-slate-900/10 pointer-events-none hidden sm:block">
               <Icon class="w-48 h-48" name="uil:restaurant" />
             </div>
 
@@ -239,9 +239,10 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       {/* =========================================
           🌟 SECCIÓ: FOTOGRAFIES DE TEMPORADES PASSADES
       ========================================= */}
+      {/* 🌟 CORREGIT: Graella optimitzada amb gaps i aspect rati adaptat a mòbils */}
       {fotosAnysPassats && fotosAnysPassats.length > 0 && (
         <section class="py-16 relative z-10">
-          <div class="text-center max-w-2xl mx-auto mb-12">
+          <div class="text-center max-w-2xl mx-auto mb-12 px-4">
             <span class="inline-block bg-azulElectrico/15 text-azulElectrico border border-azulElectrico/30 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full">
               Història de germanor
             </span>
@@ -253,8 +254,8 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
             </p>
           </div>
 
-          {/* Graella de fotos de germanor (bento grid adaptatiu completament lliure d'overlays opacs, amb vores fosques premium) */}
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {/* Graella de fotos de germanor (bento grid adaptatiu) */}
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {fotosAnysPassats.map((foto, index) => (
               <div class={`overflow-hidden rounded-2xl bg-slate-950 shadow-lg border border-slate-800/80 hover:border-azulElectrico/50 transition-all duration-300 group ${
                 index === 0 || index === 5 ? 'md:col-span-2 md:row-span-2' : ''
@@ -263,7 +264,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
                   src={urlFor(foto.asset).width(800).auto('format').url()}
                   alt={foto.alt || "Sopar de final de temporada AEB La Palma"}
                   loading="lazy"
-                  class="w-full h-full object-cover min-h-[200px] max-h-[400px] group-hover:scale-105 transition-transform duration-500"
+                  class="w-full h-full object-cover min-h-[140px] sm:min-h-[200px] max-h-[400px] group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
             ))}
@@ -274,10 +275,9 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       {/* =========================================
           FORMULARI CTA FINAL (Inscripció)
       ========================================= */}
-      {/* 🔴 CORREGIT: Disseny final de la targeta adaptat a fons fosc, incloent fons amb efecte de vidre i botons optimitzats */}
-      <section class="my-24 max-w-3xl mx-auto text-center relative z-10">
-        <div class="bg-slate-950/80 backdrop-blur-md text-white p-8 md:p-12 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden">
-          <div class="absolute -left-10 -bottom-10 text-slate-900/10 pointer-events-none">
+      <section class="my-16 sm:my-24 max-w-3xl mx-auto text-center relative z-10 px-2">
+        <div class="bg-slate-950/80 backdrop-blur-md text-white p-6 md:p-12 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden">
+          <div class="absolute -left-10 -bottom-10 text-slate-900/10 pointer-events-none hidden sm:block">
             <Icon class="w-60 h-60" name="uil:crockery" />
           </div>
           
@@ -285,10 +285,10 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
             <span class="text-amarilloClub font-black text-xs uppercase tracking-widest">
               Reserva la teva cadira!
             </span>
-            <h2 class="text-3xl lg:text-4xl font-black text-white uppercase mt-2">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white uppercase mt-2">
               Confirma la teva <span class="text-amarilloClub">assistència</span>
             </h2>
-            <p class="text-slate-300 mt-4 max-w-lg mx-auto leading-relaxed text-sm md:text-base">
+            <p class="text-slate-300 mt-4 max-w-lg mx-auto leading-relaxed text-sm md:text-base px-2">
               Preguem que feu la reserva de tiquets abans de la data límit indicada. Això ens ajuda a garantir el correcte càtering i organització de les taules.
             </p>
 
@@ -297,14 +297,14 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
                 href={linkInscripcio} 
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center gap-2 bg-azulElectrico hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg shadow-azulElectrico/20 hover:scale-102"
+                class="inline-flex items-center justify-center gap-2 bg-azulElectrico hover:bg-blue-700 text-white font-black px-6 sm:px-8 py-4 rounded-2xl transition duration-200 shadow-lg shadow-azulElectrico/20 hover:scale-[1.02] text-sm sm:text-base"
               >
                 <Icon class="w-5 h-5" name="uil:clipboard-notes" />
                 Reservar el meu tiquet
               </a>
               <a 
                 href="/contact" 
-                class="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-4 rounded-2xl border border-slate-800 transition duration-200 hover:border-slate-700"
+                class="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-4 rounded-2xl border border-slate-800 transition duration-200 hover:border-slate-700 text-sm sm:text-base"
               >
                 Dubtes? Contacta amb el club
               </a>

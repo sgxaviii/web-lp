@@ -4,7 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 import { Icon } from "astro-icon/components";
 
-// 🌟 Importem el client de Sanity i el constructor d'URLs d'imatges
+// Importem el client de Sanity i el constructor d'URLs d'imatges
 import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
 
@@ -14,7 +14,7 @@ function urlFor(source) {
   return builder.image(source);
 }
 
-// 🌟 CONSULTA: Demanem les dades del torneig i els links de destí
+// CONSULTA: Demanem les dades del torneig i els links de destí
 const dadesTorneig = await sanityClient.fetch(
   `*[_type == "torneig3x3"][0]{
     edicio,
@@ -51,42 +51,44 @@ const {
   linkInscripcio = "https://docs.google.com/forms/"
 } = dadesTorneig || {};
 
-// 🌟 LÒGICA DE MAPS: Si no hi ha enllaç a Sanity, creem una cerca de Google Maps automàtica
+// LÒGICA DE MAPS: Si no hi ha enllaç a Sanity, creem una cerca de Google Maps automàtica
 const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lloc)}`;
 ---
 
 <Layout title={`${edicio} Torneig 3x3 d'Estiu - AEB La Palma`}>
   <Container>
-    <div class="mt-14 relative z-10">
+    {/* 🌟 AFEGIT: 'overflow-x-clip' al contenidor pare per evitar desbordaments horitzontals en mòbils */}
+    <div class="mt-14 relative z-10 overflow-x-clip animate-fade-in">
       
-      {/* 🔴 CORREGIT: Llums de fons corporatius que floten darrere la pàgina per un estil premium de lliga */}
-      <div class="absolute top-10 left-1/4 w-[500px] h-[500px] bg-[#1D4ED8]/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-      <div class="absolute top-1/2 right-10 w-[400px] h-[400px] bg-amarilloClub/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+      {/* 🌟 CORREGIT: Contenidor aïllat amb 'overflow-hidden' per als llums de fons. 
+          Així mai més sortiran de la pantalla ni faran l'efecte zoom-out a mòbil. */}
+      <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div class="absolute top-10 left-1/4 w-[500px] h-[500px] bg-[#1D4ED8]/5 rounded-full blur-[120px]"></div>
+        <div class="absolute top-1/2 right-10 w-[400px] h-[400px] bg-amarilloClub/5 rounded-full blur-[120px]"></div>
+      </div>
       
       {/* =========================================
           HERO DE LA PÀGINA
       ========================================= */}
-      <section class="text-center max-w-3xl mx-auto pt-8 pb-12 relative z-10">
-        <span class="inline-block bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-md">
+      <section class="text-center max-w-3xl mx-auto pt-8 pb-12 relative z-10 px-4">
+        <span class="inline-block bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-4 py-1.5 rounded-full shadow-md text-[10px] sm:text-xs">
           L'esdeveniment de l'estiu • Inscripcions Obertes
         </span>
-        <h1 class="text-5xl lg:text-6xl font-black text-white mt-6 uppercase tracking-tight leading-none">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white mt-6 uppercase tracking-tight leading-none">
           {edicio} Torneig <br />
           <span class="text-[#1D4ED8]">3x3 d'Estiu</span>
         </h1>
-        {/* 🔴 CORREGIT: Text aclarit a text-slate-300 per contrastar millor */}
-        <p class="text-lg mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed">
+        <p class="text-base sm:text-lg mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed">
           Torna el clàssic de l'estiu a La Palma! Tres dies de bàsquet, música, servei de bar, grans premis i el millor ambient esportiu de la comarca. No et quedis sense la teva plaça!
         </p>
       </section>
 
-      {/* 🔴 CORREGIT: Separador integrat amb els tons de fons */}
       <hr class="border-slate-800/80 my-4" />
 
       {/* =========================================
           SECCIÓ: TARGETES D'INFORMACIÓ CLAU (A dalt)
       ========================================= */}
-      <section class="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+      <section class="py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative z-10">
         
         {/* targeta data */}
         <div class="bg-slate-950/80 backdrop-blur-md text-white p-6 rounded-2xl border border-slate-800/80 shadow-lg flex items-center gap-4">
@@ -112,7 +114,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
           </div>
           <div>
             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-              On es juga?
+              On es juega?
               <Icon class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-300 text-[#1D4ED8]" name="uil:external-link-alt" />
             </h3>
             <p class="text-sm font-bold text-white mt-1 leading-tight group-hover:text-[#1D4ED8] transition-colors duration-200">{lloc}</p>
@@ -154,7 +156,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       {/* =========================================
           SECCIÓ: DETALLS I CATEGORIES (2 COLUMNES)
       ========================================= */}
-      <section class="py-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start relative z-10">
+      <section class="py-12 grid lg:grid-cols-2 gap-8 lg:gap-16 items-start relative z-10">
         
         {/* Columna Esquerra: Categories del Torneig */}
         <div class="space-y-6">
@@ -170,7 +172,6 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
 
           <div class="grid gap-4 pt-4">
             {categories.map((cat) => (
-              /* 🔴 CORREGIT: Targetes de categories passades a fons fosc premium i eliminat el bg-slate-50 clar */
               <div class="flex items-center gap-4 bg-slate-950/60 backdrop-blur-sm p-4 rounded-2xl border border-slate-800/80 shadow-md hover:border-[#1D4ED8]/30 transition-all duration-300">
                 <div class="bg-[#1D4ED8]/10 text-[#1D4ED8] p-3 rounded-xl shrink-0 border border-[#1D4ED8]/20">
                   <Icon class="w-6 h-6" name={cat.icona || "uil:basketball"} />
@@ -185,9 +186,8 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
         </div>
 
         {/* Columna Dreta: Què inclou la inscripció */}
-        {/* 🔴 CORREGIT: Requadre de serveis passat a bg-slate-950 de vidre per a fons foscos */}
-        <div class="space-y-6 bg-slate-950/80 backdrop-blur-md text-white p-8 md:p-10 rounded-3xl border border-slate-800/80 shadow-xl relative overflow-hidden">
-          <div class="absolute -right-16 -bottom-16 text-slate-900/10 pointer-events-none">
+        <div class="space-y-6 bg-slate-950/80 backdrop-blur-md text-white p-6 md:p-10 rounded-3xl border border-slate-800/80 shadow-xl relative overflow-hidden">
+          <div class="absolute -right-16 -bottom-16 text-slate-900/10 pointer-events-none hidden sm:block">
             <Icon class="w-64 h-64" name="uil:basketball" />
           </div>
 
@@ -219,18 +219,17 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       {/* =========================================
           SECCIÓ: EL REGLAMENT I PREMIS
       ========================================= */}
-      {/* 🔴 CORREGIT: Secció canviada de bg-slate-50 (clar) a un elegant bloc de vidre transparent adaptat al fons fosc */}
-      <section class="py-12 bg-slate-950/40 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-slate-800/80 shadow-inner grid md:grid-cols-2 gap-8 items-center relative z-10">
+      <section class="py-12 bg-slate-950/40 backdrop-blur-md p-6 md:p-12 rounded-3xl border border-slate-800/80 shadow-inner grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10">
         <div>
-          <h3 class="text-2xl font-black text-amarilloClub uppercase flex items-center gap-2">
+          <h3 class="text-xl sm:text-2xl font-black text-amarilloClub uppercase flex items-center gap-2">
             🏆 Premis i Trofeus
           </h3>
           <p class="text-slate-300 mt-3 text-sm leading-relaxed">
-            Hi haurà trofeus per als guanyadors i finalistes de cada categoria. Per a la categoria <strong class="font-bold text-white">Sènior</strong>, a més del trofeu, hi haurà <strong class="font-bold text-white">premis en metàl·lic</strong> i obsequis dels nostres col·laboradors locals. També organitzarem un <strong class="font-bold text-white">Concurs de Triples</strong> obert a tots els participants amb premi especial!
+            Hi haurà trofeus per als guanyadors i finalistes de cada categoria. Per a la categoria <strong class="font-bold text-white">Sènior</strong>, a mès del trofeu, hi haurà <strong class="font-bold text-white">premis en metàl·lic</strong> i obsequis dels nostres col·laboradors locals. També organitzarem un <strong class="font-bold text-white">Concurs de Triples</strong> obert a tots els participants amb premi especial!
           </p>
         </div>
         <div class="border-t md:border-t-0 md:border-l border-slate-800/80 pt-6 md:pt-0 md:pl-8">
-          <h3 class="text-2xl font-black text-[#1D4ED8] uppercase flex items-center gap-2">
+          <h3 class="text-xl sm:text-2xl font-black text-[#1D4ED8] uppercase flex items-center gap-2">
             📋 Reglament
           </h3>
           <p class="text-slate-300 mt-3 text-sm leading-relaxed">
@@ -244,7 +243,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       ========================================= */}
       {galeria && galeria.length > 0 && (
         <section class="py-16 relative z-10">
-          <div class="text-center max-w-2xl mx-auto mb-12">
+          <div class="text-center max-w-2xl mx-auto mb-12 px-4">
             <span class="inline-block bg-[#1D4ED8]/15 text-[#1D4ED8] border border-[#1D4ED8]/30 uppercase tracking-widest text-xs font-bold px-3 py-1 rounded-full">
               Records i moments
             </span>
@@ -256,8 +255,8 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
             </p>
           </div>
 
-          {/* Graella de fotos moderna (Imatges completament brillants i nítides, sense cap overlay fosc) */}
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {/* Graella de fotos moderna mòbil-friendly */}
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {galeria.map((foto, index) => (
               <div class={`overflow-hidden rounded-2xl bg-slate-950 shadow-lg border border-slate-800/80 hover:border-[#1D4ED8]/50 transition-all duration-300 group ${
                 index === 1 || index === 6 ? 'md:col-span-2 md:row-span-2' : ''
@@ -266,7 +265,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
                   src={urlFor(foto.asset).width(800).auto('format').url()}
                   alt={foto.alt || "Fotografia del Torneig 3x3 AEB La Palma"}
                   loading="lazy"
-                  class="w-full h-full object-cover min-h-[200px] max-h-[400px] group-hover:scale-105 transition-transform duration-500"
+                  class="w-full h-full object-cover min-h-[140px] sm:min-h-[200px] max-h-[400px] group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
             ))}
@@ -277,10 +276,9 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
       {/* =========================================
           SOCI / CONTACTE CTA FINAL
       ========================================= */}
-      {/* 🔴 CORREGIT: Disseny del CTA adaptat al fons fosc */}
-      <section class="my-24 max-w-3xl mx-auto text-center relative z-10">
-        <div class="bg-slate-950/80 backdrop-blur-md text-white p-8 md:p-12 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden">
-          <div class="absolute -left-10 -bottom-10 text-slate-900/10 pointer-events-none">
+      <section class="my-16 sm:my-24 max-w-3xl mx-auto text-center relative z-10 px-2">
+        <div class="bg-slate-950/80 backdrop-blur-md text-white p-6 md:p-12 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden">
+          <div class="absolute -left-10 -bottom-10 text-slate-900/10 pointer-events-none hidden sm:block">
             <Icon class="w-60 h-60" name="uil:trophy" />
           </div>
           
@@ -288,10 +286,10 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
             <span class="text-amarilloClub font-black text-xs uppercase tracking-widest">
               No t'ho pensis més!
             </span>
-            <h2 class="text-3xl lg:text-4xl font-black text-white uppercase mt-2">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white uppercase mt-2">
               Inscriu el teu <span class="text-amarilloClub">Equip ara</span>
             </h2>
-            <p class="text-slate-300 mt-4 max-w-lg mx-auto leading-relaxed text-sm md:text-base">
+            <p class="text-slate-300 mt-4 max-w-lg mx-auto leading-relaxed text-sm md:text-base px-2">
               Les places són limitades per categoria per tal de garantir el correcte funcionament dels horaris del torneig. Registra el teu equip abans que s'esgotin!
             </p>
 
@@ -300,14 +298,14 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
                 href={linkInscripcio} 
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center gap-2 bg-[#1D4ED8] hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg shadow-[#1D4ED8]/20 hover:scale-102"
+                class="inline-flex items-center justify-center gap-2 bg-[#1D4ED8] hover:bg-blue-700 text-white font-black px-6 sm:px-8 py-4 rounded-2xl transition duration-200 shadow-lg shadow-[#1D4ED8]/20 hover:scale-[1.02] text-sm sm:text-base"
               >
                 <Icon class="w-5 h-5" name="uil:clipboard-notes" />
                 Formulari d'Inscripció
               </a>
               <a 
                 href="/contact" 
-                class="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-4 rounded-2xl border border-slate-800 transition duration-200 hover:border-slate-700"
+                class="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-4 rounded-2xl border border-slate-800 transition duration-200 hover:border-slate-700 text-sm sm:text-base"
               >
                 Tens dubtes? Escriu-nos
               </a>
