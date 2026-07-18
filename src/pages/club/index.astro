@@ -5,12 +5,9 @@ import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="El Club - AEB La Palma">
-  {/* 🔴 MODIFICAT: S'ha eliminat el fons bg-slate-950, la vora i el contorn tancat del section */}
   <section class="relative py-12 md:py-20 overflow-hidden z-10">
     
-    <!-- 🎨 EFECTES DE LLUM AMBIENTAL OBERTS (Més grans per difuminar-se millor) -->
-    <div class="absolute -top-20 -right-20 w-[600px] h-[600px] bg-[#1D4ED8]/10 rounded-full blur-[160px] pointer-events-none"></div>
-    <div class="absolute bottom-0 -left-20 w-[600px] h-[600px] bg-[#FBBF24]/5 rounded-full blur-[160px] pointer-events-none"></div>
+    {/* 🔴 CORREGIT: S'han eliminat els divs dels efectes de llum ambiental --> */}
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
       
