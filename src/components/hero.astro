@@ -5,10 +5,10 @@ import { Icon } from "astro-icon/components";
 
 <main class="relative grid lg:grid-cols-2 place-items-center pt-10 pb-12 md:pt-16 md:pb-28 gap-8 overflow-hidden">
   
+  {/* 🌟 CORREGIT: Afegit 'hidden lg:flex' per ocultar tota la columna del logo a la versió mòbil */}
   {/* COLUMNA LOGO */}
-  <div class="relative w-full flex justify-center py-6 order-first lg:order-last">
+  <div class="relative w-full hidden lg:flex justify-center py-6 order-first lg:order-last">
     
-    {/* Llum de fons (Glow Effect) corporatiu darrere del logo */}
     <div class="absolute w-[70%] h-[70%] bg-[#1D4ED8]/10 rounded-full blur-[80px] pointer-events-none z-0"></div>
     
     <div class="relative z-10 max-w-[280px] sm:max-w-[380px] md:max-w-[450px] lg:max-w-[500px]">
@@ -20,6 +20,7 @@ import { Icon } from "astro-icon/components";
       />
     </div>
   </div>
+  
 
   {/* COLUMNA TEXT */}
   <div class="relative z-10 text-center lg:text-left flex flex-col items-center lg:items-start">
@@ -42,7 +43,7 @@ import { Icon } from "astro-icon/components";
     {/* ⚡ BOTONS ACCENTUATS I OPTIMITZATS */}
     <div class="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
       
-      {/* 🔵 BOTÓ PRINCIPAL: Canviat a etiqueta <a> per assegurar el color blau i hover fluid a un blau més viu */}
+      {/* 🔵 BOTÓ PRINCIPAL */}
       <a
         href="/equips"
         class="flex gap-2.5 items-center justify-center bg-[#1D4ED8] hover:bg-blue-600 text-white font-black px-8 py-3.5 rounded-xl border-2 border-blue-400 hover:border-blue-300 text-sm tracking-wide uppercase w-full sm:w-auto transition-colors duration-200 ease-in-out"
@@ -51,7 +52,7 @@ import { Icon } from "astro-icon/components";
         Equips del club
       </a>
       
-      {/* 🟡 BOTÓ SECUNDARI: Club */}
+      {/* 🟡 BOTÓ SECUNDARI */}
       <a
         href="/club"
         class="flex gap-2.5 items-center justify-center border-2 border-[#FBBF24] bg-[#FBBF24]/5 hover:bg-[#FBBF24] text-[#FBBF24] hover:text-[#1D4ED8] font-black px-8 py-3.5 rounded-xl text-sm tracking-wide uppercase w-full sm:w-auto transition-colors duration-200 ease-in-out"
