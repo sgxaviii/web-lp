@@ -4,11 +4,14 @@ import { SEO } from "astro-seo";
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
 
-// 🏀 1. Importem el component d'optimització d'imatges d'Astro
+// 📊 1. Importem Vercel Analytics
+import Analytics from "@vercel/analytics/astro";
+
+// 🏀 2. Importem el component d'optimització d'imatges d'Astro
 import { Image } from "astro:assets";
 
-// 🏀 2. Importem la teva imatge local (.png) des de src/assets/
-import fonsAeb from "../assets/fons-aeb.png"; // 👈 AFEGEIX AIXÒ AQUÍ
+// 🏀 3. Importem la teva imatge local (.png) des de src/assets/
+import fonsAeb from "../assets/fons-aeb.png";
 
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
@@ -57,11 +60,13 @@ const makeTitle = title
         },
       }}
     />
+
+    <!-- 📊 Component de Vercel Analytics -->
+    <Analytics />
   </head>
   
   <body class="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
     
-    <!-- 🔴 CANVIAT: Utilitzem <img> estàndard per evitar que el motor de Vercel bloquegi la imatge -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none [backface-visibility:hidden] [transform:translate3d(0,0,0)] bg-slate-950">
       <img
         src="/fons-aeb.png" 
