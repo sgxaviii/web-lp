@@ -12,8 +12,8 @@ function urlFor(source) {
   return builder.image(source);
 }
 
-// 🌟 Demanem tots els equips a Sanity i els ordenem alfabèticament (ascendent)
-const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom asc)`);
+// 🌟 Demanem tots els equips a Sanity i els ordenem per posició (ascendent)
+const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posicio asc)`);
 ---
 
 <Layout title="Els Nostres Equips - CB Bàsquet">
@@ -37,7 +37,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(nom 
               class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amarilloClub px-5 py-2.5 rounded-full text-xs md:text-sm font-bold text-gray-300 hover:text-white transition duration-300 shadow-lg group/fed"
             >
               <span class="text-amarilloClub">🏀</span>
-              <span>Fitxa Oficial a la Federació Catalana de Basquetbol</span>
+              <span>Perfil del club a la Federació Catalana de Basquetbol</span>
               <span class="text-amarilloClub group-hover/fed:translate-x-1 transition-transform duration-200">→</span>
             </a>
           </div>
