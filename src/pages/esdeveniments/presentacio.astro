@@ -1,0 +1,274 @@
+---
+// src/pages/presentacio-equips/index.astro
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import { Icon } from "astro-icon/components";
+
+// 🌟 Importem el client i el generador d'imatges de Sanity
+import { sanityClient } from "sanity:client";
+import imageUrlBuilder from "@sanity/image-url";
+
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source) {
+  return builder.image(source);
+}
+
+// 🌟 Demanem les dades de la presentació a Sanity
+const dadesPresentacio = await sanityClient.fetch(`*[_type == "presentacioEquips"][0]{
+  ...,
+  "programaUrl": documentPrograma.asset->url,
+  equips[]{
+    nom,
+    categoria,
+    horariPresentacio,
+    foto
+  }
+}`);
+
+// 🌟 Dades de seguretat (Fallbacks) per si encara no estan definides a Sanity
+const titolHero = dadesPresentacio?.titolHero || "Presentació Oficial";
+const subtitolHero = dadesPresentacio?.subtitolHero || "Equips Temporada 2026";
+const descripcioHero = dadesPresentacio?.descripcioHero || "Tornem a omplir el poliesportiu d'il·lusió! Vine a gaudir de la gran festa del club on presentarem tots els equips, jugadors, jugadores i cos tècnic que defensaran els nostres colors aquesta temporada.";
+
+const imatgePortada = dadesPresentacio?.imatgePortada 
+  ? urlFor(dadesPresentacio.imatgePortada).width(800).height(600).fit("crop").url()
+  : "https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=800&auto=format&fit=crop";
+
+const detallsEsdeveniment = dadesPresentacio?.detalls || [
+  { 
+    titol: "Ubicació", 
+    descripcio: "Poliesportiu Municipal de La Palma", 
+    icona: "uil:map-marker",
+    enllac: "https://maps.google.com" 
+  },
+  { 
+    titol: "Hora d'Inici", 
+    descripcio: "17:30 h (Obertura de portes 17:00 h)", 
+    icona: "uil:clock" 
+  },
+  { 
+    titol: "Fotografia Oficial", 
+    descripcio: "Sessió de fotos individual i d'equip.", 
+    icona: "uil:camera" 
+  },
+  { 
+    titol: "Sorteig i Rifa", 
+    descripcio: "Gran sorteig de material esportiu del club.", 
+    icona: "uil:ticket" 
+  }
+];
+
+const escaleta = dadesPresentacio?.escaleta || [
+  { hora: "17:00 h", activitat: "Obertura de portes i concentració de jugadors/es", estat: "Confirmat" },
+  { hora: "17:30 h", activitat: "Inici de la desfilada d'equips (de l'Escoleta al Sènior)", estat: "En directe" },
+  { hora: "18:45 h", activitat: "Parlaments oficials i foto de família de la junta i tècnics", estat: "Destacat" },
+  { hora: "19:15 h", activitat: "Sorteig de la rifa de la temporada i cloenda", estat: "Final" }
+];
+
+const recomanacions = dadesPresentacio?.recomanacions || [
+  "Els jugadors/es han de venir equipats amb l'equipació oficial de joc.",
+  "Es prega als familiars i aficionats ocupar les meitats superiors de la graderia.",
+  "Servei de bar actiu durant tot l'esdeveniment a càrrec del club."
+];
+
+const linkPrograma = dadesPresentacio?.linkPrograma || dadesPresentacio?.programaUrl || "#";
+const emailContacte = dadesPresentacio?.emailContacte || "info@aeblapalma.cat";
+const telefonContacte = dadesPresentacio?.telefonContacte || "93 000 00 00";
+---
+
+<Layout title={`${titolHero} - ${subtitolHero}`}>
+  <Container>
+    <div class="mt-14 relative z-10">
+      
+      {/* =========================================
+          HERO DINÀMIC
+      ========================================= */}
+      <section class="grid lg:grid-cols-2 gap-8 items-center pt-8 pb-12">
+        <div>
+          <span class="bg-amarilloClub text-azulOscuro uppercase tracking-wider text-xs font-black px-3 py-1 rounded-full shadow-sm">
+            Esdeveniment Oficial • Poliesportiu Municipal
+          </span>
+          <h1 class="text-5xl lg:text-6xl font-black text-slate-50 mt-4 uppercase tracking-tight leading-none">
+            {titolHero} <br />
+            <span class="text-azulElectrico">{subtitolHero}</span>
+          </h1>
+          <p class="text-lg mt-6 text-slate-400 max-w-xl leading-relaxed">
+            {descripcioHero}
+          </p>
+          
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a 
+              href="#programa"
+              class="inline-flex items-center justify-center gap-2 bg-azulElectrico hover:bg-azulOscuro text-white font-black px-8 py-4 rounded-2xl transition duration-200 shadow-lg"
+            >
+              <Icon class="w-5 h-5" name="uil:schedule" />
+              Veure Horaris
+            </a>
+            <a 
+              href="#info" 
+              class="inline-flex items-center justify-center gap-2 border-2 border-slate-700 hover:border-blue-400 bg-slate-900/40 text-slate-300 hover:text-blue-400 font-bold px-8 py-4 rounded-2xl transition duration-200"
+            >
+              Més informació
+            </a>
+          </div>
+        </div>
+
+        {/* Imatge de portada dinàmica de Sanity */}
+        <div class="relative">
+          <div class="absolute -inset-1.5 bg-gradient-to-r from-azulElectrico to-amarilloClub rounded-3xl blur opacity-30"></div>
+          <img 
+            src={imatgePortada} 
+            alt="Imatge promocional de la Presentació dels Equips" 
+            class="relative w-full h-[350px] md:h-[450px] object-cover rounded-3xl border border-slate-800 shadow-2xl"
+          />
+        </div>
+      </section>
+
+      <hr class="border-slate-800/80 my-16" />
+
+      {/* =========================================
+          SECCIÓ: QUÈ HI TROBARÀS (DETALLS)
+      ========================================= */}
+      <section id="info" class="scroll-mt-20">
+        <div class="text-center max-w-2xl mx-auto">
+          <h2 class="text-3xl lg:text-4xl font-black text-slate-50 uppercase">
+            Una diada de <span class="text-azulElectrico">Bàsquet i Festa</span>
+          </h2>
+          <p class="text-slate-400 mt-3">
+            Gaudirem tots junts de la foto de família, el reconeixement als nostres equips i activitats per a tota la massa social del club.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          {detallsEsdeveniment.map((detall) => {
+            const téEnllac = !!detall.enllac;
+            const Contenidor = téEnllac ? 'a' : 'div';
+            
+            return (
+              <Contenidor 
+                href={detall.enllac}
+                target={téEnllac ? "_blank" : undefined}
+                rel={téEnllac ? "noopener noreferrer" : undefined}
+                class={`bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 shadow-sm transition duration-200 flex flex-col items-start group ${
+                  téEnllac ? 'hover:shadow-md hover:border-slate-700 cursor-pointer' : ''
+                }`}
+              >
+                <div class="bg-slate-900 text-amarilloClub p-3 rounded-xl mb-4 group-hover:bg-azulElectrico transition-colors duration-200">
+                  <Icon class="w-6 h-6" name={detall.icona || "uil:basketball"} />
+                </div>
+                
+                <h3 class="font-bold text-slate-50 uppercase text-lg mb-2 inline-flex items-center gap-1.5 group-hover:text-azulElectrico transition-colors duration-200">
+                  {detall.titol}
+                  {téEnllac && (
+                    <Icon class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-200 text-azulElectrico transform translate-x-[-4px] group-hover:translate-x-0" name="uil:arrow-right" />
+                  )}
+                </h3>
+                
+                <p class="text-slate-400 text-sm leading-relaxed">
+                  {detall.descripcio}
+                </p>
+              </Contenidor>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* =========================================
+          SECCIÓ: PROGRAMA I RECOMANACIONS
+      ========================================= */}
+      <section id="programa" class="mt-24 bg-slate-900/60 text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl scroll-mt-20">
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+          
+          <div>
+            <span class="text-amarilloClub font-black text-xs uppercase tracking-widest">
+              Horari de la diada
+            </span>
+            <h2 class="text-3xl lg:text-4xl font-black text-white uppercase mt-2">
+              Programa de l'<span class="text-amarilloClub">Esdeveniment</span>
+            </h2>
+            <p class="text-slate-300 mt-4 leading-relaxed">
+              Consulteu els horaris de convocatòria per a jugadors, tècnics i familiars per al correcte desenvolupament de la festa.
+            </p>
+
+            <div class="mt-8 space-y-3">
+              {escaleta.map((item) => (
+                <div class="flex items-center justify-between bg-slate-950/60 px-4 py-3 rounded-xl border border-slate-800">
+                  <div>
+                    <p class="font-bold text-white text-sm md:text-base">{item.activitat}</p>
+                    <p class="text-xs text-slate-400">{item.hora}</p>
+                  </div>
+                  <span class={`text-[10px] font-black uppercase px-2.5 py-1 rounded-md ${
+                    item.estat === "En directe" ? 'bg-orange-950/40 text-orange-400 border border-orange-800/40' : 
+                    item.estat === "Destacat" ? 'bg-amarilloClub text-azulOscuro' : 'bg-azulElectrico text-white'
+                  }`}>
+                    {item.estat}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recomanacions i notes organitzatives */}
+          <div class="bg-slate-950/80 p-6 md:p-8 rounded-2xl border border-slate-800 shadow-inner">
+            <h3 class="text-2xl font-black text-amarilloClub uppercase mb-4">
+              Instruccions d'Interès
+            </h3>
+            
+            {recomanacions.length > 0 && (
+              <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                <h4 class="font-bold text-white text-sm mb-3">📢 Informació per a famílies i esportistes:</h4>
+                <ul class="text-xs md:text-sm text-slate-300 list-disc list-inside space-y-2 leading-relaxed">
+                  {recomanacions.map((recomanacio) => (
+                    <li>{recomanacio}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div class="mt-6 pt-4 border-t border-slate-800/80 text-xs text-slate-400">
+              <p>Per a dubtes de darrera hora sobre la convocatòria dels jugadors, contacteu directament amb el coordinador o l'entrenador del vostre equip.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================
+          SECCIÓ: DESCARREGAR PROGRAMA / CONTACTE
+      ========================================= */}
+      <section id="descarrega" class="mt-24 bg-slate-900/60 text-white p-8 md:p-12 rounded-3xl border border-slate-800 shadow-xl">
+        <div class="bg-slate-950/80 border border-slate-800 p-8 md:p-12 rounded-2xl shadow-inner text-center">
+          
+          <div class="bg-azulElectrico/15 text-azulElectrico w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-azulElectrico/20">
+            <Icon class="w-7 h-7" name="uil:file-download-alt" />
+          </div>
+          
+          <h2 class="text-3xl lg:text-4xl font-black text-white uppercase">
+            Descarrega el <span class="text-amarilloClub">Programa Oficial</span>
+          </h2>
+          <p class="text-slate-300 mt-4 max-w-xl mx-auto leading-relaxed text-sm md:text-base">
+            Obté el dossier digital amb l'ordre complet de la presentació, el llistat d'equips i informació dels patrocinadors.
+          </p>
+
+          <div class="mt-8 flex justify-center">
+            <a 
+              href={linkPrograma} 
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-3 bg-azulElectrico hover:bg-azulOscuro text-white font-black px-10 py-5 rounded-2xl transition duration-200 shadow-lg hover:shadow-azulElectrico/25"
+            >
+              <Icon class="w-6 h-6" name="uil:document-info" />
+              Descarregar Programa (PDF)
+            </a>
+          </div>
+
+          <p class="text-xs text-slate-400 mt-8 leading-relaxed">
+            Us esperem a tots per fer d'aquesta jornada una gran festa del bàsquet. <br class="hidden sm:inline" />
+            Si teniu qualsevol consulta organitzativa, escriviu a <span class="font-bold text-white">{emailContacte}</span> o truca al <span class="font-bold text-white">{telefonContacte}</span>.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </Container>
+</Layout>
