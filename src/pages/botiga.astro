@@ -5,7 +5,7 @@ import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 
 // 🛍️ Enllaç al formulari general de comanda
-const FORMULARI_BOTIGA_URL = "https://forms.google.com/elteuformulari";
+const FORMULARI_BOTIGA_URL = "#formulari-comanda";
 
 // 📸 Fotos del Carrusel d'Inspiració / Lookbook
 const fotosCarrusel = [
@@ -211,15 +211,13 @@ const productes = [
                     </p>
                   </div>
 
-                  {/* Botó de comanda amb enllaç al formulari */}
+                  {/* Botó de comanda que baixa fins al formulari encastat */}
                   <a
                     href={producte.linkFormulari}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     class="w-full text-center bg-azulElectrico hover:bg-azulOscuro text-white font-black uppercase tracking-wider py-3 px-6 rounded-xl shadow-md transition duration-200 border border-azulElectrico/20 flex items-center justify-center gap-2"
                   >
                     <span>🛒 Encarregar peça</span>
-                    <span class="text-xs opacity-75">↗</span>
+                    <span class="text-xs opacity-75">↓</span>
                   </a>
                 </div>
 
@@ -227,6 +225,35 @@ const productes = [
             ))
           }
         </div>
+        {/* 📝 SECCIÓ: Formulari de Comanda Encastat */}
+        <section id="formulari-comanda" class="mt-16 max-w-4xl mx-auto scroll-mt-24">
+          <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-sm">
+            
+            <div class="text-center mb-8">
+              <span class="bg-amarilloClub text-azulOscuro font-black text-xs uppercase tracking-widest px-3 py-1 rounded-md">
+                Comanda Online
+              </span>
+              <h2 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mt-3">
+                Formulari d'Encarrec
+              </h2>
+              <p class="text-gray-400 text-sm mt-2">
+                Emplena el següent formulari amb les dades de contacte, la peça i la talla que necessites.
+              </p>
+            </div>
+
+            {/* Contenidor de l'Iframe optimitzat i adaptable */}
+            <div class="w-full overflow-hidden rounded-2xl bg-white border border-slate-700 shadow-inner">
+              <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLSeh38DXJ9ndo4bgIYl4bkijXIgDeF8fMJrdAVXswy4RRvvyuQ/viewform?embedded=true"
+                class="w-full h-[1800px] md:h-[2200px] border-0"
+                loading="lazy"
+              >
+                S'està carregant…
+              </iframe>
+            </div>
+
+          </div>
+        </section>
       </main>
 
     </div>
