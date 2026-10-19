@@ -6,25 +6,43 @@ import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 
 // 📧 Dades de contacte i enllaços oficials
-const EMAIL_CLUB = "aeblapalma@gmail.com";
-const WHATSAPP_NUM = "646 09 52 89";
+const EMAIL_CLUB = "info@aeblapalma.cat";
+const WHATSAPP_NUM = "644 27 96 80";
 const WHATSAPP_NOM = "Jofre";
-const WHATSAPP_LINK = "https://wa.me/34646095289?text=Hola!%20Vull%20enviar%20la%20documentaci%C3%B3%20d'inscripci%C3%B3";
+const WHATSAPP_LINK = "https://wa.me/34644279680?text=Hola!%20Vull%20enviar%20la%20documentaci%C3%B3%20d'inscripci%C3%B3";
 const FORMULARI_DRETS_IMATGE = "https://forms.gle/DjeHuUuAuNynWgDv7";
 const INSTAGRAM_USER = "@aeblapalma";
 const INSTAGRAM_LINK = "https://www.instagram.com/aeblapalma";
 
-// 📄 PDF general per defecte (en cas que no n'hi hagi un d'específic per equip)
-const PDF_GENERAL_URL = "/assets/full-inscripcio.pdf";
+// 📄 Rutes per defecte dels PDFs generals
+const PDF_INSCRIPCIO_DEFAULT = "/assets/full-inscripcio.pdf";
+const PDF_RENUNCIA_DEFAULT = "/assets/renuncia-fitxa-federativa.pdf";
+const PDF_RECOLLIDA_DEFAULT = "/assets/autoritzacio-recollida-menors.pdf";
 
-// 🌟 Demanem els equips a Sanity incloent els camps del formulari i PDF
+// 🌟 Demanem els equips a Sanity incloent els camps de form i PDFs
 const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posicio asc){
   _id,
   nom,
   categoria,
   linkFormulari,
-  "pdfUrl": pdfInscripcio.asset->url
+  "pdfUrl": pdfInscripcio.asset->url,
+  "pdfRenunciaUrl": pdfRenuncia.asset->url,
+  "pdfRecollidaUrl": pdfRecollida.asset->url
 }`);
+
+// 🧠 Funció auxiliar per determinar si un equip requereix full de recollida de menors
+function esEquipMenors(equipo) {
+  const text = `${equipo.categoria || ""} ${equipo.nom || ""}`.toLowerCase();
+  const categoriesAdults = [
+    "sots 25", "sots-25", "sots25",
+    "senior", "sènior",
+    "veterans", "veteran",
+    "més que bàsquet", "mes que basquet", "mqb"
+  ];
+  
+  // Retorna true si NO inclou cap de les categories d'adults
+  return !categoriesAdults.some((cat) => text.includes(cat));
+}
 ---
 
 <Layout title="Inscripcions - AEB La Palma">
@@ -70,7 +88,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
                 href={FORMULARI_DRETS_IMATGE}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full text-center bg-amarilloClub hover:bg-yellow-400 text-azulOscuro font-bold py-2 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-1.5"
+                class="w-full text-center bg-amarilloClub hover:bg-yellow-400 text-azulOscuro font-bold py-2 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-1.5 shadow-md"
               >
                 <span>📝 Formulari d'Imatge</span>
                 <span>↗</span>
@@ -85,7 +103,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
                 </span>
                 <h3 class="text-white font-bold text-base mb-2">Tria Equip i Descarrega</h3>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Cerca el teu equip a la llista de baix, descarrega la documentació corresponent i emplena-la.
+                  Cerca el teu equip a la llista de baix, descarrega els documents corresponents i emplena'ls.
                 </p>
               </div>
               <span class="text-xs text-azulElectrico font-semibold mt-4">↓ Veure equips a la secció inferior</span>
@@ -107,7 +125,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
 
           </div>
 
-          <!-- 📬 Destacat de canals de recpció de documents -->
+          <!-- 📬 Destacat de canals de recepció de documents -->
           <div class="mt-8 pt-6 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4">
             
             {/* Opcio Correu */}
@@ -144,7 +162,6 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
         </div>
       </section>
 
-
       {/* ⚠️ SECCIÓ 2: Requisits de la fitxa i aclariments específics */}
       <section class="mb-16 max-w-5xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -166,7 +183,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
                 </li>
                 <li class="flex items-center gap-2">
                   <span class="text-amarilloClub font-bold">✓</span>
-                  <span><strong>DNI</strong> o <strong>Targeta Sanitària</strong> escanejats.</span>
+                  <span><strong>DNI</strong> i <strong>Targeta Sanitària</strong> escanejats.</span>
                 </li>
               </ul>
             </div>
@@ -213,27 +230,29 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
         </div>
       </section>
 
-
       {/* 🏀 SECCIÓ 3: Graella de Targetes d'Equips */}
       <main class="mb-20">
         <div class="max-w-6xl mx-auto mb-8">
           <h2 class="text-2xl font-black text-white uppercase tracking-tight">Equips i Activitats</h2>
-          <p class="text-gray-400 text-sm mt-1">Selecciona el teu equip per accedir al formulari online i descarregar la documentació.</p>
+          <p class="text-gray-400 text-sm mt-1">Selecciona el teu equip per accedir al formulari online i descarregar la documentació corresponent.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {
             totsElsEquips && totsElsEquips.map((equipo) => {
               const googleFormUrl = equipo.linkFormulari || "#";
-              const pdfUrl = equipo.pdfUrl || PDF_GENERAL_URL;
+              const pdfInscripcio = equipo.pdfUrl || PDF_INSCRIPCIO_DEFAULT;
+              const pdfRenuncia = equipo.pdfRenunciaUrl || PDF_RENUNCIA_DEFAULT;
+              const pdfRecollida = equipo.pdfRecollidaUrl || PDF_RECOLLIDA_DEFAULT;
+              const requereixRecollida = esEquipMenors(equipo);
 
               return (
-                <div class="bg-slate-900/60 rounded-2xl shadow-lg border border-slate-800 overflow-hidden group hover:border-amarilloClub transition-all duration-300 flex flex-col justify-between p-6">
+                <div class="bg-slate-900/60 rounded-2xl shadow-lg border border-slate-800 overflow-hidden group hover:border-amarilloClub transition-all duration-300 flex flex-col justify-between p-5">
                   
                   {/* Capçalera de la targeta */}
                   <div>
                     {equipo.categoria && (
-                      <span class="inline-block bg-amarilloClub text-azulOscuro uppercase tracking-wider text-[10px] font-black px-2.5 py-1 rounded-md shadow-md mb-3">
+                      <span class="inline-block bg-amarilloClub text-azulOscuro uppercase tracking-wider text-[10px] font-black px-2.5 py-1 rounded-md shadow-md mb-2.5">
                         {equipo.categoria}
                       </span>
                     )}
@@ -243,29 +262,61 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
                     </h3>
                   </div>
 
-                  {/* Botons d'acció */}
-                  <div class="mt-8 flex flex-col gap-3">
-                    <a
-                      href={googleFormUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="w-full text-center bg-azulElectrico hover:bg-azulOscuro text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition duration-200 border border-azulElectrico/20 flex items-center justify-center gap-2"
-                    >
-                      <span>📝</span>
-                      <span>Formulari d'Equip</span>
-                      <span class="text-xs opacity-70">↗</span>
-                    </a>
+                  {/* Llista de botons de descàrrega i formulari */}
+                  <div class="mt-6 flex flex-col gap-2.5">
+                    
+                    {/* 1. Formulari Google (si existeix) */}
+                    {equipo.linkFormulari && (
+                      <a
+                        href={googleFormUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="w-full text-center bg-azulElectrico hover:bg-azulOscuro text-white font-bold py-2 px-3 rounded-xl text-xs shadow-md transition duration-200 border border-azulElectrico/20 flex items-center justify-center gap-2"
+                      >
+                        <span>📝</span>
+                        <span>Formulari online</span>
+                        <span class="text-[10px] opacity-70">↗</span>
+                      </a>
+                    )}
 
+                    {/* 2. PDF Full d'Inscripció */}
                     <a
-                      href={pdfUrl}
+                      href={pdfInscripcio}
                       download
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="w-full text-center bg-slate-800 hover:bg-slate-700 text-gray-200 hover:text-white font-bold py-2.5 px-4 rounded-xl text-sm transition duration-200 border border-slate-700 flex items-center justify-center gap-2"
+                      class="w-full text-center bg-slate-800 hover:bg-slate-700 text-gray-200 hover:text-white font-semibold py-2 px-3 rounded-xl text-xs transition duration-200 border border-slate-700 flex items-center justify-center gap-2"
                     >
                       <span>📄</span>
-                      <span>Descarregar Documents</span>
+                      <span>PDF Inscripció</span>
                     </a>
+
+                    {/* 3. PDF Renúncia Fitxa Federativa */}
+                    <a
+                      href={pdfRenuncia}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="w-full text-center bg-slate-800/80 hover:bg-slate-700 text-gray-300 hover:text-white font-semibold py-2 px-3 rounded-xl text-xs transition duration-200 border border-slate-700/70 flex items-center justify-center gap-2"
+                    >
+                      <span>📋</span>
+                      <span>Renúncia Fitxa Federativa</span>
+                    </a>
+
+                    {/* 4. PDF Recollida de Menors (Només si no és equip d'adults) */}
+                    {requereixRecollida && (
+                      <a
+                        href={pdfRecollida}
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="w-full text-center bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 hover:text-amber-200 font-semibold py-2 px-3 rounded-xl text-xs transition duration-200 border border-amber-500/30 flex items-center justify-center gap-2"
+                      >
+                        <span>🚸</span>
+                        <span>Autorització Recollida</span>
+                      </a>
+                    )}
+
                   </div>
 
                 </div>
