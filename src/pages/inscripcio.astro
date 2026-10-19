@@ -5,10 +5,16 @@ import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 
-// 📧 Correu electrònic del club per enviar les inscripcions
-const EMAIL_CLUB = "info@aeblapalma.cat";
+// 📧 Dades de contacte i enllaços oficials
+const EMAIL_CLUB = "aeblapalma@gmail.com";
+const WHATSAPP_NUM = "646 09 52 89";
+const WHATSAPP_NOM = "Jofre";
+const WHATSAPP_LINK = "https://wa.me/34646095289?text=Hola!%20Vull%20enviar%20la%20documentaci%C3%B3%20d'inscripci%C3%B3";
+const FORMULARI_DRETS_IMATGE = "https://forms.gle/DjeHuUuAuNynWgDv7";
+const INSTAGRAM_USER = "@aeblapalma";
+const INSTAGRAM_LINK = "https://www.instagram.com/aeblapalma";
 
-// 📄 PDF general per defecte (en cas que no n'hi hagi un de específic per equip)
+// 📄 PDF general per defecte (en cas que no n'hi hagi un d'específic per equip)
 const PDF_GENERAL_URL = "/assets/full-inscripcio.pdf";
 
 // 🌟 Demanem els equips a Sanity incloent els camps del formulari i PDF
@@ -21,85 +27,198 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
 }`);
 ---
 
-<Layout title="Inscripcions - CB Bàsquet">
+<Layout title="Inscripcions - AEB La Palma">
   <Container>
     <div class="mt-14 relative z-10">
       
-      {/* Capçalera */}
+      {/* Capçalera de benvinguda */}
       <Sectionhead>
         <Fragment slot="title">
-          <span class="text-slate-50 uppercase tracking-tight font-black">Inscripcions Temporada</span>
+          <span class="text-slate-50 uppercase tracking-tight font-black">Inscripcions AEB La Palma</span>
         </Fragment>
         <Fragment slot="desc">
-          <span class="text-gray-400 text-lg block">
-            Forma part del nostre club. Segueix el procés pas a pas per formalitzar la teva plaça.
+          <span class="text-amarilloClub font-bold text-xl block mb-2">
+            Benvingut/da al club, estem molt contents de rebre’t! 💙💛
+          </span>
+          <span class="text-gray-400 text-base block">
+            Formalitzar la teva inscripció és molt senzill. Segueix els passos següents per completar el procés.
           </span>
         </Fragment>
       </Sectionhead>
 
-      {/* Secció: Procés pas a pas d'inscripció */}
-      <section class="mt-10 mb-16 max-w-4xl mx-auto">
-        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl backdrop-blur-sm">
+      {/* 📋 SECCIÓ 1: Procés pas a pas d'inscripció */}
+      <section class="mt-10 mb-12 max-w-5xl mx-auto">
+        <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-sm">
           <h2 class="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-6 flex items-center gap-3">
-            <span class="text-amarilloClub">📋</span> Procés d'Inscripció
+            <span class="text-amarilloClub">📌</span> Passos per a la Inscripció
           </h2>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Pas 1 -->
-            <div class="bg-slate-950/60 p-5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
+            
+            <!-- Pas 1: Drets d'imatge -->
+            <div class="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80 flex flex-col justify-between group hover:border-amarilloClub/50 transition duration-300">
               <div>
-                <span class="inline-block bg-azulElectrico/20 text-azulElectrico border border-azulElectrico/30 font-black text-xs px-3 py-1 rounded-full mb-3">PAS 1</span>
-                <h3 class="text-white font-bold text-base mb-2">Omple el Formulari</h3>
-                <p class="text-gray-400 text-sm">
-                  Busca el teu equip a la llista inferior i completa el formulari de Google amb les teves dades.
+                <span class="inline-block bg-amarilloClub/20 text-amarilloClub border border-amarilloClub/30 font-black text-xs px-3 py-1 rounded-full mb-3">
+                  PAS 1
+                </span>
+                <h3 class="text-white font-bold text-base mb-2">Drets d'Imatge</h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                  Omple el formulari d'autorització per a l'ús d'imatges i promocions de les nostres activitats.
                 </p>
               </div>
+              <a
+                href={FORMULARI_DRETS_IMATGE}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full text-center bg-amarilloClub hover:bg-yellow-400 text-azulOscuro font-bold py-2 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-1.5"
+              >
+                <span>📝 Formulari d'Imatge</span>
+                <span>↗</span>
+              </a>
             </div>
 
-            <!-- Pas 2 -->
-            <div class="bg-slate-950/60 p-5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
+            <!-- Pas 2: Descarregar documents -->
+            <div class="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80 flex flex-col justify-between group hover:border-azulElectrico/50 transition duration-300">
               <div>
-                <span class="inline-block bg-amarilloClub/20 text-amarilloClub border border-amarilloClub/30 font-black text-xs px-3 py-1 rounded-full mb-3">PAS 2</span>
-                <h3 class="text-white font-bold text-base mb-2">Descarrega el PDF</h3>
-                <p class="text-gray-400 text-sm">
-                  Descarrega el document oficial en PDF, imprimeix-lo i signa les autoritzacions corresponents.
+                <span class="inline-block bg-azulElectrico/20 text-azulElectrico border border-azulElectrico/30 font-black text-xs px-3 py-1 rounded-full mb-3">
+                  PAS 2
+                </span>
+                <h3 class="text-white font-bold text-base mb-2">Tria Equip i Descarrega</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Cerca el teu equip a la llista de baix, descarrega la documentació corresponent i emplena-la.
                 </p>
               </div>
+              <span class="text-xs text-azulElectrico font-semibold mt-4">↓ Veure equips a la secció inferior</span>
             </div>
 
-            <!-- Pas 3 -->
-            <div class="bg-slate-950/60 p-5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
+            <!-- Pas 3: Enviar la documentació -->
+            <div class="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80 flex flex-col justify-between group hover:border-emerald-500/50 transition duration-300">
               <div>
-                <span class="inline-block bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-black text-xs px-3 py-1 rounded-full mb-3">PAS 3</span>
-                <h3 class="text-white font-bold text-base mb-2">Envia la Documentació</h3>
-                <p class="text-gray-400 text-sm">
-                  Escaneja o fotografia el full PDF omplert i envia'l al correu del club per finalitzar la reserva.
+                <span class="inline-block bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-black text-xs px-3 py-1 rounded-full mb-3">
+                  PAS 3
+                </span>
+                <h3 class="text-white font-bold text-base mb-2">Envia els Documents</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Envia tots els documents escanejats o fotografiats per correu electrònic o WhatsApp.
                 </p>
               </div>
+              <span class="text-xs text-emerald-400 font-semibold mt-4">✉️ Email o WhatsApp disponibles</span>
             </div>
+
           </div>
 
-          <!-- Destacat del correu d'enviament -->
-          <div class="mt-8 bg-slate-950 border border-amarilloClub/40 rounded-xl p-5 text-center flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="text-left">
-              <p class="text-xs font-bold uppercase tracking-wider text-amarilloClub">On s'ha d'enviar el document PDF emplenat?</p>
-              <p class="text-white font-mono font-bold text-lg md:text-xl">{EMAIL_CLUB}</p>
+          <!-- 📬 Destacat de canals de recpció de documents -->
+          <div class="mt-8 pt-6 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            {/* Opcio Correu */}
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex items-center justify-between gap-3">
+              <div>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-gray-400">Opció A: Via Correu Electrònic</p>
+                <p class="text-white font-mono font-bold text-sm md:text-base mt-0.5">{EMAIL_CLUB}</p>
+              </div>
+              <a
+                href={`mailto:${EMAIL_CLUB}?subject=Inscripció%20AEB%20La%20Palma`}
+                class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition duration-200 shrink-0 border border-slate-700"
+              >
+                ✉️ Enviar Mail
+              </a>
             </div>
-            <a
-              href={`mailto:${EMAIL_CLUB}?subject=Inscripció%20Temporada`}
-              class="bg-amarilloClub hover:bg-yellow-400 text-azulOscuro font-black px-5 py-2.5 rounded-xl text-sm transition-all duration-200 shrink-0 shadow-md"
-            >
-              ✉️ Enviar correu ara
-            </a>
+
+            {/* Opcio WhatsApp */}
+            <div class="bg-slate-950 border border-emerald-500/30 rounded-xl p-4 flex items-center justify-between gap-3">
+              <div>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Opció B: Via WhatsApp ({WHATSAPP_NOM})</p>
+                <p class="text-white font-mono font-bold text-sm md:text-base mt-0.5">+34 {WHATSAPP_NUM}</p>
+              </div>
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition duration-200 shrink-0"
+              >
+                💬 WhatsApp
+              </a>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Secció: Gria de Targetes d'Equips */}
+
+      {/* ⚠️ SECCIÓ 2: Requisits de la fitxa i aclariments específics */}
+      <section class="mb-16 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Bloc Requisits Fitxa Federativa -->
+          <div class="md:col-span-1 bg-slate-900/90 border border-amarilloClub/40 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xl">🪪</span>
+                <h3 class="text-lg font-black text-white uppercase tracking-tight">Fitxa Federativa</h3>
+              </div>
+              <p class="text-gray-300 text-xs leading-relaxed mb-4">
+                Per tramitar la fitxa federativa oficial, a part dels documents d’inscripció, és imprescindible aportar:
+              </p>
+              <ul class="space-y-2 text-xs text-gray-200">
+                <li class="flex items-center gap-2">
+                  <span class="text-amarilloClub font-bold">✓</span>
+                  <span><strong>Foto tipus carnet</strong> recent.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-amarilloClub font-bold">✓</span>
+                  <span><strong>DNI</strong> o <strong>Targeta Sanitària</strong> escanejats.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-gray-400 italic">
+              Recorda adjuntar aquesta documentació al teu missatge.
+            </div>
+          </div>
+
+          <!-- Bloc Aclariments per Categoria -->
+          <div class="md:col-span-2 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl">
+            <h3 class="text-lg font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+              <span>ℹ️</span> Aclariments Específics per Categoria
+            </h3>
+
+            <div class="space-y-4 text-xs text-gray-300">
+              
+              {/* Preminis */}
+              <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
+                <p class="font-bold text-white text-sm mb-1 text-amarilloClub">🏀 Preminis</p>
+                <p>
+                  El <em>"Document de Renúncia a la Fitxa Federativa"</em> és <strong>obligatori sempre que no vulgueu federar</strong> al jugador/a. La fitxa té un cost de <strong>50 €</strong> i els habilita a jugar partits i a estar coberts per la Mútua de la Federació. Podeu federar l’infant sense participar dels partits per gaudir de la cobertura mèdica.
+                </p>
+              </div>
+
+              {/* Veterans */}
+              <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
+                <p class="font-bold text-white text-sm mb-1 text-amarilloClub">🏀 Veterans</p>
+                <p>
+                  El <em>"Document de Renúncia a la Fitxa Federativa"</em> és <strong>obligatori llevat que vulgueu federar-vos</strong> per accedir a la cobertura mèdica de la federació. La fitxa té un cost d’uns <strong>35 €</strong> i té vigència des de l’01/09 fins al 30/06.
+                </p>
+              </div>
+
+              {/* Més Que Bàsquet */}
+              <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
+                <p class="font-bold text-white text-sm mb-1 text-amarilloClub">🏀 Més Que Bàsquet</p>
+                <p>
+                  El <em>"Document de Renúncia a la Fitxa Federativa"</em> és <strong>obligatori llevat que vulgueu federar-vos</strong> per accedir a la cobertura mèdica de la federació. La fitxa té un cost d’uns <strong>35 €</strong> i té vigència des de l’01/09 fins al 30/06.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* 🏀 SECCIÓ 3: Graella de Targetes d'Equips */}
       <main class="mb-20">
         <div class="max-w-6xl mx-auto mb-8">
-          <h2 class="text-2xl font-black text-white uppercase tracking-tight">Equips Disponibles</h2>
-          <p class="text-gray-400 text-sm mt-1">Selecciona el teu equip per accedir al formulari i descarregar el full d'inscripció.</p>
+          <h2 class="text-2xl font-black text-white uppercase tracking-tight">Equips i Activitats</h2>
+          <p class="text-gray-400 text-sm mt-1">Selecciona el teu equip per accedir al formulari online i descarregar la documentació.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -133,7 +252,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
                       class="w-full text-center bg-azulElectrico hover:bg-azulOscuro text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition duration-200 border border-azulElectrico/20 flex items-center justify-center gap-2"
                     >
                       <span>📝</span>
-                      <span>Formulari de Google</span>
+                      <span>Formulari d'Equip</span>
                       <span class="text-xs opacity-70">↗</span>
                     </a>
 
@@ -145,7 +264,7 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
                       class="w-full text-center bg-slate-800 hover:bg-slate-700 text-gray-200 hover:text-white font-bold py-2.5 px-4 rounded-xl text-sm transition duration-200 border border-slate-700 flex items-center justify-center gap-2"
                     >
                       <span>📄</span>
-                      <span>Descarregar PDF</span>
+                      <span>Descarregar Documents</span>
                     </a>
                   </div>
 
@@ -155,6 +274,27 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
           }
         </div>
       </main>
+
+      {/* 📲 Banner Instagram d'Acomiadament */}
+      <section class="max-w-4xl mx-auto mb-16 text-center">
+        <div class="bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900 border border-slate-800 rounded-3xl p-8 shadow-xl">
+          <p class="text-white text-xl font-black uppercase tracking-tight mb-2">
+            Benvingut/da a la família de l'AEB La Palma! 💙💛
+          </p>
+          <p class="text-gray-400 text-sm mb-6">
+            No oblidis seguir-nos a les xarxes socials per estar al dia de tota l'actualitat i partits del club.
+          </p>
+          <a
+            href={INSTAGRAM_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 via-pink-600 to-yellow-500 text-white font-bold px-6 py-3 rounded-full text-sm hover:opacity-90 transition duration-200 shadow-lg"
+          >
+            <span>📸 Segueix-nos a Instagram {INSTAGRAM_USER}</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </section>
 
     </div>
   </Container>
