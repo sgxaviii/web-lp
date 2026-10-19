@@ -14,7 +14,7 @@ function urlFor(source) {
 
 // 🌟 Generem les rutes estàtiques demanant les dades a Sanity en lloc de Markdown
 export async function getStaticPaths() {
-  const equips = await sanityClient.fetch(`*[_type == "equip"]{ "slug": slug.current }`);
+  const equips = await sanityClient.fetch(`*[_type == "equip"] | order(posicio asc){ "slug": slug.current }`);
   return equips.map((equip) => ({
     params: { slug: equip.slug },
   }));
