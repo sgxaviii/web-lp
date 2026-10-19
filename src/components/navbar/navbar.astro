@@ -10,7 +10,7 @@ import { sanityClient } from "sanity:client";
 
 // Demanem els equips i els ordenem alfabèticament
 const equipsBaseDeDades = await sanityClient.fetch(
-  `*[_type == "equip"] | order(nom asc){ nom, "slug": slug.current }`
+  `*[_type == "equip"] | order(posicio asc){ nom, posicio, "slug": slug.current }`
 );
 
 const esdevenimentsBaseDeDades = await sanityClient.fetch(
