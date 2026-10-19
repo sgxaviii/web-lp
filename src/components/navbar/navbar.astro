@@ -13,7 +13,7 @@ const equipsBaseDeDades = await sanityClient.fetch(
   `*[_type == "equip"] | order(nom asc){ nom, "slug": slug.current }`
 );
 
-const activitatsBaseDeDades = await sanityClient.fetch(
+const esdevenimentsBaseDeDades = await sanityClient.fetch(
   `*[_type == "activitat"] | order(titol asc){ titol, "slug": slug.current }`
 )
 
@@ -23,9 +23,9 @@ const equipsMapejats = equipsBaseDeDades.map((equip) => ({
   path: `/equips/${equip.slug}`,
 }));
 
-const activitatsMapejades = activitatsBaseDeDades.map((activitat) => ({
+const esdevenimentsMapejats = esdevenimentsBaseDeDades.map((activitat) => ({
   title: activitat.titol,
-  path: `/activitats/${activitat.slug}`
+  path: `/esdeveniments/${activitat.slug}`
 }));
 
 // Estructura dinàmica del menú
@@ -45,10 +45,9 @@ const menuitems = [
     ],
   },
   {
-    title: "Activitats Extra",
-    path: "/activitats",
-    badge: true,
-    children: activitatsMapejades,
+    title: "Esdeveniments",
+    path: "/esdeveniments",
+    children: esdevenimentsMapejats,
   },
   {
     title: "Multimèdia",
