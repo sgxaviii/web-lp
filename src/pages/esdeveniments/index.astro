@@ -114,7 +114,7 @@ const obtenirEstilEtiqueta = (colorDefinit: any, textEtiqueta: string) => {
         ) : (
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {activitats.map((act) => {
-              const destinacioRedireccio = act.ruta || (act.slug ? `/activitats/${act.slug}` : "#");
+              const destinacioRedireccio = act.ruta || (act.slug ? `/esdeveniments/${act.slug}` : "#");
               const colorIconaClasses = obtenirColorIcona(act.icona);
               const classesEtiqueta = obtenirEstilEtiqueta(act.etiquetaColor, act.etiqueta);
 
