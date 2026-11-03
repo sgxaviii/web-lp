@@ -8,6 +8,9 @@ import { Icon } from "astro-icon/components";
 // 🌟 Importem el client de Sanity per demanar les dades dels equips reals
 import { sanityClient } from "sanity:client";
 
+// 🚧 Interruptors de bloqueig temporal (src/config/bloqueig.ts)
+import { bloqueig } from "@/config/bloqueig";
+
 // Demanem els equips i els ordenem alfabèticament
 const equipsBaseDeDades = await sanityClient.fetch(
   `*[_type == "equip"] | order(posicio asc){ nom, posicio, "slug": slug.current }`
@@ -41,13 +44,14 @@ const menuitems = [
     children: [
       { title: "Qui som", path: "/club/quisom" },
       { title: "Història", path: "/club/historia" },
-      { title: "Equipaments", path: "/club/equipaments"}
+      { title: "Equipaments", path: "/club/equipaments", bloquejat: bloqueig.equipaments }
     ],
   },
   {
     title: "Esdeveniments",
     path: "/esdeveniments",
     children: esdevenimentsMapejats,
+    bloquejat: bloqueig.esdeveniments,
   },
   {
     title: "Inscripcions",
@@ -96,7 +100,18 @@ const menuitems = [
           {
             menuitems.map((item, index) => (
               <>
-                {item.children && item.children.length > 0 && (
+                {item.bloquejat && (
+                  <li>
+                    <span
+                      aria-disabled="true"
+                      class="bloquejat flex lg:px-3 py-2 items-center text-slate-300 font-semibold"
+                    >
+                      <span> {item.title}</span>
+                    </span>
+                  </li>
+                )}
+
+                {!item.bloquejat && item.children && item.children.length > 0 && (
                   <Dropdown
                     title={item.title}
                     path={item.path}
@@ -106,7 +121,7 @@ const menuitems = [
                   />
                 )}
 
-                {(!item.children || item.children.length === 0) && (
+                {!item.bloquejat && (!item.children || item.children.length === 0) && (
                   <li>
                     <a
                       href={item.path}
@@ -157,7 +172,7 @@ const menuitems = [
             </a>
 
             <a 
-              href="https://wa.me/34644279680" 
+              href="https://api.whatsapp.com/send/?phone=34644279680&text&type=phone_number&app_absent=0" 
               target="_blank" 
               rel="noopener noreferrer" 
               class="flex items-center text-slate-400 hover:text-green-500 transition-colors"
@@ -204,7 +219,7 @@ const menuitems = [
       </a>
 
       <a 
-        href="https://wa.me/34644279680" 
+        href="https://api.whatsapp.com/send/?phone=34644279680&text&type=phone_number&app_absent=0" 
         target="_blank" 
         rel="noopener noreferrer" 
         title="WhatsApp"

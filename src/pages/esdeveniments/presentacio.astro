@@ -1,6 +1,8 @@
 ---
 // src/pages/presentacio-equips/index.astro
 import Layout from "@/layouts/Layout.astro";
+import BloqueigPagina from "@/components/BloqueigPagina.astro";
+import { bloqueig } from "@/config/bloqueig";
 import Container from "@/components/container.astro";
 import { Icon } from "astro-icon/components";
 
@@ -72,11 +74,12 @@ const recomanacions = dadesPresentacio?.recomanacions || [
 ];
 
 const linkPrograma = dadesPresentacio?.linkPrograma || dadesPresentacio?.programaUrl || "#";
-const emailContacte = dadesPresentacio?.emailContacte || "info@aeblapalma.cat";
+const emailContacte = dadesPresentacio?.emailContacte || "aeblapalma@gmail.com";
 const telefonContacte = dadesPresentacio?.telefonContacte || "93 000 00 00";
 ---
 
 <Layout title={`${titolHero} - ${subtitolHero}`}>
+  <BloqueigPagina actiu={bloqueig.esdeveniments} missatge="Esdeveniments encara no disponibles" />
   <Container>
     <div class="mt-14 relative z-10">
       

@@ -1,6 +1,12 @@
 ---
 // @ts-ignore
 import { Icon } from "astro-icon/components";
+import { bloqueig } from "../config/bloqueig";
+
+// 🚧 Enllaços a pàgines bloquejades temporalment (src/config/bloqueig.ts)
+const estaBloquejat = (link: string) =>
+  (bloqueig.equipaments && link.startsWith("/club/equipaments")) ||
+  (bloqueig.esdeveniments && link.startsWith("/esdeveniments"));
 
 const features = [
   {
@@ -72,11 +78,11 @@ const features = [
     <div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-x-12 gap-y-16">
       {
         features.map((item) => (
-          <div class="flex gap-4 items-start group">
+          <div class:list={["flex gap-4 items-start group", estaBloquejat(item.link) && "bloquejat"]}>
             
             {/* 🌟 Icona optimitzada per a fons fosc (reacciona al fer hover a tot el bloc) */}
             <a 
-              href={item.link} 
+              href={estaBloquejat(item.link) ? undefined : item.link} 
               class="mt-1 bg-slate-900/80 rounded-full w-11 h-11 flex items-center justify-center shrink-0 shadow-inner border border-slate-800/80 transition-all duration-300 group-hover:bg-azulElectrico group-hover:border-azulElectrico group-hover:scale-110"
               aria-label={`Anar a ${item.title}`}
             >
@@ -87,7 +93,7 @@ const features = [
               {/* Títol en blanc amb hover groc/blau */}
               <h3 class="font-bold text-white text-lg uppercase tracking-tight">
                 <a 
-                  href={item.link} 
+                  href={estaBloquejat(item.link) ? undefined : item.link} 
                   class="hover:text-amarilloClub transition-colors duration-200 inline-flex items-center gap-1 group-hover:text-amarilloClub"
                 >
                   {item.title}

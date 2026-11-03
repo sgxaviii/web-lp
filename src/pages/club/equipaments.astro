@@ -1,6 +1,8 @@
 ---
 // src/pages/equipaments.astro
 import Layout from "@/layouts/Layout.astro";
+import BloqueigPagina from "@/components/BloqueigPagina.astro";
+import { bloqueig } from "@/config/bloqueig";
 import Container from "@/components/container.astro";
 import { Icon } from "astro-icon/components";
 
@@ -88,6 +90,7 @@ const equipaments = [
 ---
 
 <Layout title="Equipaments i Instal·lacions - AEB La Palma">
+  <BloqueigPagina actiu={bloqueig.equipaments} missatge="Equipaments encara no disponibles" />
   <Container>
     <div class="mt-14 relative z-10">
       

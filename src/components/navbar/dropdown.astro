@@ -41,8 +41,12 @@ const { title, children, lastItem, path, badge } = Astro.props;
         {
           children.map((child) => (
             <a
-              href={child.path}
-              class="block py-2 text-slate-300 hover:text-azulElectrico font-medium text-sm transition-colors"
+              href={child.bloquejat ? undefined : child.path}
+              aria-disabled={child.bloquejat ? "true" : undefined}
+              class:list={[
+                "block py-2 text-slate-300 hover:text-azulElectrico font-medium text-sm transition-colors",
+                child.bloquejat && "bloquejat",
+              ]}
             >
               {child.title}
             </a>
