@@ -160,10 +160,11 @@ function esEquipMenors(equipo) {
         </div>
       </section>
 
-      {/* ⚠️ SECCIÓ 2: Informació Addicional */}
-      <section class="mb-16 max-w-5xl mx-auto">
+      {/* ⚠️ SECCIÓ 2: Informació Addicional i Taula d'Horaris */}
+      <section class="mb-16 max-w-5xl mx-auto space-y-6">
+        
+        <!-- Blocs de text informatius -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
           <!-- Bloc Informació General -->
           <div class="md:col-span-1 bg-slate-900/90 border border-amarilloClub/40 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
             <div>
@@ -175,9 +176,6 @@ function esEquipMenors(equipo) {
                 La inscripció de l'AEB La Palma inclou una assegurança d’accidents amb cobertura mèdica.
               </p>
             </div>
-            <div class="mt-4 pt-4 border-t border-slate-800 text-[11px] text-gray-400 italic">
-              * MIREU LES ALTRES PESTANYES DEL DOCUMENT (EXCEL D'INSCRIPCIÓ) PER VEURE TOTA LA INFORMACIÓ DE LES ACTIVITATS!
-            </div>
           </div>
 
           <!-- Bloc Aclariments per Categoria -->
@@ -185,17 +183,7 @@ function esEquipMenors(equipo) {
             <h3 class="text-lg font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
               <span>📌</span> Aclariments Específics per Categoria
             </h3>
-
             <div class="space-y-4 text-xs text-gray-300">
-              
-              {/* Cistella Petita */}
-              <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
-                <p class="font-bold text-white text-sm mb-1 text-amarilloClub">🏀 Cistella Petita / Equips Base</p>
-                <p>
-                  El document d’<strong>Autorització de Recollida</strong> només l’heu d’omplir si necessiteu que recollim a l’infant a <strong>l’escola el Solell</strong> i el portem fins a l’espai de l’activitat.
-                </p>
-              </div>
-
               {/* Veterans */}
               <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
                 <p class="font-bold text-white text-sm mb-1 text-amarilloClub">🏀 Veterans</p>
@@ -203,7 +191,6 @@ function esEquipMenors(equipo) {
                   <strong>Benvingut al club!</strong> La quota per participar de l’activitat 1 dia a la setmana és de <strong>15 €/mes</strong> i de <strong>25 €/mes</strong> per fer-ho dos dies. El primer mes es cobra una <strong>matrícula de 10 €</strong>.
                 </p>
               </div>
-
               {/* Més Que Bàsquet */}
               <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
                 <p class="font-bold text-white text-sm mb-1 text-amarilloClub">🏀 Més Que Bàsquet</p>
@@ -211,11 +198,81 @@ function esEquipMenors(equipo) {
                   <strong>Benvinguda al club!</strong> La quota per participar de l’activitat 1 dia a la setmana és de <strong>15 €/mes</strong> i de <strong>25 €/mes</strong> per fer-ho dos dies. El primer mes es cobra una <strong>matrícula de 10 €</strong>.
                 </p>
               </div>
-
             </div>
           </div>
-
         </div>
+
+        <!-- 📅 Taula Cistella Petita -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl overflow-hidden">
+          <h3 class="text-lg font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+            <span>📅</span> Informació Cistella Petita
+          </h3>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-300 border-collapse min-w-[700px]">
+              <thead class="text-xs text-white uppercase bg-slate-800">
+                <tr>
+                  <th class="border border-slate-700 p-3 text-center w-1/4">Info Cistella Petita</th>
+                  <th class="border border-slate-700 p-3 text-center">Edat</th>
+                  <th class="border border-slate-700 p-3 text-center w-1/3">Dies d'entrenament i horaris</th>
+                  <th class="border border-slate-700 p-3 text-center w-1/4">Serveis</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <!-- Row 1: Escola de Bàsquet -->
+                <tr>
+                  <td class="border border-slate-700 p-3 bg-green-500/20 font-bold text-green-300">Escola de Bàsquet</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50">I4 i I5</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50" rowspan="2">
+                    <strong>Dilluns:</strong> 16:45 a 18:00 h<br/>
+                    <strong>Dijous:</strong> 16:45 a 18:00 h
+                  </td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50" rowspan="3">
+                    Recollida al Solell a les 16:30 i transport fins al poliesportiu
+                  </td>
+                </tr>
+                <!-- Row 2: Escobol -->
+                <tr>
+                  <td class="border border-slate-700 p-3 bg-red-400/20 font-bold text-red-300">Escobol</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50">1r i 2 de primària</td>
+                </tr>
+                <!-- Row 3: Premini Blau -->
+                <tr>
+                  <td class="border border-slate-700 p-3 bg-blue-400/20 font-bold text-blue-300">Premini Blau</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50">2n i 3r de primària</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50">
+                    <strong>Dilluns:</strong> 16:45 a 18:00 h<br/>
+                    <strong>Dimecres:</strong> 19 a 20 h (opcional)<br/>
+                    <strong>Dijous:</strong> 16:45 a 18:00 h
+                  </td>
+                </tr>
+                <!-- Row 4: Premini Groc -->
+                <tr>
+                  <td class="border border-slate-700 p-3 bg-yellow-500/20 font-bold text-yellow-300">Premini Groc</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50">4t de primària</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50" rowspan="2">
+                    <strong>Dilluns:</strong> 17:45 a 19:00 h<br/>
+                    <strong>Dimecres:</strong> de 19 a 20 h (opcional)<br/>
+                    <strong>Dijous:</strong> 17:45 a 19:00 h
+                  </td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50" rowspan="2">
+                    Possibilitat de recollida al Solell a les 16:30, transport fins al poliesportiu i Acadèmia de 16:45 a 17:45
+                  </td>
+                </tr>
+                <!-- Row 5: Mini Blau -->
+                <tr>
+                  <td class="border border-slate-700 p-3 bg-blue-600/30 font-bold text-blue-400">Mini Blau</td>
+                  <td class="border border-slate-700 p-3 bg-slate-900/50">5è de primària en endavant</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="mt-4 text-xs text-gray-400 italic">
+            El document d’<strong>Autorització de Recollida</strong> només l’heu d’omplir i adjuntar si necessiteu fer ús d'aquest servei des de l'escola El Solell.
+          </div>
+        </div>
+
       </section>
 
       {/* 🏀 SECCIÓ 3: Graella de Targetes d'Equips */}
