@@ -13,6 +13,9 @@ import { Image } from "astro:assets";
 // 🏀 3. Importem la teva imatge local (.png) des de src/assets/
 import fonsAeb from "../assets/fons-aeb.png";
 
+// 🚧 Interruptors de bloqueig temporal (src/config/bloqueig.ts)
+import { bloqueig, missatgeImatges } from "../config/bloqueig";
+
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
 import "../styles/global.css";
@@ -92,6 +95,69 @@ const makeTitle = title
         content-visibility: auto;
       }
     </style>
+
+    {bloqueig.imatges && (
+      <>
+        {/* 🚧 Imatges de contingut no disponibles: es mantenen el logo i el fons de marca */}
+        <style is:global>
+          img:not([src^="/logo"]):not([src^="/fons-aeb"]):not([src^="/favicon"]):not(#modalImage):not(#modal-img) {
+            visibility: hidden;
+          }
+          .imatge-no-disponible {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 6rem;
+            padding: 0.5rem;
+            box-sizing: border-box;
+            background: rgb(30 41 59 / 0.6);
+            border: 1px dashed rgb(100 116 139);
+            color: rgb(148 163 184);
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1.2;
+          }
+        </style>
+        <script is:inline define:vars={{ missatgeImatges }}>
+          (function () {
+            var marca = /^\/(logo|fons-aeb|favicon)/;
+            function esMarca(img) {
+              if (img.id === "modalImage" || img.id === "modal-img") return true;
+              if (img.closest(".imatge-no-disponible")) return true;
+              var src = img.getAttribute("src") || "";
+              return marca.test(src);
+            }
+            function substituir(img) {
+              if (esMarca(img) || img.dataset.bloquejada) return;
+              img.dataset.bloquejada = "1";
+              var caixa = document.createElement("div");
+              caixa.className = (img.getAttribute("class") || "") + " imatge-no-disponible";
+              caixa.setAttribute("role", "img");
+              caixa.setAttribute("aria-label", missatgeImatges);
+              caixa.textContent = missatgeImatges;
+              img.style.display = "none";
+              img.removeAttribute("srcset");
+              img.parentNode.insertBefore(caixa, img);
+            }
+            function tot(arrel) {
+              (arrel.querySelectorAll ? arrel.querySelectorAll("img") : []).forEach(substituir);
+            }
+            tot(document);
+            document.addEventListener("DOMContentLoaded", function () { tot(document); });
+            new MutationObserver(function (mutacions) {
+              mutacions.forEach(function (m) {
+                m.addedNodes.forEach(function (n) {
+                  if (n.nodeType !== 1) return;
+                  if (n.tagName === "IMG") substituir(n);
+                  else tot(n);
+                });
+              });
+            }).observe(document.documentElement, { childList: true, subtree: true });
+          })();
+        </script>
+      </>
+    )}
   </body>
 </html>
 

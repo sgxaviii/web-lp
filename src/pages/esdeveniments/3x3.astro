@@ -1,6 +1,8 @@
 ---
 // src/pages/3x3.astro
 import Layout from "@/layouts/Layout.astro";
+import BloqueigPagina from "@/components/BloqueigPagina.astro";
+import { bloqueig } from "@/config/bloqueig";
 import Container from "@/components/container.astro";
 import { Icon } from "astro-icon/components";
 
@@ -56,6 +58,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
 ---
 
 <Layout title={`${edicio} Torneig 3x3 d'Estiu - AEB La Palma`}>
+  <BloqueigPagina actiu={bloqueig.esdeveniments} missatge="Esdeveniments encara no disponibles" />
   <Container>
     {/* 🌟 AFEGIT: 'overflow-x-clip' al contenidor pare per evitar desbordaments horitzontals en mòbils */}
     <div class="mt-14 relative z-10 overflow-x-clip animate-fade-in">

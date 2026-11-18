@@ -79,11 +79,15 @@ import Button from "./ui/button.astro";
 
   {/* Botó d'enviament */}
   <div class="relative group">
+    {/* 🚧 Botó desactivat temporalment: l'adreça de destinació del formulari encara no està actualitzada */}
     <Button 
       type="submit" 
       size="lg" 
       block 
-      class="bg-azulElectrico hover:bg-azulOscuro text-white font-black uppercase tracking-wider py-3.5 px-6 rounded-xl shadow-md shadow-azulElectrico/10 hover:shadow-azulOscuro/20 transition duration-200 cursor-pointer"
+      disabled
+      aria-disabled="true"
+      title="Formulari no disponible actualment"
+      class="bg-azulElectrico text-white font-black uppercase tracking-wider py-3.5 px-6 rounded-xl shadow-md shadow-azulElectrico/10 transition duration-200 opacity-40 grayscale cursor-not-allowed pointer-events-none"
     >
       Envia el missatge
     </Button>

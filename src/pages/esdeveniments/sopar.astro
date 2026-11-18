@@ -1,6 +1,8 @@
 ---
 // src/pages/sopar.astro
 import Layout from "@/layouts/Layout.astro";
+import BloqueigPagina from "@/components/BloqueigPagina.astro";
+import { bloqueig } from "@/config/bloqueig";
 import Container from "@/components/container.astro";
 import { Icon } from "astro-icon/components";
 
@@ -54,6 +56,7 @@ const googleMapsUrl = linkMaps || `https://www.google.com/maps/search/?api=1&que
 ---
 
 <Layout title="Sopar de Final de Temporada - AEB La Palma">
+  <BloqueigPagina actiu={bloqueig.esdeveniments} missatge="Esdeveniments encara no disponibles" />
   <Container>
     {/* 🌟 AFEGIT: 'overflow-x-clip' per garantir que res surti dels marges laterals a mòbil */}
     <div class="mt-14 relative z-10 overflow-x-clip">

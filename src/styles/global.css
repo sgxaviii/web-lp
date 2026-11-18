@@ -26,3 +26,12 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
+
+/* 🚧 Element bloquejat temporalment ("futura funcionalitat"): atenuat i no clicable */
+.bloquejat {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+  pointer-events: none;
+  user-select: none;
+  cursor: not-allowed;
+}

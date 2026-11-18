@@ -1,0 +1,85 @@
+---
+// Atenua el contingut de la pàgina i mostra un avís que desapareix tot sol.
+// Si es fa clic al contingut atenuat, l'avís torna a aparèixer.
+interface Props {
+  missatge: string;
+  actiu?: boolean;
+  segons?: number;
+}
+const { missatge, actiu = true, segons = 5 } = Astro.props;
+---
+
+{actiu && (
+  <>
+    <div id="bloqueig-avis" class="bloqueig-avis" role="status" aria-live="polite" style={`--durada:${segons}s`}>
+      {missatge}
+    </div>
+
+    <style is:global>
+      main {
+        position: relative;
+        opacity: 0.3;
+        filter: grayscale(0.5);
+        user-select: none;
+      }
+      .bloqueig-capa {
+        position: absolute;
+        inset: 0;
+        z-index: 40;
+        cursor: not-allowed;
+      }
+      .bloqueig-avis {
+        position: fixed;
+        top: 6rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        max-width: calc(100vw - 2rem);
+        padding: 0.9rem 1.6rem;
+        border-radius: 1rem;
+        background: rgb(15 23 42 / 0.96);
+        color: #fbbf24;
+        border: 1px solid rgb(251 191 36 / 0.5);
+        box-shadow: 0 20px 50px rgb(0 0 0 / 0.5);
+        font-weight: 800;
+        text-align: center;
+        letter-spacing: 0.02em;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+      .bloqueig-avis.mostrar {
+        animation: bloqueig-avis var(--durada, 5s) ease forwards;
+      }
+      @keyframes bloqueig-avis {
+        0% { opacity: 0; visibility: visible; transform: translateX(-50%) translateY(-8px); }
+        8% { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        85% { opacity: 1; visibility: visible; }
+        100% { opacity: 0; visibility: hidden; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .bloqueig-avis.mostrar { animation-duration: var(--durada, 5s); }
+      }
+    </style>
+
+    <script is:inline>
+      (function () {
+        var avis = document.getElementById("bloqueig-avis");
+        var main = document.querySelector("main");
+        if (!avis || !main) return;
+        main.setAttribute("inert", "");
+        var capa = document.createElement("div");
+        capa.className = "bloqueig-capa";
+        capa.setAttribute("aria-hidden", "true");
+        main.appendChild(capa);
+        function mostrar() {
+          avis.classList.remove("mostrar");
+          void avis.offsetWidth;
+          avis.classList.add("mostrar");
+        }
+        capa.addEventListener("click", mostrar);
+        mostrar();
+      })();
+    </script>
+  </>
+)}
