@@ -5,7 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
 
-// 📧 Dades de contacte i enllaços oficials (ACTUALITZATS)
+// 📧 Dades de contacte i enllaços oficials
 const EMAIL_CLUB = "aeblapalma@gmail.com";
 const WHATSAPP_NUM = "646 09 52 89";
 const WHATSAPP_NOM = "Jofre";
@@ -16,7 +16,6 @@ const INSTAGRAM_LINK = "https://www.instagram.com/aeblapalma";
 
 // 📄 Rutes per defecte dels PDFs generals
 const PDF_INSCRIPCIO_DEFAULT = "/assets/full-inscripcio.pdf";
-const PDF_RENUNCIA_DEFAULT = "/assets/renuncia-fitxa-federativa.pdf";
 const PDF_RECOLLIDA_DEFAULT = "/assets/autoritzacio-recollida-menors.pdf";
 
 // 🌟 Demanem els equips a Sanity incloent els camps de form i PDFs
@@ -26,7 +25,6 @@ const totsElsEquips = await sanityClient.fetch(`*[_type == "equip"] | order(posi
   categoria,
   linkFormulari,
   "pdfUrl": pdfInscripcio.asset->url,
-  "pdfRenunciaUrl": pdfRenuncia.asset->url,
   "pdfRecollidaUrl": pdfRecollida.asset->url
 }`);
 
@@ -162,41 +160,30 @@ function esEquipMenors(equipo) {
         </div>
       </section>
 
-      {/* ⚠️ SECCIÓ 2: Requisits de la fitxa i aclariments específics */}
+      {/* ⚠️ SECCIÓ 2: Informació Addicional */}
       <section class="mb-16 max-w-5xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          <!-- Bloc Requisits Generals -->
+          <!-- Bloc Informació General -->
           <div class="md:col-span-1 bg-slate-900/90 border border-amarilloClub/40 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
             <div>
               <div class="flex items-center gap-2 mb-3">
-                <span class="text-xl">🪪</span>
+                <span class="text-xl">ℹ️</span>
                 <h3 class="text-lg font-black text-white uppercase tracking-tight">Informació d'interès</h3>
               </div>
-              <p class="text-gray-300 text-xs leading-relaxed mb-4">
-                La inscripció de l'AEB La Palma inclou una assegurança d’accidents amb cobertura mèdica.<br><br>
-                A més, per tramitar una fitxa federativa oficial caldrà:
+              <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                La inscripció de l'AEB La Palma inclou una assegurança d’accidents amb cobertura mèdica.
               </p>
-              <ul class="space-y-2 text-xs text-gray-200">
-                <li class="flex items-center gap-2">
-                  <span class="text-amarilloClub font-bold">✓</span>
-                  <span><strong>Foto tipus carnet</strong> recent.</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-amarilloClub font-bold">✓</span>
-                  <span><strong>DNI</strong> i <strong>Targeta Sanitària</strong> escanejats.</span>
-                </li>
-              </ul>
             </div>
-            <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-gray-400 italic">
-              * MIREU LES ALTRES PESTANYES DEL DOCUMENT PER VEURE TOTA LA INFORMACIÓ DE LES ACTIVITATS!
+            <div class="mt-4 pt-4 border-t border-slate-800 text-[11px] text-gray-400 italic">
+              * MIREU LES ALTRES PESTANYES DEL DOCUMENT (EXCEL D'INSCRIPCIÓ) PER VEURE TOTA LA INFORMACIÓ DE LES ACTIVITATS!
             </div>
           </div>
 
           <!-- Bloc Aclariments per Categoria -->
           <div class="md:col-span-2 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl">
             <h3 class="text-lg font-black text-white uppercase tracking-tight mb-4 flex items-center gap-2">
-              <span>ℹ️</span> Aclariments Específics per Categoria
+              <span>📌</span> Aclariments Específics per Categoria
             </h3>
 
             <div class="space-y-4 text-xs text-gray-300">
@@ -205,7 +192,7 @@ function esEquipMenors(equipo) {
               <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
                 <p class="font-bold text-white text-sm mb-1 text-amarilloClub">🏀 Cistella Petita / Equips Base</p>
                 <p>
-                  El document d’<strong>Autorització de Recollida</strong> només l’heu d’omplir si necessiteu que recollim a l’infant a <strong>l’escola el Solell</strong> i el portem fins a l’espai de l’activitat. A més a més, el document de <em>Renúncia a la Fitxa Federativa</em> és obligatori sempre que no vulgueu federar al jugador/a (la fitxa els habilita a jugar partits i estar coberts per la Mútua).
+                  El document d’<strong>Autorització de Recollida</strong> només l’heu d’omplir si necessiteu que recollim a l’infant a <strong>l’escola el Solell</strong> i el portem fins a l’espai de l’activitat.
                 </p>
               </div>
 
@@ -243,7 +230,6 @@ function esEquipMenors(equipo) {
             totsElsEquips && totsElsEquips.map((equipo) => {
               const googleFormUrl = equipo.linkFormulari || "#";
               const pdfInscripcio = equipo.pdfUrl || PDF_INSCRIPCIO_DEFAULT;
-              const pdfRenuncia = equipo.pdfRenunciaUrl || PDF_RENUNCIA_DEFAULT;
               const pdfRecollida = equipo.pdfRecollidaUrl || PDF_RECOLLIDA_DEFAULT;
               const requereixRecollida = esEquipMenors(equipo);
 
@@ -292,19 +278,7 @@ function esEquipMenors(equipo) {
                       <span>PDF Inscripció</span>
                     </a>
 
-                    {/* 3. PDF Renúncia Fitxa Federativa */}
-                    <a
-                      href={pdfRenuncia}
-                      download
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="w-full text-center bg-slate-800/80 hover:bg-slate-700 text-gray-300 hover:text-white font-semibold py-2 px-3 rounded-xl text-xs transition duration-200 border border-slate-700/70 flex items-center justify-center gap-2"
-                    >
-                      <span>📋</span>
-                      <span>Renúncia Fitxa Federativa</span>
-                    </a>
-
-                    {/* 4. PDF Recollida de Menors (Només si no és equip d'adults) */}
+                    {/* 3. PDF Recollida de Menors (Només si no és equip d'adults) */}
                     {requereixRecollida && (
                       <a
                         href={pdfRecollida}
