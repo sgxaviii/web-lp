@@ -93,19 +93,21 @@ function esEquipMenors(equipo) {
               </a>
             </div>
 
-            <!-- Pas 2: Descarregar documents -->
-            <div class="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80 flex flex-col justify-between group hover:border-azulElectrico/50 transition duration-300">
+            <!-- Pas 2: Descarregar documents (Ara és un enllaç cap avall) -->
+            <a href="#equips" class="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80 flex flex-col justify-between group hover:border-azulElectrico/50 transition duration-300 cursor-pointer">
               <div>
                 <span class="inline-block bg-azulElectrico/20 text-azulElectrico border border-azulElectrico/30 font-black text-xs px-3 py-1 rounded-full mb-3">
                   PAS 2
                 </span>
-                <h3 class="text-white font-bold text-base mb-2">Tria Equip i Descarrega</h3>
+                <h3 class="text-white font-bold text-base mb-2 group-hover:text-azulElectrico transition-colors duration-200">Tria Equip i Descarrega</h3>
                 <p class="text-gray-400 text-sm leading-relaxed">
                   Cerca el teu equip a la llista de baix, descarrega els documents d'inscripció que hi trobaràs i emplena'ls.
                 </p>
               </div>
-              <span class="text-xs text-azulElectrico font-semibold mt-4">↓ Veure equips a la secció inferior</span>
-            </div>
+              <span class="text-xs text-azulElectrico font-semibold mt-4 flex items-center gap-1">
+                <span>↓</span> Fer clic per anar als equips
+              </span>
+            </a>
 
             <!-- Pas 3: Enviar la documentació -->
             <div class="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80 flex flex-col justify-between group hover:border-emerald-500/50 transition duration-300">
@@ -275,8 +277,8 @@ function esEquipMenors(equipo) {
 
       </section>
 
-      {/* 🏀 SECCIÓ 3: Graella de Targetes d'Equips */}
-      <main class="mb-20">
+      {/* 🏀 SECCIÓ 3: Graella de Targetes d'Equips (Amb ID "equips" per al salt i scroll-mt-24 per evitar encavalcaments) */}
+      <main id="equips" class="mb-20 scroll-mt-24">
         <div class="max-w-6xl mx-auto mb-8">
           <h2 class="text-2xl font-black text-white uppercase tracking-tight">Equips i Activitats</h2>
           <p class="text-gray-400 text-sm mt-1">Selecciona el teu equip per accedir al formulari online i descarregar la documentació corresponent.</p>
@@ -306,7 +308,7 @@ function esEquipMenors(equipo) {
                     </h3>
                   </div>
 
-                  {/* Llista de botons de descàrrega i formulari */}
+                  {/* Llista de botons de descàrrega i formularis */}
                   <div class="mt-6 flex flex-col gap-2.5">
                     
                     {/* 1. Formulari Google (si existeix) */}
@@ -348,6 +350,17 @@ function esEquipMenors(equipo) {
                         <span>Autorització Recollida</span>
                       </a>
                     )}
+
+                    {/* 4. Formulari Drets d'Imatge (Afegit a cada equip) */}
+                    <a
+                      href={FORMULARI_DRETS_IMATGE}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="w-full text-center bg-amarilloClub/10 hover:bg-amarilloClub/20 text-amarilloClub font-semibold py-2 px-3 rounded-xl text-xs transition duration-200 border border-amarilloClub/30 flex items-center justify-center gap-2"
+                    >
+                      <span>📸</span>
+                      <span>Drets d'Imatge</span>
+                    </a>
 
                   </div>
 
